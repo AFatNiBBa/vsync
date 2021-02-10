@@ -1,0 +1,24 @@
+{
+  "name": "syncplayer",
+  "version": "0.5.0",
+  "description": "Plays a video synchronously.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AFatNiBBa/syncPlayer.git"
+  },
+  "author": "AFatNiBBa",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AFatNiBBa/syncPlayer/issues"
+  },
+  "homepage": "https://github.com/AFatNiBBa/syncPlayer#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "http": "^0.0.1-security",
+    "ws": "^7.4.3"
+  }
+}

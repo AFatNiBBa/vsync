@@ -1,0 +1,53 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+        <title> Video </title>
+	    <style>
+            video
+            {
+                width: 50%;
+                height: 50%;
+            }
+        </style>
+        <script>
+            var lock = 0;
+            const url = new URLSearchParams(window.location.search);
+            send = type => (lock == 0) && socket.send(JSON.stringify({
+                type,
+                time: video.currentTime,
+                pass: url.get("pass")
+            }));
+
+            function load()
+            {
+                const video = window.video = document.querySelector("video");
+                const socket = window.socket = new WebSocket(`ws://${ window.location.hostname }:6789`);
+                video.onplay = x => send("play");
+                video.onpause = x => send("pause");
+                video.ontimeupdate = x => send("current");
+                socket.onmessage = async x => {
+                    lock++;
+                    const promises = [];
+                    try
+                    {
+                        const obj = JSON.parse(x.data);
+                        console.log(obj);
+                        if (obj.type == "play" && video.paused) promises.push(video.play());
+                        if (obj.type == "pause" && !video.paused) promises.push(video.pause());
+                        if (Math.abs(video.currentTime - obj.time) > 1) video.currentTime = obj.time;
+                    }
+                    catch { }
+                    await Promise.all(promises);
+                    lock--; // Le funzioni "play" e "pause" sono asincrone, perciò "lock" veniva diminuito prima della loro esecuzione
+                };
+            }
+        </script>
+	</head>
+	<body onload="load()">
+        <video controls>
+            <!-- Da Google Drive -->
+            <source src="https://drive.google.com/uc?export=download&id=1_m0y32d3RJIofuHG7MpJfs-am8G5gYu5" type='video/mp4'>
+        </video>
+	</body>
+</html>
