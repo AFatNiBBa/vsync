@@ -12,18 +12,16 @@
         </style>
         <script>
             var lock = 0;
-            const url = new URLSearchParams(window.location.search);
             secure = () => window.location.protocol == "https:";
             send = type => (lock == 0) && socket.send(JSON.stringify({
                 type,
                 time: video.currentTime,
-                pass: url.get("pass")
             }));
 
             function load()
             {
                 const video = window.video = document.querySelector("video");
-                const socket = window.socket = new WebSocket(`ws${ secure() ? "s" : "" }://${ window.location.hostname }${ secure() ? "" : ":3000" }`);
+                const socket = window.socket = new WebSocket(`ws${ secure() ? "s" : "" }://${ window.location.hostname }${ window.location.hostname == "localhost" ? ":3000" : "" }`);
                 video.onplay = x => send("play");
                 video.onpause = x => send("pause");
                 video.ontimeupdate = x => send("current");
@@ -51,7 +49,7 @@
 	<body onload="load()">
         <video controls>
             <!-- Da Google Drive -->
-            <source src="https://www.googleapis.com/drive/v3/files/1z-mDQjpmdIq75Bm4EFi8Qy340ks-vetl?alt=media&key=AIzaSyAB_HQx9nP2UlKaNN4TS6_C05H1kjmup00" type='video/mp4'>
+            <source src="https://blob-eu-central-1-nwsekq.s3.eu-central-1.amazonaws.com/sara/10/1039/1039af42-dca2-4ad6-b25f-799e50da0a25.bin?response-content-disposition=attachment%3B%20filename%3D%22AOT4x8.mp4%22&response-content-type=video%2Fmp4&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAI75SICYCOZ7DPWTA%2F20210211%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20210211T103650Z&X-Amz-SignedHeaders=host&X-Amz-Expires=1800&X-Amz-Signature=f651b4fd13733d1bf1fd9e443f42cbb1b4e6aa8859907704ba52f62054605ec9" type='video/mp4'>
         </video>
 	</body>
 </html>
