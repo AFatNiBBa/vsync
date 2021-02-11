@@ -22,36 +22,33 @@
 
             function load()
             {
-                const video = window.video = document.querySelector("video");
-                const socket = window.socket = new WebSocket(`ws${ secure() ? "s" : "" }://${ window.location.hostname }${ secure() ? "" : ":3000" }`);
-                video.onplay = x => send("play");
-                video.onpause = x => send("pause");
-                video.ontimeupdate = x => send("current");
-                socket.onmessage = async x => {
-                    lock++;
-                    const promises = [];
-                    try
-                    {
-                        const obj = JSON.parse(x.data);
-                        console.log(obj);
-                        if (obj.type == "play" && video.paused) promises.push(video.play());
-                        if (obj.type == "pause" && !video.paused) promises.push(video.pause());
-                        if (Math.abs(video.currentTime - obj.time) > 1) video.currentTime = obj.time;
-                    }
-                    catch { }
-                    await Promise.all(promises);
-                    lock--; // Le funzioni "play" e "pause" sono asincrone, perciò "lock" veniva diminuito prima della loro esecuzione
-                };
+                // const video = window.video = document.querySelector("video");
+                // const socket = window.socket = new WebSocket(`ws${ secure() ? "s" : "" }://${ window.location.hostname }${ secure() ? "" : ":3000" }`);
+                // video.onplay = x => send("play");
+                // video.onpause = x => send("pause");
+                // video.ontimeupdate = x => send("current");
+                // socket.onmessage = async x => {
+                //     lock++;
+                //     const promises = [];
+                //     try
+                //     {
+                //         const obj = JSON.parse(x.data);
+                //         console.log(obj);
+                //         if (obj.type == "play" && video.paused) promises.push(video.play());
+                //         if (obj.type == "pause" && !video.paused) promises.push(video.pause());
+                //         if (Math.abs(video.currentTime - obj.time) > 1) video.currentTime = obj.time;
+                //     }
+                //     catch { }
+                //     await Promise.all(promises);
+                //     lock--; // Le funzioni "play" e "pause" sono asincrone, perciò "lock" veniva diminuito prima della loro esecuzione
+                // };
             }
         </script>
 	</head>
 	<body onload="load()">
         <video controls>
             <!-- Da Google Drive -->
-            <source src="https://drive.google.com/u/0/uc?export=download&confirm=OEkZ&id=1z-mDQjpmdIq75Bm4EFi8Qy340ks-vetl" type='video/mp4'>
-
-            <!-- WEB BUCKETS -->
-            <!-- https://console.cloud.google.com/projectselector2/storage/browser?_ga=2.103235145.815413398.1613003976-418629032.1610397721&_gac=1.92390127.1610397723.CjwKCAiAi_D_BRApEiwASslbJ7Wd0ZaBsDZjX-HT_3AzuXGjEMPBu5Lq9QxW9mn2yTdyiw-ehZnFXhoCag8QAvD_BwE&pli=1&supportedpurview=project&creatingProject=true -->
+            <source src="https://www.googleapis.com/drive/v3/files/1z-mDQjpmdIq75Bm4EFi8Qy340ks-vetl?alt=media&key=AIzaSyAB_HQx9nP2UlKaNN4TS6_C05H1kjmup00" type='video/mp4'>
         </video>
 	</body>
 </html>
