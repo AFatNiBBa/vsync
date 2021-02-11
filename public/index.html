@@ -22,26 +22,26 @@
 
             function load()
             {
-                // const video = window.video = document.querySelector("video");
-                // const socket = window.socket = new WebSocket(`ws${ secure() ? "s" : "" }://${ window.location.hostname }${ secure() ? "" : ":3000" }`);
-                // video.onplay = x => send("play");
-                // video.onpause = x => send("pause");
-                // video.ontimeupdate = x => send("current");
-                // socket.onmessage = async x => {
-                //     lock++;
-                //     const promises = [];
-                //     try
-                //     {
-                //         const obj = JSON.parse(x.data);
-                //         console.log(obj);
-                //         if (obj.type == "play" && video.paused) promises.push(video.play());
-                //         if (obj.type == "pause" && !video.paused) promises.push(video.pause());
-                //         if (Math.abs(video.currentTime - obj.time) > 1) video.currentTime = obj.time;
-                //     }
-                //     catch { }
-                //     await Promise.all(promises);
-                //     lock--; // Le funzioni "play" e "pause" sono asincrone, perciò "lock" veniva diminuito prima della loro esecuzione
-                // };
+                const video = window.video = document.querySelector("video");
+                const socket = window.socket = new WebSocket(`ws${ secure() ? "s" : "" }://${ window.location.hostname }${ secure() ? "" : ":3000" }`);
+                video.onplay = x => send("play");
+                video.onpause = x => send("pause");
+                video.ontimeupdate = x => send("current");
+                socket.onmessage = async x => {
+                    lock++;
+                    const promises = [];
+                    try
+                    {
+                        const obj = JSON.parse(x.data);
+                        console.log(obj);
+                        if (obj.type == "play" && video.paused) promises.push(video.play());
+                        if (obj.type == "pause" && !video.paused) promises.push(video.pause());
+                        if (Math.abs(video.currentTime - obj.time) > 1) video.currentTime = obj.time;
+                    }
+                    catch { }
+                    await Promise.all(promises);
+                    lock--; // Le funzioni "play" e "pause" sono asincrone, perciò "lock" veniva diminuito prima della loro esecuzione
+                };
             }
         </script>
 	</head>
