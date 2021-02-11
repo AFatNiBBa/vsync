@@ -54,6 +54,7 @@ server.on("connection", async socket => {
 
     //| Evento
     socket.on("message", async msg => {
+        if (msg == "alive") return;
         try
         {
             const obj = JSON.parse(msg);
