@@ -13,6 +13,7 @@
         <script>
             var lock = 0;
             const url = new URLSearchParams(window.location.search);
+            secure = () => window.location.protocol == "https:";
             send = type => (lock == 0) && socket.send(JSON.stringify({
                 type,
                 time: video.currentTime,
@@ -22,7 +23,7 @@
             function load()
             {
                 const video = window.video = document.querySelector("video");
-                const socket = window.socket = new WebSocket(`ws${ window.location.protocol == "https:" ? "s" : "" }://${ window.location.hostname }:3000`);
+                const socket = window.socket = new WebSocket(`ws${ secure() ? "s" : "" }://${ window.location.hostname }${ secure() ? "" : ":3000" }`);
                 video.onplay = x => send("play");
                 video.onpause = x => send("pause");
                 video.ontimeupdate = x => send("current");
@@ -48,6 +49,9 @@
         <video controls>
             <!-- Da Google Drive -->
             <source src="https://drive.google.com/u/0/uc?export=download&confirm=OEkZ&id=1z-mDQjpmdIq75Bm4EFi8Qy340ks-vetl" type='video/mp4'>
+
+            <!-- WEB BUCKETS -->
+            <!-- https://console.cloud.google.com/projectselector2/storage/browser?_ga=2.103235145.815413398.1613003976-418629032.1610397721&_gac=1.92390127.1610397723.CjwKCAiAi_D_BRApEiwASslbJ7Wd0ZaBsDZjX-HT_3AzuXGjEMPBu5Lq9QxW9mn2yTdyiw-ehZnFXhoCag8QAvD_BwE&pli=1&supportedpurview=project&creatingProject=true -->
         </video>
 	</body>
 </html>
