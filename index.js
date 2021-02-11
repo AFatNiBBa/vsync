@@ -67,5 +67,5 @@ server.on("connection", async socket => {
     state();
 });
 
-app.listen(process.env.PORT ?? 6789);
+app.listen(process.env.PORT || 3000);
 state();

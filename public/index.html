@@ -22,7 +22,7 @@
             function load()
             {
                 const video = window.video = document.querySelector("video");
-                const socket = window.socket = new WebSocket(`ws://${ window.location.hostname }:6789`);
+                const socket = window.socket = new WebSocket(`wss://${ window.location.hostname }:3000`);
                 video.onplay = x => send("play");
                 video.onpause = x => send("pause");
                 video.ontimeupdate = x => send("current");
