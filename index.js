@@ -1,7 +1,9 @@
 
 /*
-    File: 1z-mDQjpmdIq75Bm4EFi8Qy340ks-vetl
-    Output: https://www.googleapis.com/drive/v3/files/1z-mDQjpmdIq75Bm4EFi8Qy340ks-vetl?alt=media&key=AIzaSyAB_HQx9nP2UlKaNN4TS6_C05H1kjmup00
+    [WIP]: pass, room, link
+    Drive: 1z-mDQjpmdIq75Bm4EFi8Qy340ks-vetl
+    Direct: https://www.googleapis.com/drive/v3/files/1z-mDQjpmdIq75Bm4EFi8Qy340ks-vetl?alt=media&key=AIzaSyAB_HQx9nP2UlKaNN4TS6_C05H1kjmup00
+    Filesend: https://www.filesend.jp/l/en-US/RRZnPS
 */
 
 const express = require("express");
