@@ -16,25 +16,36 @@
                 get: (t, k) => t.get(k),
                 set: (t, k, v) => t.set(k, v)
             });
-
-            url.room ??= 0;
-            url.link ??= "";
             
             send = type => (lock == 0) && socket.send(JSON.stringify({
                 type,
-                time: video.currentTime
+                time: video.currentTime,
+                pass: url.pass
             }));
 
+            uuid = () => "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, c => {
+                const r = Math.random() * 16 | 0;
+                return (
+                    c == "x"
+                    ? r
+                    : (r & 0x3 | 0x8)
+                ).toString(16);
+            });
+
+            url.room ??= uuid();
+            url.link ??= "https://zfs209.svid.li/dnzpeezgy7g4a3gyvafh7mlsqkbs27b5p3zvoj4iogayucyn3lqtojfaqedq/Tenet_[HD]_(2020)_IMAX_Bluray_1080p[supervideo.tv].mp4"
             function load()
             {
                 const video = window.video = document.querySelector("video");
                 const socket = window.socket = new WebSocket(`ws${ window.location.protocol == "https:" ? "s" : "" }://${ window.location.hostname }${ window.location.hostname == "localhost" ? ":3000" : "" }`);
+
                 video.onplay = x => send("play");
                 video.onpause = x => send("pause");
                 video.ontimeupdate = x => send("current");
 
                 const id = setInterval(() => socket.send("alive"), 1000);
                 socket.onclose = x => clearInterval(id);
+                socket.onopen = x => socket.send(url.room);
                 socket.onmessage = async x => {
                     lock++;
                     const promises = [];
@@ -55,8 +66,24 @@
 	</head>
 	<body onload="load()">
         <video controls>
-            <!-- Da Google Drive -->
-            <source src="https://filetransfer.io/data-package/eX4xyCEC/download" type='video/mp4'>
+            <script>
+                document.writeln(`<source type="video/mp4" src="${ url.link }">`);
+            </script>
         </video>
+        <form action="." method="GET">
+            <table>
+                <script>
+                    for(const e of ["room", "link", "pass"]) document.writeln(`
+                        <tr>
+                            <td> ${ e[0].toUpperCase() + e.substr(1) } </td>
+                            <td>
+                                <input type="text" name="${ e }" value="${ url[e] }">
+                            </td>
+                        </tr>
+                    `);
+                </script>
+            </table>
+            <input type="submit" value="Aggiorna">
+        </form>
 	</body>
 </html>
