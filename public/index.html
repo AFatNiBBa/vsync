@@ -6,8 +6,8 @@
 	    <style>
             video
             {
-                width: 50%;
-                height: 50%;
+                width: 100%;
+                /* height: 100%; */
             }
         </style>
         <script>
@@ -36,7 +36,7 @@
             url.link ??= "https://filetransfer.io/data-package/eX4xyCEC/download"
             function load()
             {
-                const video = window.video = document.querySelector("video");
+                const video = window.video = $("video")[0];
                 const socket = window.socket = new WebSocket(`ws${ window.location.protocol == "https:" ? "s" : "" }://${ window.location.hostname }${ window.location.hostname == "localhost" ? ":3000" : "" }`);
 
                 video.onplay = x => send("play");
@@ -65,25 +65,43 @@
         </script>
 	</head>
 	<body onload="load()">
-        <video controls>
-            <script>
-                document.writeln(`<source type="video/mp4" src="${ url.link }">`);
-            </script>
-        </video>
-        <form action="." method="GET">
-            <table>
-                <script>
-                    for(const e of ["room", "link", "pass"]) document.writeln(`
-                        <tr>
-                            <td> ${ e[0].toUpperCase() + e.substr(1) } </td>
-                            <td>
-                                <input type="text" name="${ e }" value="${ url[e] ?? "" }">
-                            </td>
-                        </tr>
-                    `);
-                </script>
-            </table>
-            <input type="submit" value="Aggiorna">
-        </form>
+        <div class="container-fluid mt-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-5 col-sm-10">
+                    <video controls>
+                        <script>
+                            document.writeln(`<source type="video/mp4" src="${ url.link }">`);
+                        </script>
+                    </video>
+                </div>
+                <div class="col-lg-5 col-sm-10">
+                    <form class="pt-5">
+                        <script>
+                            const data = [ [ "room", "Stanza", "Per guardare un video insieme dovete avere tutti la stessa." ], [ "link", "Link Diretto Video", "Potete averlo diverso: Il sito sincronizza lo stesso." ], [ "pass", "Password", "Il primo che la setta comanda (Insime agli altri che hanno la stessa)." ] ];
+                            for(const [ name, label, dex ] of data) document.writeln(`
+                                <div class="form-group">
+                                    <label for="${ name }">
+                                        <h4> ${ label } </h4>
+                                    </label> <br>
+                                    <input type="email" id="${ name }" value="${ url[name] ?? "" }" placeholder="Vuoto" class="form-control">
+                                    <small class="form-text text-muted"> ${ dex } </small>
+                                </div>
+                            `);
+                        </script>
+                        <button type="submit" class="btn btn-warning"> Aggiorna </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <!-- JQuery -->
+        <script src="./lib/jquery.js"></script>
+
+        <!-- Bootstrap -->
+        <script src="./lib/bootstrap/js/bootstrap.js"></script>
+        <script src="./lib/bootstrap/js/bootstrap.bundle.js"></script>
+        <link rel="stylesheet" href="./lib/bootstrap/css/bootstrap.css" />
+        <link rel="stylesheet" href="./lib/bootstrap/css/bootstrap-grid.css" />
+        <link rel="stylesheet" href="./lib/bootstrap/css/bootstrap-reboot.css" />
 	</body>
 </html>
