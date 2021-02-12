@@ -72,9 +72,12 @@
                 //| Se modifichi i parametri ti dice che c'è da salvare
                 $('input[type="text"]').on("change", () => {
                     const submit = $('button[type="submit"]');
-                    submit.removeClass("btn-success").addClass("btn-warning");
+                    submit.removeClass("btn-secondary").addClass("btn-warning");
                     submit[0].innerHTML = 'Aggiorna<span class="text-danger font-weight-bold">*</span>';
                 });
+
+                //| Abilita la descrizione durante l'hover
+                $("[title]").tooltip();
             }
         </script>
 	</head>
@@ -103,9 +106,9 @@
                                 </div>
                             `);
                         </script>
-                        <button type="submit" class="btn btn-success"> Aggiorna </button>
-                        <input type="button" value="Admin" class="btn btn-danger" onclick='navigator.clipboard.writeText(url.href)' />
-                        <input type="button" value="Utente" class="btn btn-primary" onclick='{
+                        <button type="submit" title="Applica le Impostazioni." class="btn btn-secondary"> Aggiorna </button>
+                        <input type="button" value="Admin" title="Condividi il tuo Link." class="btn btn-danger" onclick='navigator.clipboard.writeText(url.href)' />
+                        <input type="button" value="Utente" title="Condividi un link che non include la Password." class="btn btn-primary" onclick='{
                             const out = new (url.constructor)(url.href);
                             out.searchParams.delete("pass");
                             navigator.clipboard.writeText(out.href);
