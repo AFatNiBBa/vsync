@@ -1,6 +1,6 @@
 
 /*
-    [WIP]: Test url[GET]
+    [WIP]: Copy Link
     Drive: 1z-mDQjpmdIq75Bm4EFi8Qy340ks-vetl
     Direct: https://www.googleapis.com/drive/v3/files/1z-mDQjpmdIq75Bm4EFi8Qy340ks-vetl?alt=media&key=AIzaSyAB_HQx9nP2UlKaNN4TS6_C05H1kjmup00
     
@@ -14,7 +14,7 @@ const { Server } = require('ws');
 const http = require("http");
 
 //| Contenitore di "stanze"
-const container = new Proxy(()=>{}, {
+const container = new Proxy(() => {}, {
     type: class Info {
         constructor(key, time, play, pass)
         {

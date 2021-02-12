@@ -12,28 +12,35 @@
         </style>
         <script>
             var lock = 0;
-            const url = new Proxy(new URLSearchParams(window.location.search), {
+            const url = new URL(window.location.href);
+            const proxy = new Proxy(url.searchParams, {
                 get: (t, k) => t.get(k),
                 set: (t, k, v) => t.set(k, v)
             });
             
-            send = type => (lock == 0) && socket.send(JSON.stringify({
-                type,
-                time: video.currentTime,
-                pass: url.pass
-            }));
+            function send(type)
+            {
+                if (lock == 0) socket.send(JSON.stringify({
+                    type,
+                    time: video.currentTime,
+                    pass: proxy.pass
+                }));
+            }
 
-            uuid = () => "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, c => {
-                const r = Math.random() * 16 | 0;
-                return (
-                    c == "x"
-                    ? r
-                    : (r & 0x3 | 0x8)
-                ).toString(16);
-            });
+            function uuid()
+            {
+                return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, c => {
+                    const r = Math.random() * 16 | 0;
+                    return (
+                        c == "x"
+                        ? r
+                        : (r & 0x3 | 0x8)
+                    ).toString(16);
+                }); 
+            }
 
-            url.room ??= uuid();
-            url.link ??= "https://filetransfer.io/data-package/eX4xyCEC/download"
+            proxy.room ??= uuid();
+            proxy.link ??= "https://filetransfer.io/data-package/eX4xyCEC/download"
             function load()
             {
                 const video = window.video = $("video")[0];
@@ -45,7 +52,7 @@
 
                 const id = setInterval(() => socket.send("alive"), 1000);
                 socket.onclose = x => clearInterval(id);
-                socket.onopen = x => socket.send(url.room);
+                socket.onopen = x => socket.send(proxy.room);
                 socket.onmessage = async x => {
                     lock++;
                     const promises = [];
@@ -61,21 +68,29 @@
                     await Promise.all(promises);
                     lock--; // Le funzioni "play" e "pause" sono asincrone, perciò "lock" veniva diminuito prima della loro esecuzione
                 };
+
+                //| Se modifichi i parametri ti dice che c'è da salvare
+                $('input[type="text"]').on("change", () => {
+                    const submit = $('button[type="submit"]');
+                    submit.removeClass("btn-success").addClass("btn-warning");
+                    submit[0].innerHTML = 'Aggiorna<span class="text-danger font-weight-bold">*</span>';
+                });
             }
         </script>
 	</head>
 	<body onload="load()">
+        <input id="buffer" class="invisible" />
         <div class="container-fluid mt-5">
             <div class="row justify-content-center">
                 <div class="col-lg-5 col-sm-10">
                     <video controls>
                         <script>
-                            document.writeln(`<source type="video/mp4" src="${ url.link }">`);
+                            document.writeln(`<source type="video/mp4" src="${ proxy.link }">`);
                         </script>
                     </video>
                 </div>
                 <div class="col-lg-5 col-sm-10">
-                    <form class="pt-5">
+                    <form>
                         <script>
                             const data = [ [ "room", "Stanza", "Per guardare un video insieme dovete avere tutti la stessa." ], [ "link", "Link Diretto Video", "Potete averlo diverso: Il sito sincronizza lo stesso." ], [ "pass", "Password", "Il primo che la setta comanda (Insime agli altri che hanno la stessa)." ] ];
                             for(const [ name, label, dex ] of data) document.writeln(`
@@ -83,12 +98,18 @@
                                     <label for="${ name }">
                                         <h4> ${ label } </h4>
                                     </label> <br>
-                                    <input type="text" name="${ name }" value="${ url[name] ?? "" }" placeholder="Vuoto" class="form-control">
+                                    <input type="text" name="${ name }" value="${ proxy[name] ?? "" }" placeholder="Vuoto" class="form-control">
                                     <small class="form-text text-muted"> ${ dex } </small>
                                 </div>
                             `);
                         </script>
-                        <button type="submit" class="btn btn-warning"> Aggiorna </button>
+                        <button type="submit" class="btn btn-success"> Aggiorna </button>
+                        <input type="button" value="Admin" class="btn btn-danger" onclick='navigator.clipboard.writeText(url.href)' />
+                        <input type="button" value="Utente" class="btn btn-primary" onclick='{
+                            const out = new (url.constructor)(url.href);
+                            out.searchParams.delete("pass");
+                            navigator.clipboard.writeText(out.href);
+                        }' />
                     </form>
                 </div>
             </div>
