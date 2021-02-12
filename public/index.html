@@ -3,13 +3,6 @@
 <html>
 	<head>
         <title> Sync Player </title>
-	    <style>
-            video
-            {
-                width: 100%;
-                /* height: 100%; */
-            }
-        </style>
         <script>
             var lock = 0;
             const url = new URL(window.location.href);
@@ -17,7 +10,15 @@
                 get: (t, k) => t.get(k),
                 set: (t, k, v) => t.set(k, v)
             });
+
+            //| Carica la pagina sicura perchè "navigator.clipboard" sta solo su quella
+            if (!navigator.clipboard)
+            {
+                url.protocol = "https:";
+                window.location.href = url.href;
+            }
             
+            //| Manda un pacchetto di aggiornamento con password, tempo corrente e tipo del pacchetto
             function send(type)
             {
                 if (lock == 0) socket.send(JSON.stringify({
@@ -27,6 +28,7 @@
                 }));
             }
 
+            //| Universally Unique ID v4
             function uuid()
             {
                 return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, c => {
@@ -86,7 +88,7 @@
         <div class="container-fluid mt-5">
             <div class="row justify-content-center">
                 <div class="col-lg-5 col-sm-10">
-                    <video controls>
+                    <video controls class="w-100">
                         <script>
                             document.writeln(`<source type="video/mp4" src="${ proxy.link }">`);
                         </script>
@@ -111,7 +113,7 @@
                         <input type="button" value="Utente" title="Condividi un link che non include la Password." class="btn btn-primary" onclick='{
                             const out = new (url.constructor)(url.href);
                             out.searchParams.delete("pass");
-                            navigator.clipboard.writeText(out.href);
+                            navigator.clipboard.writeText(out.href); // Per copiare sulla clipboard
                         }' />
                     </form>
                 </div>
