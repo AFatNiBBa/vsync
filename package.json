@@ -21,5 +21,8 @@
     "express": "^4.17.1",
     "http": "^0.0.1-security",
     "ws": "^7.4.3"
+  },
+  "engines": {
+    "node": "15.1.0"
   }
 }
