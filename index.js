@@ -6,6 +6,7 @@
     
     Filesend: https://www.filesend.jp/l/en-US/RRZnPS
     FileTransfer: https://filetransfer.io/data-package/eX4xyCEC/download
+    SpeedVideo: https://zfs209.svid.li/dnzpeezgy7g4a3gyvafh7mlsqkbs27b5p3zvoj4iogayucyn3lqtojfaqedq/Tenet_[HD]_(2020)_IMAX_Bluray_1080p[supervideo.tv].mp4
 */
 
 const express = require("express");
@@ -34,14 +35,13 @@ const container = new Proxy(()=>{}, {
 function state()
 {
     console.clear();
-    console.log("Acceso.");
-    console.log(container());
+    console.log("\x1b[91mAcceso:\x1b[0m", Object.assign({}, container()));
 }
 
 //| Pagina Web
 const app = http.createServer(
     express()
-    .use("/", express.static("public"))
+    .use("/", express.static("./public"))
 );
 
 //| Socket
@@ -83,7 +83,11 @@ server.on("connection", async socket => {
             if (obj.type == "play") info.play = true;
             else if (obj.type == "pause") info.play = false;
             info.time = obj.time ?? info.time;
-            info.pass ||= obj.pass || null;
+            if (!info.pass && obj.pass)
+            {
+                info.pass = obj.pass;
+                state();
+            }
 
             const result = update();
             for (const e of set)
