@@ -1,12 +1,9 @@
 
 /*
-    [WIP]: Copy Link
-    Drive: 1z-mDQjpmdIq75Bm4EFi8Qy340ks-vetl
-    Direct: https://www.googleapis.com/drive/v3/files/1z-mDQjpmdIq75Bm4EFi8Qy340ks-vetl?alt=media&key=AIzaSyAB_HQx9nP2UlKaNN4TS6_C05H1kjmup00
+    [UPDATE]: Includi font, no svg
     
-    Filesend: https://www.filesend.jp/l/en-US/RRZnPS
-    FileTransfer: https://filetransfer.io/data-package/eX4xyCEC/download
-    SpeedVideo: https://zfs209.svid.li/dnzpeezgy7g4a3gyvafh7mlsqkbs27b5p3zvoj4iogayucyn3lqtojfaqedq/Tenet_[HD]_(2020)_IMAX_Bluray_1080p[supervideo.tv].mp4
+    AOT 4x08 (FileTransfer):    https://filetransfer.io/data-package/eX4xyCEC/download
+    Tenet (SpeedVideo):         https://zfs209.svid.li/dnzpeezgy7g4a3gyvafh7mlsqkbs27b5p3zvoj4iogayucyn3lqtojfaqedq/Tenet_[HD]_(2020)_IMAX_Bluray_1080p[supervideo.tv].mp4
 */
 
 const express = require("express");
