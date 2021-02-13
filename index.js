@@ -1,7 +1,5 @@
 
 /*
-    [UPDATE]: Includi font, no svg
-    
     AOT 4x08 (FileTransfer):    https://filetransfer.io/data-package/eX4xyCEC/download
     Tenet (SpeedVideo):         https://zfs209.svid.li/dnzpeezgy7g4a3gyvafh7mlsqkbs27b5p3zvoj4iogayucyn3lqtojfaqedq/Tenet_[HD]_(2020)_IMAX_Bluray_1080p[supervideo.tv].mp4
 */

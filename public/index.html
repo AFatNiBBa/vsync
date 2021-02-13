@@ -92,10 +92,10 @@
                             function err404()
                             {
                                 const icon = $("#icon")
+                                .removeClass("fa-check-circle")
                                 .removeClass("text-success")
-                                .addClass("text-danger")[0];
-                                $("#ok", icon).addClass("invisible");
-                                $("#no", icon).removeClass("invisible");
+                                .addClass("fa-times-circle")
+                                .addClass("text-danger");
                             }
                             document.writeln(`<source onerror="err404()" type="video/mp4" src="${ proxy.link }">`);
                         </script>
@@ -109,14 +109,8 @@
                                 <div class="form-group">
                                     <label for="${ name }">
                                         <h4>
-                                            ${ label }
-                                            ${
-                                                name == "link" ? `
-                                                <svg id="icon" width="16" height="16" fill="currentColor" class="text-success" >
-                                                    <path id="ok" d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zm1.354 4.354l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708.708z"/>
-                                                    <path id="no" class="invisible" d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM6.854 7.146L8 8.293l1.146-1.147a.5.5 0 1 1 .708.708L8.707 9l1.147 1.146a.5.5 0 0 1-.708.708L8 9.707l-1.146 1.147a.5.5 0 0 1-.708-.708L7.293 9 6.146 7.854a.5.5 0 1 1 .708-.708z"/>
-                                                </svg>` : ""
-                                            }
+                                            ${ label } 
+                                            ${ name == "link" ? '<i id="icon" class="fad fa-check-circle text-success"></i>': "" }
                                         </h4>
                                     </label> <br>
                                     <input type="text" name="${ name }" value="${ proxy[name] ?? "" }" placeholder="Vuoto" class="form-control">
@@ -145,5 +139,6 @@
         <link rel="stylesheet" href="./lib/bootstrap/css/bootstrap.css" />
         <link rel="stylesheet" href="./lib/bootstrap/css/bootstrap-grid.css" />
         <link rel="stylesheet" href="./lib/bootstrap/css/bootstrap-reboot.css" />
+        <link rel="stylesheet" href="./lib/font-awesome/font-awesome.css" />
 	</body>
 </html>
