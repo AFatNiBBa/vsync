@@ -4,11 +4,12 @@ class Synchronizer
     #lock = 0;
     constructor(opts)
     {
-        //| video, room, pass, delta
+        //| video, room, pass, server, delta
         Object.assign(this, opts);
         this.delta ??= 1;
         this.room ??= Synchronizer.uuid();
-        this.socket ??= new WebSocket(link ?? `ws${ window.location.protocol == "https:" ? "s" : "" }://${ window.location.hostname }${ window.location.hostname == "localhost" ? ":3000" : "" }`);
+        this.server ??= `ws${ window.location.protocol == "https:" ? "s" : "" }://${ window.location.hostname }${ window.location.hostname == "localhost" ? ":3000" : "" }`;
+        this.socket ??= new WebSocket(this.server);
 
         this.video.onplay = () => this.send("play");
         this.video.onpause = () => this.send("pause");
