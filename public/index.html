@@ -4,8 +4,8 @@
 	<head>
         <title> Sync Player </title>
         <link rel="icon" href="./icon.png">
+        <script src="./lib/synchronizer.js"></script>
         <script>
-            var lock = 0;
             const url = new URL(window.location.href);
             const proxy = new Proxy(url.searchParams, {
                 get: (t, k) => t.get(k),
@@ -18,60 +18,16 @@
                 url.protocol = "https:";
                 window.location.href = url.href;
             }
-            
-            //| Manda un pacchetto di aggiornamento con password, tempo corrente e tipo del pacchetto
-            function send(type)
-            {
-                if (lock == 0) socket.send(JSON.stringify({
-                    type,
-                    pass,
-                    time: video.currentTime
-                }));
-            }
 
-            //| Universally Unique ID v4
-            function uuid()
-            {
-                return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, c => {
-                    const r = Math.random() * 16 | 0;
-                    return (
-                        c == "x"
-                        ? r
-                        : (r & 0x3 | 0x8)
-                    ).toString(16);
-                }); 
-            }
-
-            const { pass } = proxy;
-            proxy.room ??= uuid();
             proxy.link ??= "https://work.streamingaw.online/DDL/ANIME/ShingekiNoKyojin4SUBITA/ShingekiNoKyojin4_Ep_02_SUB_ITA.mp4"
             function load()
             {
                 const video = window.video = $("video")[0];
-                const socket = window.socket = new WebSocket(`ws${ window.location.protocol == "https:" ? "s" : "" }://${ window.location.hostname }${ window.location.hostname == "localhost" ? ":3000" : "" }`);
-
-                video.onplay = () => send("play");
-                video.onpause = () => send("pause");
-                video.ontimeupdate = () => send("current");
-
-                const id = setInterval(() => socket.send("alive"), 1000);
-                socket.onclose = x => clearInterval(id);
-                socket.onopen = x => socket.send(proxy.room);
-                socket.onmessage = async x => {
-                    lock++;
-                    const promises = [];
-                    try
-                    {
-                        const obj = JSON.parse(x.data);
-                        console.log(obj);
-                        if (obj.type == "play" && video.paused) promises.push(video.play());
-                        if (obj.type == "pause" && !video.paused) promises.push(video.pause());
-                        if (Math.abs(video.currentTime - obj.time) > 1) video.currentTime = obj.time;
-                    }
-                    catch { }
-                    await Promise.all(promises);
-                    lock--; // Le funzioni "play" e "pause" sono asincrone, perciò "lock" veniva diminuito prima della loro esecuzione
-                };
+                const sync = window.sync = new Synchronizer({
+                    video,
+                    room: proxy.room,
+                    pass: proxy.pass
+                });
 
                 //| Se modifichi i parametri ti dice che c'è da salvare
                 $('input[type="text"]').on("change", () => {
