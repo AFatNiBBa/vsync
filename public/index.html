@@ -19,6 +19,7 @@
                 window.location.href = url.href;
             }
 
+            proxy.room ??= Synchronizer.uuid();
             proxy.link ??= "https://work.streamingaw.online/DDL/ANIME/ShingekiNoKyojin4SUBITA/ShingekiNoKyojin4_Ep_02_SUB_ITA.mp4"
             function load()
             {
@@ -28,7 +29,6 @@
                     room: proxy.room,
                     pass: proxy.pass
                 });
-                proxy.room = sync.room;
 
                 //| Se modifichi i parametri ti dice che c'è da salvare
                 $('input[type="text"]').on("change", () => {

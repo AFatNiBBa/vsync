@@ -4,12 +4,19 @@ class Synchronizer
     #lock = 0;
     constructor(opts)
     {
-        //| video, room, pass, server, delta
+        /**
+         * So che non fa lo tengo solo come riferimento
+         * @param video Elemento video da controllare
+         * @param room Sessione all'interno della quale si trovano tutti gli utenti con i quali si desidera sincronizzarsi
+         * @param pass Password della sessione, finchè non viene settata tutti possono fare tutto, per cambiarla si deve entrare in una nuova sessione; Le sessioni sono considerate nuove anche una volta che sono tutti usciti da esse
+         * @param server Link del server che eseguirà la sincronizzazione
+         * @param delta Tempo di desincronizzazione massima (in secondi) dal server
+         */
         Object.assign(this, opts);
+        const sync = this.constructor;
         this.delta ??= 1;
-        this.room ??= Synchronizer.uuid();
-        this.server ??= `ws${ window.location.protocol == "https:" ? "s" : "" }://${ window.location.hostname }${ window.location.hostname == "localhost" ? ":3000" : "" }`;
-        this.socket ??= new WebSocket(this.server);
+        this.room ??= sync.uuid();
+        this.socket ??= new WebSocket(this.server ??= sync.url());
 
         this.video.onplay = () => this.send("play");
         this.video.onpause = () => this.send("pause");
@@ -42,6 +49,12 @@ class Synchronizer
             pass: this.pass,
             time: this.video.currentTime
         }));
+    }
+
+    //| Genera l'url del server dando per scontato che si trova sul server corrente
+    static url()
+    {
+        return `ws${ window.location.protocol == "https:" ? "s" : "" }://${ window.location.hostname }${ window.location.hostname == "localhost" ? ":3000" : "" }`;
     }
 
     //| Universally Unique ID v4
