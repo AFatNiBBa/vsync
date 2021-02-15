@@ -24,8 +24,8 @@
             {
                 if (lock == 0) socket.send(JSON.stringify({
                     type,
-                    time: video.currentTime,
-                    pass: proxy.pass
+                    pass,
+                    time: video.currentTime
                 }));
             }
 
@@ -42,6 +42,7 @@
                 }); 
             }
 
+            const { pass } = proxy;
             proxy.room ??= uuid();
             proxy.link ??= "https://work.streamingaw.online/DDL/ANIME/ShingekiNoKyojin4SUBITA/ShingekiNoKyojin4_Ep_02_SUB_ITA.mp4"
             function load()
