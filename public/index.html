@@ -28,6 +28,7 @@
                     room: proxy.room,
                     pass: proxy.pass
                 });
+                proxy.room = sync.room;
 
                 //| Se modifichi i parametri ti dice che c'è da salvare
                 $('input[type="text"]').on("change", () => {
