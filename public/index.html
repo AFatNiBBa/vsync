@@ -95,7 +95,7 @@
                             navigator.clipboard.writeText(out.href); // Per copiare sulla clipboard
                         }' />
                         <input type="button" value="Embed" title="Sincronizza video con link privati incollando questo sul loro sito." class="btn btn-info" onclick='{
-                            navigator.clipboard.writeText(`Synchronizer ??= ${ Synchronizer.toString() }\nsync = new Synchronizer({${
+                            navigator.clipboard.writeText(`window.Synchronizer ??= ${ Synchronizer.toString() }\nsync = new Synchronizer({${
                                 "\n\t" + [
                                     `video: $0, // Clicca una volta l\x27Elemento video e nient\x27altro da ispeziona elemento prima di eseguire il codice`,
                                     `room: ${ JSON.stringify(sync.room) }, // Sessione`,
