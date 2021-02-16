@@ -4,6 +4,13 @@
 	<head>
         <title> Sync Player </title>
         <link rel="icon" href="./icon.png">
+        <style>
+            .btn:hover
+            {
+                background-color: white !important;
+                color: black !important;
+            }
+        </style>
         <script src="./lib/synchronizer.js"></script>
         <script>
             const url = new URL(window.location.href);
@@ -39,6 +46,9 @@
 
                 //| Abilita la descrizione durante l'hover
                 $("[title]").tooltip();
+
+                //| Aggiunge le ombre sugli elementi della form
+                $("input, button").addClass("shadow");
             }
         </script>
 	</head>
@@ -83,6 +93,17 @@
                             const out = new (url.constructor)(url.href);
                             out.searchParams.delete("pass");
                             navigator.clipboard.writeText(out.href); // Per copiare sulla clipboard
+                        }' />
+                        <input type="button" value="Embed" title="Sincronizza video con link privati incollando questo sul loro sito." class="btn btn-info" onclick='{
+                            navigator.clipboard.writeText(`${ Synchronizer.toString() }\nsync = new Synchronizer({${
+                                "\n\t" + [
+                                    `video: $0, // Clicca una volta l\x27Elemento video e nient\x27altro da ispeziona elemento prima di eseguire il codice`,
+                                    `room: ${ JSON.stringify(sync.room) }, // Sessione`,
+                                    `pass: ${ JSON.stringify(sync.pass) }, // Cancellala dal link di chi non vuoi abbia accesso`,
+                                    `server: ${ JSON.stringify(sync.server) }, // Lascia stare guarda`,
+                                    `delta: ${ JSON.stringify(sync.delta) } // Secondi massimi di differenza tra il video di un utente e quello di un\x27altro`,
+                                ].join("\n\t") + "\n"
+                            }});`);
                         }' />
                     </form>
                 </div>
