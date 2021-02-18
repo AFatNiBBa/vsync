@@ -31,7 +31,7 @@ class Synchronizer
             {
                 const { video } = this;
                 const obj = JSON.parse(x.data);
-                if (this.onupdate && this.update instanceof Function) this.onupdate(obj);
+                if (this.onupdate instanceof Function) this.onupdate(obj);
                 if (obj.type == "play" && video.paused) await video.play();
                 if (obj.type == "pause" && !video.paused) await video.pause();
                 if (Math.abs(video.currentTime - obj.time) > this.delta) video.currentTime = obj.time;
