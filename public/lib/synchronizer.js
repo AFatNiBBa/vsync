@@ -22,22 +22,25 @@ class Synchronizer
         this.video.onpause = () => this.send("pause");
         this.video.ontimeupdate = () => this.send("current");
 
-        const id = setInterval(() => this.socket.send("alive"), 1000);
-        this.socket.onclose = x => clearInterval(id);
-        this.socket.onopen = x => this.socket.send(this.room);
-        this.socket.onmessage = async x => {
-            this.#lock++;
-            try
-            {
-                const { video } = this;
-                const obj = JSON.parse(x.data);
-                if (this.onupdate instanceof Function) this.onupdate(obj);
-                if (obj.type == "play" && video.paused) await video.play();
-                if (obj.type == "pause" && !video.paused) await video.pause();
-                if (Math.abs(video.currentTime - obj.time) > this.delta) video.currentTime = obj.time;
-            }
-            catch { }
-            this.#lock--; // Le funzioni "play" e "pause" sono asincrone, perciò "lock" veniva diminuito prima della loro esecuzione senza gli 'await'
+        this.socket.onopen = () => {
+            const id = setInterval(() => this.socket.send("alive"), 1000);
+            this.socket.onclose = x => clearInterval(id);
+            this.socket.onmessage = async x => {
+                this.#lock++;
+                try
+                {
+                    const { video } = this;
+                    const obj = JSON.parse(x.data);
+                    if (this.onupdate instanceof Function) this.onupdate(obj);
+                    if (obj.type == "play" && video.paused) await video.play();
+                    if (obj.type == "pause" && !video.paused) await video.pause();
+                    if (Math.abs(video.currentTime - obj.time) > this.delta) video.currentTime = obj.time;
+                }
+                catch { }
+                this.#lock--; // Le funzioni "play" e "pause" sono asincrone, perciò "lock" veniva diminuito prima della loro esecuzione senza gli 'await'
+            };
+            
+            this.socket.send(this.room);
         };
     }
 
