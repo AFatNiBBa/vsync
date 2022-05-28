@@ -1,6 +1,7 @@
 
 /*
     [WIP]: robe del video > { link, stanza, pass } > fa sì che siano responsive
+    [WIP]: Uncaught DOMException: Failed to execute 'send' on 'WebSocket': Still in CONNECTING state.
 */
 
 const { container, state } = require('./lib/utils');
