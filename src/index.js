@@ -6,7 +6,7 @@ const express = require('express');
 const app = express();
 require("express-ws")(app);
 
-app.get("/wakemydyno.txt", (req, res) => res.send(""));
+app.get("/-wakemydyno.txt", (req, res) => res.send(""));
 
 app.use(express.static(join(__dirname, '../dist')));
 
