@@ -1,28 +1,24 @@
 {
   "name": "syncplayer",
-  "version": "0.5.0",
-  "description": "Plays a video synchronously.",
-  "main": "index.js",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/AFatNiBBa/syncPlayer.git"
+    "vite": "vite",
+    "start": "vite build & node .",
+    "build": "vite build"
   },
   "author": "AFatNiBBa",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/AFatNiBBa/syncPlayer/issues"
-  },
-  "homepage": "https://github.com/AFatNiBBa/syncPlayer#readme",
   "dependencies": {
-    "express": "^4.17.1",
-    "http": "^0.0.1-security",
-    "ws": "^7.4.3"
+    "express": "^4.18.1",
+    "express-ws": "^5.0.2",
+    "solid-js": "^1.4.1"
   },
-  "engines": {
-    "node": "15.1.0"
+  "devDependencies": {
+    "@types/jquery": "^3.5.14",
+    "vite-plugin-solid": "^2.2.6",
+    "vite": "^2.9.9"
   }
 }
