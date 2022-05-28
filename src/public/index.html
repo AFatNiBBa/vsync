@@ -47,7 +47,7 @@
 
             // Inizializzazione variabili globali
             globalThis.video = $("video")[0];
-            globalThis.sync = new Synchronizer(video, args.room, args.pass);
+            globalThis.sync = new Synchronizer(video, args);
 
             // Abilita la descrizione durante l'hover
             $("[title]").tooltip();
