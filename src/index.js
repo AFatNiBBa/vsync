@@ -39,12 +39,12 @@ app.ws("/", socket => {
                 show = true;
 
             // Cambio password
-            if (info.pass && info.pass != obj.pass && info.pass != lastPass)    // Se la stanza ha la password, e la suddetta è diversa da quella del pacchetto e quella precedentemente passata
-                return;                                                         // Allora esci
-            else if (obj.pass)                                                  // Altrimenti se sul pacchetto c'è una password
-                info.pass = obj.pass,                                           // Cambia la password della stanza
-                show = true;
-            lastPass = info.pass;                                               // Salva la password precedente, essa permette di mantenere i permessi d'amministratore per un ciclo
+            if ((info.pass || null) != (obj.pass || null))                      // Se la password della stanza è diversa da quella del pacchetto
+                if (info.pass == lastPass)                                      // Se la password della stanza era stata inserita corretttamente la scorsa volta
+                    lastPass = info.pass = obj.pass,                            // Cambia la password della stanza e aggiorna quella precedente, quest'ultima permette di mantenere i permessi d'amministratore per un ciclo dopo il cambio della password
+                    show = true;
+                else
+                    return;                                                     // Altrimenti, se la password non è corretta, esce
             
             // Cambio stato pausa
             if (obj.paused != null && info.paused != obj.paused)
