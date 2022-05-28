@@ -67,7 +67,7 @@ export default class Synchronizer
     /**
      * Genera l'url del server dando per scontato che si trova sul server corrente
      */
-    static url = () => `ws${ window.location.protocol == "https:" ? "s" : "" }://${ window.location.hostname }${ window.location.port }`;
+    static url = () => `ws${ window.location.protocol == "https:" ? "s" : "" }://${ window.location.hostname }${ window.location.hostname == "localhost" ? ":3000" : "" }`;
 
     /**
      * Universally Unique ID v4

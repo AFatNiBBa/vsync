@@ -1,4 +1,8 @@
 
+/*
+    [WIP]: robe del video > { link, stanza, pass } > fa sì che siano responsive
+*/
+
 const { container, state } = require('./lib/utils');
 const { join } = require("path")
 const express = require('express');
@@ -56,4 +60,4 @@ app.ws("/", async socket => {
     state();
 });
 
-app.listen(process.env.PORT || 80, state);
+app.listen(process.env.PORT || 3000, state);
