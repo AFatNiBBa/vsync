@@ -18,6 +18,7 @@ export default function Input(props: Opts) {
     function onChanged(e) {
         args[props.name] = e.target.value;  // Aggiorna i parametri dell'app
         sync.send();                        // Invia i parametri al server (Altrimenti se il video era pausato non li mandava)
+        props.onChange?.(e);                // Evento custom attaccabile al controllo
     }
 
     return (

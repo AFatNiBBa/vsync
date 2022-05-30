@@ -6,6 +6,12 @@ import Input from './input';
 declare const sync: Synchronizer;
 declare const $: JQueryStatic;
 
+enum State {
+    OK = "fa-check-circle text-success",
+    FAIL = "fa-times-circle text-danger",
+    WAIT = "fa-spinner-third text-warning fa-spin"
+}
+
 function copyUserUrl() {
     const out = new URL(url);
     out.searchParams.delete("pass");
@@ -29,27 +35,24 @@ function copyEmbedCode() {
 }
 
 export default function App() {
-    const icon = <i id="icon" class="fad fa-check-circle text-success"></i>;
+    const icon = <i id="icon" class={`fad ${ State.WAIT }`}></i>;
 
-    function onSourceChanged(success) {
-        const ok = [ "fa-check-circle", "text-success" ];
-        const fail = [ "fa-times-circle", "text-danger" ];
-        const [ a, r ] = success ? [ ok, fail ] : [ fail, ok ];
-        $(icon).addClass(a).removeClass(r);
+    function onSourceChanged(state: State) {
+        $(icon).removeClass([ State.OK, State.FAIL, State.WAIT ]).addClass(state);
     }
 
     return (
         <div class="container-fluid mt-5">
             <div class="row justify-content-center">
                 <div class="col-lg-5 col-sm-10">
-                    <video controls class="w-100" src={args.link} onLoadedData ={() => onSourceChanged(true)} onError={() => onSourceChanged(false)} />
+                    <video controls class="w-100" src={args.link} onLoadedData={() => onSourceChanged(State.OK)} onError={() => onSourceChanged(State.FAIL)} />
                 </div>
                 <div class="col-lg-5 col-sm-10">
                     <form>
                         <Input name='room' label='Stampa' value={args.room}>
                             Per guardare un video insieme dovete avere tutti la stessa.
                         </Input>
-                        <Input name='link' label='Link Diretto Video' value={args.link} icon={icon}>
+                        <Input name='link' label='Link Diretto Video' value={args.link} icon={icon} onChange={() => onSourceChanged(State.WAIT)}>
                             Potete averlo diverso: Il sito sincronizza lo stesso.
                         </Input>
                         <Input name='pass' label='Password' value={args.pass}>
