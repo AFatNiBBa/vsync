@@ -1,14 +1,16 @@
 
-const Room = require('./lib/room');
+const Room = require('./lib/room.js');
 const express = require('express');
 const { join } = require("path")
 
 const app = express();
 require("express-ws")(app);
 
-app.get("/-wakemydyno.txt", (req, res) => res.send(""));
+app.get("/-wakemydyno.txt", (req, res) => res.send("SVEGLIA HEROKU"));
 
 app.use(express.static(join(__dirname, '../dist')));
+
+app.use("/api", require("./lib/api.js"));
 
 app.ws("/", socket => {
     /** @type {import("./lib/room")} */

@@ -1,6 +1,6 @@
 {
   "name": "syncplayer",
-  "version": "1.2.3",
+  "version": "2.5.0",
   "description": "Plays a video synchronously.",
   "main": "src/index.js",
   "scripts": {
@@ -11,14 +11,20 @@
   },
   "author": "AFatNiBBa",
   "license": "ISC",
+  "engines": {
+    "node": "18.x"
+  },
   "dependencies": {
     "express": "^4.18.1",
     "express-ws": "^5.0.2",
-    "solid-js": "^1.4.1"
+    "puppeteer-extra": "^3.2.3",
+    "puppeteer-extra-plugin-stealth": "^2.9.0",
+    "request": "^2.88.2"
   },
   "devDependencies": {
     "@types/jquery": "^3.5.14",
-    "vite-plugin-solid": "^2.2.6",
-    "vite": "^2.9.9"
+    "solid-js": "^1.4.1",
+    "vite": "^2.9.9",
+    "vite-plugin-solid": "^2.2.6"
   }
 }
