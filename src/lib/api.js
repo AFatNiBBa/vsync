@@ -18,7 +18,7 @@ api.get("/proxy", (req, res) => {
  * I download di animeworld non necessitano di proxy.
  */
 const puppeteer = require("puppeteer-extra").use(require("puppeteer-extra-plugin-stealth")());
-const browser = puppeteer.launch();
+const browser = puppeteer.launch({ args: [ '--no-sandbox' ] });
 api.get("/animeworld/:serie/:ep", async (req, res) => {
     /** @type {import("puppeteer").Page} */
     const page = await (await browser).newPage();
