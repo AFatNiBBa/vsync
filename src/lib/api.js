@@ -24,28 +24,32 @@ api.get("/animeworld/:serie/:ep", async (req, res) => {
     const page = await (await browser).newPage();
     const host = req.protocol + "://" + req.get('host');
 
-    // Ricerca serie
-    const url = new URL("https://www.animeworld.tv/search");
-    url.searchParams.set("keyword", req.params.serie);
-    await page.goto(url.href);
+    try
+    {
+        // Ricerca serie
+        const url = new URL("https://www.animeworld.tv/search");
+        url.searchParams.set("keyword", req.params.serie);
+        await page.goto(url.href);
 
-    // Selezione serie
-    const anime = await page.evaluate(() => document.querySelector(".film-list > .item a").href);
-    await page.goto(anime);
+        // Selezione serie
+        const anime = await page.evaluate(() => document.querySelector(".film-list > .item a").href);
+        await page.goto(anime);
 
-    // Selezione episodio
-    const ep = await page.evaluate(x => document.querySelector(`.server.active .episodes.range .episode a[data-episode-num="${ x }"]`).href, req.params.ep);
-    await page.goto(ep);
+        // Selezione episodio
+        const ep = await page.evaluate(x => document.querySelector(`.server.active .episodes.range .episode a[data-episode-num="${ x }"]`).href, req.params.ep);
+        await page.goto(ep);
 
-    // Link di download
-    const link = new URL(await page.evaluate(() => document.querySelector("#download .widget-body center a").href));
-    link.pathname = link.searchParams.get("id");
-    link.searchParams.delete("id");
+        // Link di download
+        const link = new URL(await page.evaluate(() => document.querySelector("#download .widget-body center a").href));
+        link.pathname = link.searchParams.get("id");
+        link.searchParams.delete("id");
 
-    // Player con il link proxy
-    const player = new URL(host);
-    player.searchParams.set("link", link.href);
+        // Player con il link proxy
+        const player = new URL(host);
+        player.searchParams.set("link", link.href);
 
-    res.redirect(player.href);
-    await page.close();
+        res.redirect(player.href);
+    }
+    catch (e) { console.error(e); }
+    finally { await page.close(); }
 });
