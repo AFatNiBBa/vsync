@@ -50,6 +50,10 @@ api.get("/animeworld/:serie/:ep", async (req, res) => {
 
         res.redirect(player.href);
     }
-    catch (e) { console.error(e); }
+    catch (e)
+    {
+        console.error(e);
+        res.status(503).send(e);
+    }
     finally { await page.close(); }
 });
