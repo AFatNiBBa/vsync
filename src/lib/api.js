@@ -55,5 +55,5 @@ api.get("/animeworld/:serie/:ep", async (req, res) => {
         }
         finally { await page.close(); }
     }
-    catch (e) { res.status(404).sendFile("error.html", { root: join(__dirname, "..") }); }
+    catch { res.status(404).sendFile("error.html", { root: join(__dirname, "..") }); }
 });
