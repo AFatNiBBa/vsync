@@ -46,7 +46,7 @@
             render(App, document.getElementById("root"));
 
             // Inizializzazione variabili globali
-            globalThis.video = $("video")[0];
+            const video = globalThis.video = $("video")[0];
             globalThis.sync = new Synchronizer(video, args);
 
             // Abilita la descrizione durante l'hover
@@ -54,19 +54,6 @@
 
             // Aggiunge le ombre sugli elementi della form
             $("input, button").addClass("shadow");
-
-            // Fa sì che il video skippi 10s per volta
-            $(document).on("keydown", e => {
-                switch (e.keyCode)
-                {
-                    case 37: // Left
-                       sync.video.currentTime -= 10;
-                    break;
-                    case 39: // Right
-                        sync.video.currentTime += 10;
-                    break
-                }
-            });
         </script>
     </body>
 </html>
