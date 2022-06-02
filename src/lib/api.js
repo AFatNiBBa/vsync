@@ -1,5 +1,6 @@
 
 const api = module.exports = require("express").Router();
+const { join } = require("path");
 
 /**
  * Fa sì che il link passi attrraverso il sito per renderlo indipendente dal visitatore
@@ -20,40 +21,39 @@ api.get("/proxy", (req, res) => {
 const puppeteer = require("puppeteer-extra").use(require("puppeteer-extra-plugin-stealth")());
 const browser = puppeteer.launch({ args: [ '--no-sandbox' ] });
 api.get("/animeworld/:serie/:ep", async (req, res) => {
-    /** @type {import("puppeteer").Page} */
-    const page = await (await browser).newPage();
-    const host = req.protocol + "://" + req.get('host');
-
-    try
+    try // Log errore
     {
-        // Ricerca serie
-        const url = new URL("https://www.animeworld.tv/search");
-        url.searchParams.set("keyword", req.params.serie);
-        await page.goto(url.href);
+        /** @type {import("puppeteer").Page} */
+        const page = await (await browser).newPage();
+        const host = req.protocol + "://" + req.get('host');
 
-        // Selezione serie
-        const anime = await page.evaluate(() => document.querySelector(".film-list > .item a").href);
-        await page.goto(anime);
+        try // Smaltimento della pagina
+        {
+            // Ricerca serie
+            const url = new URL("https://www.animeworld.tv/search");
+            url.searchParams.set("keyword", req.params.serie);
+            await page.goto(url.href);
 
-        // Selezione episodio
-        const ep = await page.evaluate(x => document.querySelector(`.server.active .episodes.range .episode a[data-episode-num="${ x }"]`).href, req.params.ep);
-        await page.goto(ep);
+            // Selezione serie
+            const anime = await page.evaluate(() => document.querySelector(".film-list > .item a").href);
+            await page.goto(anime);
 
-        // Link di download
-        const link = new URL(await page.evaluate(() => document.querySelector("#download .widget-body center a").href));
-        link.pathname = link.searchParams.get("id");
-        link.searchParams.delete("id");
+            // Selezione episodio
+            const ep = await page.evaluate(x => document.querySelector(`.server.active .episodes.range .episode a[data-episode-num="${ x }"]`).href, req.params.ep);
+            await page.goto(ep);
 
-        // Player con il link proxy
-        const player = new URL(host);
-        player.searchParams.set("link", link.href);
+            // Link di download
+            const link = new URL(await page.evaluate(() => document.querySelector("#download .widget-body center a").href));
+            link.pathname = link.searchParams.get("id");
+            link.searchParams.delete("id");
 
-        res.redirect(player.href);
+            // Player con il link proxy
+            const player = new URL(host);
+            player.searchParams.set("link", link.href);
+
+            res.redirect(player.href);
+        }
+        finally { await page.close(); }
     }
-    catch (e)
-    {
-        console.error(e);
-        res.status(503).send(e);
-    }
-    finally { await page.close(); }
+    catch (e) { res.status(404).sendFile("error.html", { root: join(__dirname, "..") }); }
 });
