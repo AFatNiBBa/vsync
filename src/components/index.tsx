@@ -1,10 +1,8 @@
 
-import { args, url } from '../lib/env';
-import Synchronizer from '../lib/synchronizer';
+import { createEffect } from 'solid-js';
+import { Synchronizer, EmbedSynchronizer } from '../lib/synchronizer';
+import { url, sync, shiftTab } from '../lib/env';
 import Input from './input';
-
-declare const sync: Synchronizer;
-declare const $: JQueryStatic;
 
 enum State {
     OK = "fa-check-circle text-success",
@@ -19,43 +17,48 @@ function copyUserUrl() {
 }
 
 function copyEmbedCode() {
-    navigator.clipboard.writeText(`window.Synchronizer ??= ${ Synchronizer.toString() }\nsync = new Synchronizer(\n\t${
-        [
-            `$0, // Clicca una volta l'Elemento video e nient'altro da ispeziona elemento prima di eseguire il codice`,
-            `{\n\t\t${
-                [
-                    `room: ${ JSON.stringify(sync.target.room) }, // Sessione`,
-                    `pass: ${ JSON.stringify(sync.target.pass) } // Cancellala dal link di chi non vuoi abbia accesso`,
-                ].join("\n\t\t")
-            }\n\t},`,
-            `${ JSON.stringify(sync.server) }, // Lascia stare guarda`,
-            `${ JSON.stringify(sync.delta) } // Secondi massimi di differenza tra il video di un utente e quello di un'altro`,
-        ].join("\n\t")
-    }\n);`);
+    navigator.clipboard.writeText(shiftTab`
+        ${Synchronizer}
+        ${EmbedSynchronizer}
+        sync = new EmbedSynchronizer(
+            $0, // Clicca una volta l'Elemento video e nient'altro da ispeziona elemento prima di eseguire il codice
+            ${ JSON.stringify(sync.room) }, // Sessione
+            ${ JSON.stringify(sync.pass) }, // Cancellala dal link di chi non vuoi abbia accesso
+            ${ JSON.stringify(sync.server) }, // Lascia stare guarda
+            ${ JSON.stringify(sync.delta) } // Secondi massimi di differenza tra il video di un utente e quello di un'altro
+        );
+    `);
 }
 
 export default function App() {
     const icon = <i id="icon" class={`fad ${ State.WAIT }`}></i>;
+    const video = globalThis.video = <video controls class="w-100" src={sync.link} onLoadedData={() => onSourceChanged(State.OK)} onError={() => onSourceChanged(State.FAIL)} />;
+    sync.initVideo(video);
 
     function onSourceChanged(state: State) {
         $(icon).removeClass([ State.OK, State.FAIL, State.WAIT ]).addClass(state);
     }
 
+    createEffect(() => {
+        sync.link;
+        onSourceChanged(State.WAIT);
+    });
+
     return (
         <div class="container-fluid mt-5">
             <div class="row justify-content-center">
                 <div class="col-lg-5 col-sm-10">
-                    <video controls class="w-100" src={args.link} onLoadedData={() => onSourceChanged(State.OK)} onError={() => onSourceChanged(State.FAIL)} />
+                    {video}
                 </div>
                 <div class="col-lg-5 col-sm-10">
                     <form>
-                        <Input name='room' label='Stampa' value={args.room}>
+                        <Input name='room' label='Stampa' value={sync._room}>
                             Per guardare un video insieme dovete avere tutti la stessa.
                         </Input>
-                        <Input name='link' label='Link Diretto Video' value={args.link} icon={icon} onChange={() => onSourceChanged(State.WAIT)}>
+                        <Input name='link' label='Link Diretto Video' value={sync._link} icon={icon}>
                             Potete averlo diverso: Il sito sincronizza lo stesso.
                         </Input>
-                        <Input name='pass' label='Password' value={args.pass}>
+                        <Input name='pass' label='Password' value={sync._pass}>
                             Il primo che la setta comanda (Insieme agli altri che hanno la stessa).
                         </Input>
 

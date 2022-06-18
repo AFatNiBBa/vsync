@@ -1,18 +1,24 @@
 
-import { createSignal } from 'solid-js';
+import { createEffect } from "solid-js";
+import { ReactiveSynchronizer } from './synchronizer';
 
-const target = {};
-export const url = new URL(globalThis.location.href);
-export const args = <{ room: string, link: string, pass: string }>new Proxy(target, { get: (t, k) => t[k][0](), set: (t, k, v) => (t[k][1](() => v), true) });
-
-for (const k of [ "room", "link", "pass" ])
-{
-    const sign: [ () => string, (v: string | ((x: string) => string)) => string ] = target[k] = createSignal(url.searchParams.get(k));
-    const old = sign[1];
-    sign[1] = v => {
-        const out = old(v);
-        url.searchParams.set(k, out);
-        history.replaceState({}, "", url.pathname + url.search);
-        return out;
-    };
+export function shiftTab(template: TemplateStringsArray, ...args: any[]) {
+    var out = "";
+    const search = template[0].match(/((?!\n)\s)*?(?=\S|$)/s)[0];
+    for (var i = 0; i < template.length; i++)
+        out += template[i].replaceAll(search, "") + (args[i] ?? "");
+    return out.trim();
 }
+
+export const url = new URL(globalThis.location.href);
+export const sync = globalThis.sync = new ReactiveSynchronizer(url.searchParams.get("room"), url.searchParams.get("pass"), url.searchParams.get("link"));
+
+sync.room ??= ReactiveSynchronizer.uuid();
+sync.link ??= "https://server7.streamingaw.online/DDL/ANIME/SpyXFamilyAW/SpyXFamily_Ep_01_SUB_ITA.mp4"
+
+createEffect(() => {
+    for (const k of [ "room", "link", "pass" ])
+        url.searchParams[sync[k] ? "set" : "delete"](k, sync[k]);    
+    sync.send();
+    history.replaceState({}, "", url.href);
+});

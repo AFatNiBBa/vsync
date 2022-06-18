@@ -26,12 +26,20 @@ module.exports = class Room {
         Room.map.set(key, this);
     }
 
-    add(socket) { this.set.add(socket); }
+    add(socket) {
+        this.set.add(socket);
+    }
 
     delete(socket) {
         this.set.delete(socket);
         if (this.set.size == 0)
             Room.map.delete(this.key);
+    }
+
+    send(obj, socket) {
+        for (const e of this.set)
+            if (e != socket)
+                e.send(obj);
     }
 
     static migrate(info, socket, key) {

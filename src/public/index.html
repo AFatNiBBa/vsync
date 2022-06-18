@@ -34,20 +34,10 @@
         <div id="root"></div>
         <script type="module">
             import { render } from "solid-js/web";
-            import { args } from '../lib/env';
-            import Synchronizer from '../lib/synchronizer';
             import App from '../components/index';
-
-            // Imposta i parametri di default
-            args.room ??= Synchronizer.uuid();
-            args.link ??= "https://work.streamingaw.online/DDL/ANIME/ShingekiNoKyojin4SUBITA/ShingekiNoKyojin4_Ep_02_SUB_ITA.mp4"
 
             // Renderizza la pagina
             render(App, document.getElementById("root"));
-
-            // Inizializzazione variabili globali
-            const video = globalThis.video = $("video")[0];
-            globalThis.sync = new Synchronizer(video, args);
 
             // Abilita la descrizione durante l'hover
             $("[title]").tooltip();

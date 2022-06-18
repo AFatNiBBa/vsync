@@ -13,12 +13,9 @@ app.use(express.static(join(__dirname, '../dist')));
 app.use("/api", require("./lib/api.js"));
 
 app.ws("/", socket => {
-    /** @type {import("./lib/room")} */
+    /** @type {Room} */
     var info;
     var lastPass;
-
-    // Pacchetto di aggiornamento
-    const update = () => JSON.stringify({ paused: info?.paused, time: info?.time });
     
     // Chiusura
     socket.on("close", () => {
@@ -56,10 +53,7 @@ app.ws("/", socket => {
 
             // Updata
             info.time = obj.time ?? info.time;
-            const result = update();
-            for (const e of info.set)
-                if(e != socket)
-                    e.send(result);
+            info.send(JSON.stringify({ paused: info?.paused, time: info?.time }));
 
             // Eventualmente mostra il cambiamento
             if (show) Room.print();
