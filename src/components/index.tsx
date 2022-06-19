@@ -63,7 +63,7 @@ export default function App() {
                             </Switch>
                         </div>
 
-                        <Input name='room' label='Stampa' value={sync._room}>
+                        <Input name='room' label='Stanza' value={sync._room}>
                             Per guardare un video insieme dovete avere tutti la stessa.
                         </Input>
                         <Input name='link' label='Link Diretto Video' value={sync._link} icon={icon}>

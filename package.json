@@ -1,6 +1,6 @@
 {
   "name": "syncplayer",
-  "version": "2.5.2",
+  "version": "2.6.0",
   "description": "Plays a video synchronously.",
   "main": "src/index.js",
   "scripts": {
