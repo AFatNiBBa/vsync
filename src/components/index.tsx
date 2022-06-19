@@ -52,7 +52,7 @@ export default function App() {
                 </div>
                 <div class="col-lg-5 col-sm-10">
                     <form>
-                        <Input name='room' label='Stampa' value={sync._room}>
+                        <Input name='room' label='Stanza' value={sync._room}>
                             Per guardare un video insieme dovete avere tutti la stessa.
                         </Input>
                         <Input name='link' label='Link Diretto Video' value={sync._link} icon={icon}>
