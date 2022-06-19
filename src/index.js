@@ -53,7 +53,7 @@ app.ws("/", socket => {
 
             // Updata
             info.time = obj.time ?? info.time;
-            info.send(JSON.stringify({ paused: info?.paused, time: info?.time }));
+            info.send(undefined, socket);
 
             // Eventualmente mostra il cambiamento
             if (show) Room.print();

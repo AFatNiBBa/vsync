@@ -2,6 +2,7 @@
     "compilerOptions": {
         "strictNullChecks": false,
         "target": "es2022",
+        "jsxImportSource": "solid-js",
         "moduleResolution": "node",
         "jsx":"preserve"
     }

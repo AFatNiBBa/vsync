@@ -1,19 +1,21 @@
 
 import { createSignal } from "solid-js";
 
-type State = { room?: string, paused?: boolean, time?: number };
+type BaseState = { paused?: boolean, time?: number };
+type InputState = BaseState & { users: number };
+type OutputState = BaseState & { room: string, pass?: string };
 
 export abstract class Synchronizer {
     _lock = 0;
     video: HTMLVideoElement;
     socket: WebSocket;
-    onUpdate?: (x: any) => void;
+    onUpdate?: (x: InputState) => void;
 
     abstract room: string;
 
     abstract pass: string;
 
-    get state(): State & { pass: string } { return { room: this.room, pass: this.pass, paused: this.video.paused, time: this.video.currentTime }; }
+    get state(): OutputState { return { room: this.room, pass: this.pass, paused: this.video.paused, time: this.video.currentTime }; }
 
     /**
      * @param server Link del server che eseguirà la sincronizzazione
@@ -31,7 +33,7 @@ export abstract class Synchronizer {
                     const { video } = this;
                     if (!video) return;
 
-                    const obj: State = JSON.parse(x.data);
+                    const obj: InputState = JSON.parse(x.data);
                     this.onUpdate?.(obj);
 
                     if (obj.paused !== video.paused)
@@ -58,7 +60,7 @@ export abstract class Synchronizer {
     }
 
     /** Manda un pacchetto di aggiornamento con password, tempo corrente e tipo del pacchetto */
-    send(obj?: State) {
+    send(obj?: OutputState) {
         if (!this._lock && this.video && this.socket.readyState === WebSocket.OPEN)
             this.socket.send(JSON.stringify(obj ?? this.state));
     }
@@ -97,6 +99,10 @@ export class ReactiveSynchronizer extends Synchronizer {
     get link() { return this._link[0](); }
     set link(v) { this._link[1](() => v); }
 
+    _users = createSignal<number>(1);
+    get users() { return this._users[0](); }
+    set users(v) { this._users[1](() => v); }
+
     /**
      * Versione reattiva del {@link Synchronizer}
      * @param link Url del video da caricare e sincronizzare
@@ -107,5 +113,7 @@ export class ReactiveSynchronizer extends Synchronizer {
         this.room = room;
         this.pass = pass;
         this.link = link;
+
+        this.onUpdate = (obj: InputState) => this.users = obj.users;
     }
 }

@@ -1,5 +1,5 @@
 
-import { createEffect } from 'solid-js';
+import { createEffect, Switch, Match } from 'solid-js';
 import { Synchronizer, EmbedSynchronizer } from '../lib/synchronizer';
 import { url, sync, shiftTab } from '../lib/env';
 import Input from './input';
@@ -33,10 +33,10 @@ function copyEmbedCode() {
 export default function App() {
     const icon = <i id="icon" class={`fad ${ State.WAIT }`}></i>;
     const video = globalThis.video = <video controls class="w-100" src={sync.link} onLoadedData={() => onSourceChanged(State.OK)} onError={() => onSourceChanged(State.FAIL)} />;
-    sync.initVideo(video);
+    sync.initVideo(video as any);
 
     function onSourceChanged(state: State) {
-        $(icon).removeClass([ State.OK, State.FAIL, State.WAIT ]).addClass(state);
+        $(icon as any).removeClass([ State.OK, State.FAIL, State.WAIT ]).addClass(state);
     }
 
     createEffect(() => {
@@ -52,6 +52,17 @@ export default function App() {
                 </div>
                 <div class="col-lg-5 col-sm-10">
                     <form>
+                        <div class="mb-4">
+                            <Switch fallback={<> Ci sono <b>{sync.users}</b> utenti connessi </>}>
+                                <Match when={sync.users === 0}>
+                                    La stanza è <b>vuota</b>, come è possibile?!
+                                </Match>
+                                <Match when={sync.users === 1}>
+                                    Sei <b>l'unico</b> utente connesso
+                                </Match>
+                            </Switch>
+                        </div>
+
                         <Input name='room' label='Stampa' value={sync._room}>
                             Per guardare un video insieme dovete avere tutti la stessa.
                         </Input>

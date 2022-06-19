@@ -11,6 +11,8 @@ module.exports = class Room {
     /** @type {string} */ pass;
     set = new Set();
 
+    get state() { return { users: this.set.size, paused: this.paused, time: this.time }; }
+
     /**
      * @param {typeof this.key} key Codice della stanza
      * @param {typeof this.time} time Tempo corrente del video
@@ -34,18 +36,22 @@ module.exports = class Room {
         this.set.delete(socket);
         if (this.set.size == 0)
             Room.map.delete(this.key);
+        else
+            this.send();
     }
 
     send(obj, socket) {
+        const str = JSON.stringify(obj ?? this.state);
         for (const e of this.set)
             if (e != socket)
-                e.send(obj);
+                e.send(str);
     }
 
     static migrate(info, socket, key) {
         info?.delete(socket);
         const out = Room.get(key);
         out.add(socket);
+        out.send();
         return out;
     }
 }

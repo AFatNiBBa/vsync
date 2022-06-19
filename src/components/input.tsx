@@ -1,12 +1,12 @@
 
-import { Signal } from "solid-js";
+import { Signal, JSXElement } from "solid-js";
 
 type Opts = {
     name?: string,
     value: Signal<string>,
     label?: string,
-    icon?: HTMLElement,
-    children?: import("solid-js").JSX.Element
+    icon?: JSXElement,
+    children?: JSXElement
 };
 
 export default function Input(props: Opts) {
@@ -18,7 +18,7 @@ export default function Input(props: Opts) {
                 <h4> {props.label} {props.icon} </h4>
             </label>
             <br />
-            <input id={id} name={props.name} value={getValue()} onChange={e => setValue(e.target.value)} placeholder="Vuoto" class="form-control" />
+            <input id={id} name={props.name} value={getValue()} onChange={e => setValue((e.target as HTMLInputElement).value)} placeholder="Vuoto" class="form-control" />
             <small class="form-text text-muted"> {props.children} </small>
         </div>
     );
