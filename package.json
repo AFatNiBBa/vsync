@@ -1,6 +1,6 @@
 {
   "name": "syncplayer",
-  "version": "2.6.1",
+  "version": "2.7.0",
   "description": "Plays videos with friends",
   "main": "src/index.js",
   "scripts": {

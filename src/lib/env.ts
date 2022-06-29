@@ -20,5 +20,5 @@ createEffect(() => {
     for (const k of [ "room", "link", "pass" ])
         url.searchParams[sync[k] ? "set" : "delete"](k, sync[k]);    
     sync.send();
-    history.replaceState({}, "", url.href);
+    history.pushState({}, "", url.href);
 });
