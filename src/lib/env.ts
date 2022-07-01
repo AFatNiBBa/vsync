@@ -25,8 +25,6 @@ createEffect(() => {
 });
 
 globalThis.onpopstate = globalThis.onpushstate = () => {
-    untrack(() => {
-        for (const k of params)
-            sync[k] = url.searchParams.get(k);
-    });
+    for (const k of params)
+        sync[k] = url.searchParams.get(k);
 };
