@@ -19,6 +19,9 @@ sync.link ??= "https://server6.streamingaw.online/DDL/ANIME/SpyXFamily/SpyXFamil
 createEffect(() => {
     for (const k of [ "room", "link", "pass" ])
         url.searchParams[sync[k] ? "set" : "delete"](k, sync[k]);
-    history.replaceState(null, null, url.href);
+    history.pushState(null, null, url.href);
     sync.send();
 });
+
+globalThis.onpopstate = () => 
+    globalThid.location.reload();
