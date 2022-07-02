@@ -24,4 +24,4 @@ createEffect(() => {
 });
 
 globalThis.onpopstate = () => 
-    globalThid.location.reload();
+    globalThis.location.reload();
