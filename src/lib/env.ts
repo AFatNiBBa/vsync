@@ -1,10 +1,6 @@
 
-import { createEffect, untrack } from "solid-js";
+import { createEffect } from "solid-js";
 import { ReactiveSynchronizer } from './synchronizer';
-
-const params = [ "room", "link", "pass" ];
-export const url = new URL(globalThis.location.href);
-export const sync = globalThis.sync = new ReactiveSynchronizer(url.searchParams.get("room"), url.searchParams.get("pass"), url.searchParams.get("link"));
 
 export function shiftTab(template: TemplateStringsArray, ...args: any[]) {
     var out = "";
@@ -14,17 +10,15 @@ export function shiftTab(template: TemplateStringsArray, ...args: any[]) {
     return out.trim();
 }
 
+export const url = new URL(globalThis.location.href);
+export const sync = globalThis.sync = new ReactiveSynchronizer(url.searchParams.get("room"), url.searchParams.get("pass"), url.searchParams.get("link"));
+
 sync.room ??= ReactiveSynchronizer.uuid();
-sync.link ??= "https://server7.streamingaw.online/DDL/ANIME/SpyXFamilyAW/SpyXFamily_Ep_01_SUB_ITA.mp4"
+sync.link ??= "https://server6.streamingaw.online/DDL/ANIME/SpyXFamily/SpyXFamily_Ep_01_SUB_ITA.mp4"
 
 createEffect(() => {
-    for (const k of params)
-        url.searchParams[sync[k] ? "set" : "delete"](k, sync[k]);    
+    for (const k of [ "room", "link", "pass" ])
+        url.searchParams[sync[k] ? "set" : "delete"](k, sync[k]);
+    history.replaceState(null, null, url.href);
     sync.send();
-    history.pushState({}, "", url.href);
 });
-
-globalThis.onpopstate = globalThis.onpushstate = () => {
-    for (const k of params)
-        sync[k] = url.searchParams.get(k);
-};
