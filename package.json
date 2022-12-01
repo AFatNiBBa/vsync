@@ -16,12 +16,12 @@
     "puppeteer": "^19.3.0",
     "puppeteer-extra": "^3.3.4",
     "puppeteer-extra-plugin-stealth": "^2.11.1",
-    "request": "^2.88.2"
-  },
-  "devDependencies": {
-    "@types/jquery": "^3.5.14",
+    "request": "^2.88.2",
     "solid-js": "^1.6.2",
     "vite": "^3.2.4",
     "vite-plugin-solid": "^2.4.0"
+  },
+  "devDependencies": {
+    "@types/jquery": "^3.5.14"
   }
 }
