@@ -4,24 +4,24 @@
   "description": "Plays videos with friends",
   "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "vite build",
     "serve": "vite",
-    "start": "vite build & node ."
+    "start": "npm run build & node ."
   },
   "author": "AFatNiBBa",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.18.1",
+    "express": "^4.18.2",
     "express-ws": "^5.0.2",
-    "puppeteer-extra": "^3.2.3",
-    "puppeteer-extra-plugin-stealth": "^2.9.0",
+    "puppeteer": "^19.3.0",
+    "puppeteer-extra": "^3.3.4",
+    "puppeteer-extra-plugin-stealth": "^2.11.1",
     "request": "^2.88.2"
   },
   "devDependencies": {
     "@types/jquery": "^3.5.14",
-    "solid-js": "^1.4.1",
-    "vite": "^2.9.9",
-    "vite-plugin-solid": "^2.2.6"
+    "solid-js": "^1.6.2",
+    "vite": "^3.2.4",
+    "vite-plugin-solid": "^2.4.0"
   }
 }
