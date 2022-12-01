@@ -6,7 +6,7 @@
   "scripts": {
     "build": "vite build",
     "serve": "vite",
-    "start": "npm run build & node ."
+    "start": "npm i & npm run build & node ."
   },
   "author": "AFatNiBBa",
   "license": "ISC",
