@@ -6,22 +6,22 @@
   "scripts": {
     "build": "vite build",
     "serve": "vite",
-    "start": "npm i & npm run build & node ."
+    "start": "npm run build & node ."
   },
   "author": "AFatNiBBa",
   "license": "ISC",
   "dependencies": {
     "express": "^4.18.2",
     "express-ws": "^5.0.2",
-    "puppeteer": "^19.3.0",
+    "puppeteer": "^12.0.0",
     "puppeteer-extra": "^3.3.4",
     "puppeteer-extra-plugin-stealth": "^2.11.1",
-    "request": "^2.88.2",
+    "request": "^2.88.2"
+  },
+  "devDependencies": {
+    "@types/jquery": "^3.5.14",
     "solid-js": "^1.6.2",
     "vite": "^3.2.4",
     "vite-plugin-solid": "^2.4.0"
-  },
-  "devDependencies": {
-    "@types/jquery": "^3.5.14"
   }
 }

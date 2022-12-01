@@ -18,11 +18,8 @@ api.get("/proxy", (req, res) => {
  * Su Anime World le stagioni sono separate in più serie.
  * I download di animeworld non necessitano di proxy.
  */
-const { executablePath } = require("puppeteer");
-console.log(">>>", executablePath());
-
 const puppeteer = require("puppeteer-extra").use(require("puppeteer-extra-plugin-stealth")());
-const browser = puppeteer.launch({ args: [ '--no-sandbox' ], executablePath: executablePath() });
+const browser = puppeteer.launch({ args: [ '--no-sandbox', '--disable-setuid-sandbox' ] });
 api.get("/animeworld/:serie/:ep", async (req, res) => {
     try // Log errore
     {
