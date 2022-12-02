@@ -1,7 +1,7 @@
 
 import { createEffect, Switch, Match } from 'solid-js';
 import { Synchronizer, EmbedSynchronizer } from '../lib/synchronizer';
-import { url, sync, shiftTab } from '../lib/env';
+import { url, sync, shiftTab, copyToClipboard } from '../lib/env';
 import Input from './input';
 
 enum State {
@@ -13,11 +13,11 @@ enum State {
 function copyUserUrl() {
     const out = new URL(url);
     out.searchParams.delete("pass");
-    navigator.clipboard.writeText(out.href);
+    copyToClipboard(out.href);
 }
 
 function copyEmbedCode() {
-    navigator.clipboard.writeText(shiftTab`
+    copyToClipboard(shiftTab`
         ${Synchronizer}
         ${EmbedSynchronizer}
         sync = new EmbedSynchronizer(
@@ -73,7 +73,7 @@ export default function App() {
                             Il primo che la setta comanda (Insieme agli altri che hanno la stessa).
                         </Input>
 
-                        <input type="button" value="Admin" title="Condividi il tuo Link." class="btn btn-danger ml-2" onclick={() => navigator.clipboard.writeText(url.href)} />
+                        <input type="button" value="Admin" title="Condividi il tuo Link." class="btn btn-danger ml-2" onclick={() => copyToClipboard(url.href)} />
                         <input type="button" value="Utente" title="Condividi un link che non include la Password." class="btn btn-primary ml-2" onclick={copyUserUrl} />
                         <input type="button" value="Embed" title="Sincronizza video con link privati incollando questo sul loro sito." class="btn btn-info ml-2" onclick={copyEmbedCode} />
                     </form>

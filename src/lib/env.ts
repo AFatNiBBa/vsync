@@ -10,6 +10,19 @@ export function shiftTab(template: TemplateStringsArray, ...args: any[]) {
     return out.trim();
 }
 
+export function copyToClipboard(str: string) {
+    const elm = document.createElement('textarea');
+    elm.value = str;
+    elm.style.opacity = "0";
+    document.body.appendChild(elm);
+    try
+    {
+        elm.select();
+        document.execCommand("copy");
+    }
+    finally { elm.remove(); }
+}
+
 export const url = new URL(globalThis.location.href);
 export const sync = globalThis.sync = new ReactiveSynchronizer(url.searchParams.get("room"), url.searchParams.get("pass"), url.searchParams.get("link"));
 
