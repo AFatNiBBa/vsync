@@ -19,7 +19,7 @@ api.get("/proxy", (req, res) => {
  * I download di animeworld non necessitano di proxy.
  */
 const puppeteer = require("puppeteer-extra").use(require("puppeteer-extra-plugin-stealth")());
-const browser = puppeteer.launch({ args: [ '--no-sandbox', '--disable-setuid-sandbox', '--media-cache-size=0', '--disk-cache-size=0' ] });
+const browser = puppeteer.launch({ args: [ '--no-sandbox', '--disable-setuid-sandbox' ] });
 api.get("/animeworld/:serie/:ep", async (req, res) => {
     try // Log errore
     {
