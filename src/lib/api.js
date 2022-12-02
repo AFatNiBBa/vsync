@@ -28,8 +28,6 @@ api.get("/animeworld/:serie/:ep", async (req, res) => {
         const page = await (await browser).newPage();
         const host = req.protocol + "://" + req.get('host');
 
-        console.dir(await page.cookies());
-
         try // Smaltimento della pagina
         {
             // Ricerca serie
