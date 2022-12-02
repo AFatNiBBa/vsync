@@ -64,4 +64,4 @@ app.ws("/", socket => {
     Room.print();
 });
 
-app.listen(process.env.PORT || 3000, Room.print);
+app.listen(process.env.PORT || 80, Room.print);
