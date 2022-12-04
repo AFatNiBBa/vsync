@@ -36,17 +36,14 @@ api.get("/animeworld/:serie/:ep", async (req, res) => {
             await page.goto(url.href);
 
             // Selezione serie
-            await page.waitForSelector(".film-list > .item a");
             const anime = await page.evaluate(() => document.querySelector(".film-list > .item a").href);
             await page.goto(anime);
 
             // Selezione episodio
-            await page.waitForSelector(".server.active .episodes.range .episode a");
             const ep = await page.evaluate(x => document.querySelector(`.server.active .episodes.range .episode a[data-episode-num="${ x }"]`).href, req.params.ep);
             await page.goto(ep);
 
             // Link di download
-            await page.waitForSelector("#download .widget-body center a");
             const link = new URL(await page.evaluate(() => document.querySelector("#download .widget-body center a").href));
             link.pathname = link.searchParams.get("id");
             link.searchParams.delete("id");
