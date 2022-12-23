@@ -3,6 +3,13 @@ const api = module.exports = require("express").Router();
 const { join } = require("path");
 
 /**
+ * Esegue del javascript arbitrario nella pagina corrente
+ */
+api.get("/eval", (req, res) => 
+    res.send(`<script>eval(${ JSON.stringify(req.query.code).replace(/<\/script>/g, "<\\/script>") } )</script>`)
+);
+
+/**
  * Fa sì che il link passi attrraverso il sito per renderlo indipendente dal visitatore
  */
 const request = require("request");
@@ -20,7 +27,7 @@ api.get("/proxy", (req, res) => {
  */
 const { executablePath } = require("puppeteer");
 const puppeteer = require("puppeteer-extra").use(require("puppeteer-extra-plugin-stealth")());
-const browser = puppeteer.launch({ args: [ '--no-sandbox' ], executablePath: executablePath() });
+const browser = puppeteer.launch({ args: [ '--no-sandbox', '--proxy-server=socks5://localhost:9050' ], executablePath: executablePath() });
 api.get("/animeworld/:serie/:ep", async (req, res) => {
     try // Log errore
     {
