@@ -1,9 +1,9 @@
 
 import getAnimeUrl from "./animeworld";
 import subdomain from "express-subdomain";
-import { getSubDomainOffset, getSubDomainLength, hostLink, errorLink } from "../url";
-import { Router } from "express";
+import { getSubDomainOffset, getSubDomainLength, hostLink, errorLink } from "./url";
 import { createRequire } from "module"
+import { Router } from "express";
 
 const require = createRequire(import.meta.url); // Viene usato il "require()" per non includere nel bundle un certo modulo
 const request: typeof import("request") = require("request");

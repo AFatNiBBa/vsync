@@ -1,6 +1,7 @@
 
 import { ReactiveSynchronizer } from "~/lib/app/synchronizer";
 import { createEffect } from "solid-js";
+import { uuid } from "../utils";
 
 globalThis.onpopstate = () => globalThis.location.reload();
 
@@ -27,11 +28,10 @@ export function copyToClipboard(str: string) {
 }
 
 export function createEnv(): [ URL, ReactiveSynchronizer ] {
-
   const url = new URL(globalThis.location.href);
   const sync = globalThis.sync = new ReactiveSynchronizer(url.searchParams.get("room"), url.searchParams.get("pass"), url.searchParams.get("link"));
 
-  sync.room ??= crypto.randomUUID();
+  sync.room ??= uuid();
   sync.link ??= "https://server6.streamingaw.online/DDL/ANIME/SpyXFamily/SpyXFamily_Ep_01_SUB_ITA.mp4"
 
   createEffect(() => {

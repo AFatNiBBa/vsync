@@ -3,7 +3,7 @@ import ws from "express-ws";
 import sync from "./lib/app/server";
 import getApi from "./lib/api/entry";
 import subdomain from "express-subdomain";
-import { getSubDomainOffset } from "./lib/url";
+import { getSubDomainOffset } from "./lib/api/url";
 import type { Observer } from "solid-start-express";
 import {
   createHandler,

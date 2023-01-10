@@ -1,5 +1,6 @@
 
 import { splitProps, Signal, JSX } from "solid-js";
+import { uuid } from "~/lib/utils";
 
 type Opts = Omit<JSX.InputHTMLAttributes<HTMLInputElement>, "value"> & {
   value: Signal<string>,
@@ -9,7 +10,7 @@ type Opts = Omit<JSX.InputHTMLAttributes<HTMLInputElement>, "value"> & {
 };
 
 export default function Input(props: Opts) {
-  const id = crypto.randomUUID();
+  const id = uuid();
   const [local, other] = splitProps(props, ["value", "label", "icon", "children", "class"]);
   return (
     <div class="form-group">

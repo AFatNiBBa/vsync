@@ -1,5 +1,6 @@
 
 import { createSignal } from "solid-js";
+import { uuid } from "../utils";
 
 type BaseState = { paused?: boolean, time?: number };
 type InputState = BaseState & { users: number };
@@ -76,7 +77,7 @@ export class EmbedSynchronizer extends Synchronizer {
    * @param pass Password della sessione, finchè non viene settata tutti possono fare tutto, per cambiarla si deve entrare in una nuova sessione; Le sessioni sono considerate nuove anche una volta che sono tutti usciti da esse 
    * @inheritdoc Synchronizer
    */
-  constructor(video: HTMLVideoElement, public room: string = crypto.randomUUID(), public pass: string = null, server?: string, delta?: number) {
+  constructor(video: HTMLVideoElement, public room: string = uuid(), public pass: string = null, server?: string, delta?: number) {
     super(server, delta);
     this.initVideo(video);
   }
@@ -104,7 +105,7 @@ export class ReactiveSynchronizer extends Synchronizer {
    * @param link Url del video da caricare e sincronizzare
    * @inheritdoc EmbedSynchronizer
    */
-  constructor(room: string = crypto.randomUUID(), pass: string = null, link?: string, server?: string, delta?: number) {
+  constructor(room: string = uuid(), pass: string = null, link?: string, server?: string, delta?: number) {
     super(server, delta);
     this.room = room;
     this.pass = pass;
