@@ -1,27 +1,40 @@
 {
-  "name": "syncplayer",
-  "version": "2.7.0",
-  "description": "Plays videos with friends",
-  "main": "src/index.js",
+  "name": "vsync",
   "scripts": {
-    "build": "vite build",
-    "serve": "vite",
-    "start": "npm run build & node ."
+    "dev": "solid-start dev",
+    "build": "solid-start build",
+    "start": "solid-start start",
+    "load": "cls & npm run build && npm start"
   },
-  "author": "AFatNiBBa",
-  "license": "ISC",
-  "dependencies": {
-    "express": "^4.18.2",
-    "express-ws": "^5.0.2",
-    "puppeteer": "^19.3.0",
-    "puppeteer-extra": "^3.2.3",
-    "puppeteer-extra-plugin-stealth": "^2.9.0",
-    "request": "^2.88.2"
-  },
+  "type": "module",
   "devDependencies": {
-    "@types/jquery": "^3.5.14",
+    "@types/bootstrap": "^5.2.6",
+    "@types/express": "^4.17.15",
+    "@types/express-ws": "^3.0.1",
+    "@types/jquery": "^3.5.16",
+    "@types/node": "^18.11.9",
+    "@types/request": "^2.48.8",
+    "@types/ws": "^8.5.4",
+    "esbuild": "^0.14.54",
+    "postcss": "^8.4.18",
+    "solid-start-express": "^0.2.20",
+    "typescript": "^4.8.4",
+    "vite": "^3.1.8"
+  },
+  "dependencies": {
+    "@solidjs/meta": "^0.28.0",
+    "@solidjs/router": "^0.6.0",
+    "express-subdomain": "^1.0.5",
+    "express-ws": "^5.0.2",
+    "puppeteer": "^19.4.1",
+    "puppeteer-extra": "^3.3.4",
+    "puppeteer-extra-plugin-stealth": "^2.11.1",
+    "request": "^2.88.2",
     "solid-js": "^1.6.2",
-    "vite": "^3.2.4",
-    "vite-plugin-solid": "^2.4.0"
+    "solid-start": "^0.2.0",
+    "undici": "^5.11.0"
+  },
+  "engines": {
+    "node": ">=16.8"
   }
 }

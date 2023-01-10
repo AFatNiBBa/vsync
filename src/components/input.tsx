@@ -1,25 +1,31 @@
 
-import { Signal, JSXElement } from "solid-js";
+import { splitProps, Signal, JSX } from "solid-js";
 
-type Opts = {
-    name?: string,
-    value: Signal<string>,
-    label?: string,
-    icon?: JSXElement,
-    children?: JSXElement
+type Opts = Omit<JSX.InputHTMLAttributes<HTMLInputElement>, "value"> & {
+  value: Signal<string>,
+  label?: string,
+  icon?: JSX.Element,
+  children?: JSX.Element
 };
 
 export default function Input(props: Opts) {
-    const id = `input-${ props.name }`;  
-    const [ getValue, setValue ] = props.value;
-    return (
-        <div class="form-group">
-            <label for={id}>
-                <h4> {props.label} {props.icon} </h4>
-            </label>
-            <br />
-            <input id={id} name={props.name} value={getValue()} onChange={e => setValue((e.target as HTMLInputElement).value)} placeholder="Vuoto" class="form-control" />
-            <small class="form-text text-muted"> {props.children} </small>
-        </div>
-    );
+  const id = crypto.randomUUID();
+  const [local, other] = splitProps(props, ["value", "label", "icon", "children", "class"]);
+  return (
+    <div class="form-group">
+      <label for={id}>
+        <h4> {local.label} {local.icon} </h4>
+      </label>
+      <br />
+      <input
+        {...other}
+        id={id}
+        value={local.value[0]()}
+        onChange={e => local.value[1]((e.target as HTMLInputElement).value)}
+        placeholder="Vuoto"
+        class={`form-control ${local.class}`}
+      />
+      <small class="form-text text-muted"> {local.children} </small>
+    </div>
+  );
 }
