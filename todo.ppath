@@ -2,3 +2,5 @@
 prova a far funzionare la api di animeworld installato chrome piuttosto che chrominium
 
 prova a rendere il sito https (anche se non sicuro)
+
+fai sì che quando builda non apra un browser a caso > metti "headless: false" per vederlo

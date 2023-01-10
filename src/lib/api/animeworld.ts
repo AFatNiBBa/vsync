@@ -9,7 +9,7 @@ const puppeteerExtra: typeof import("puppeteer-extra").default = require("puppet
 const { executablePath }: typeof import("puppeteer") = require("puppeteer");
 
 const puppeteer = puppeteerExtra.use(puppeteerExtraPluginStealth());
-const browser = puppeteer.launch({ args: [ '--no-sandbox' ], executablePath: executablePath(), headless: false });
+const browser = puppeteer.launch({ args: [ '--no-sandbox' ], executablePath: executablePath() });
 
 /**
  * Ottiene il link del flusso video di un episodio da "https://www.animeworld.tv"
