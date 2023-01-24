@@ -1,5 +1,6 @@
 
 import Input from '~/components/input';
+import SubTitle from '~/components/subTitle';
 import { createEffect, Switch, Match, createSignal, onMount } from 'solid-js';
 import { Synchronizer, EmbedSynchronizer } from "~/lib/app/synchronizer";
 import { shiftTab, copyToClipboard, createEnv } from "../lib/app/client";
@@ -46,6 +47,7 @@ export default function Player() {
   sync.initVideo(video as any);
   
   return <>
+    <SubTitle> Player </SubTitle>
     <div class="container-fluid mt-5">
       <div class="row justify-content-center">
         <div class="col-lg-5 col-sm-10">

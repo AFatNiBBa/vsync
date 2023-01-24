@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "@solidjs/meta": "^0.28.0",
-    "@solidjs/router": "^0.6.0",
+    "@solidjs/router": "^0.7.0",
     "base64-url": "^2.3.3",
     "express-subdomain": "^1.0.5",
     "express-ws": "^5.0.2",
@@ -33,7 +33,7 @@
     "puppeteer-extra-plugin-stealth": "^2.11.1",
     "request": "^2.88.2",
     "solid-js": "^1.6.2",
-    "solid-start": "^0.2.0",
+    "solid-start": "^0.2.16",
     "undici": "^5.11.0"
   },
   "engines": {

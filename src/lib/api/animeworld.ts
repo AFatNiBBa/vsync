@@ -1,5 +1,5 @@
 
-import type { WaitForOptions } from "puppeteer";
+import type { Browser, WaitForOptions } from "puppeteer";
 import { encode, decode } from "base64-url";
 import { createRequire } from "module";
 
@@ -9,7 +9,17 @@ const puppeteerExtra: typeof import("puppeteer-extra").default = require("puppet
 const { executablePath }: typeof import("puppeteer") = require("puppeteer");
 
 const puppeteer = puppeteerExtra.use(puppeteerExtraPluginStealth());
-const browser = puppeteer.launch({ args: [ '--no-sandbox' ], executablePath: executablePath() });
+var browser: Promise<Browser>;
+
+/**
+ * Funzione lato client che valuta un episodio
+ * @param ep Episodio
+ * @returns Il link all'episodio ed un {@link Boolean} che indica se si tratta di quello attivo
+ */
+function checkEpisode(ep: string) {
+  const elm = document.querySelector(`.server.active .episodes.range .episode a[data-episode-num="${ ep }"]`);
+  return [ (elm as HTMLAnchorElement)!.href, elm.matches(".active") ] as const;
+}
 
 /**
  * Ottiene il link del flusso video di un episodio da "https://www.animeworld.tv"
@@ -17,6 +27,7 @@ const browser = puppeteer.launch({ args: [ '--no-sandbox' ], executablePath: exe
  * @param ep Episodio della serie
  */
 export default async function getAnimeUrl(name: string, ep: string) {
+  browser ??= puppeteer.launch({ args: [ '--no-sandbox' ], executablePath: executablePath() });
   const page = await (await browser).newPage();
   const opts: WaitForOptions = { waitUntil: "domcontentloaded" };
 
@@ -28,14 +39,14 @@ export default async function getAnimeUrl(name: string, ep: string) {
 
     // Passaggio per proxy
     await page.goto(`https://www.hidemyass-freeproxy.com/proxy/en-ww/${ encode(url.href) }?agreed=1`, opts);
-
+    
     // Selezione serie
     const stagione = await page.evaluate(() => (document.querySelector(".film-list > .item a") as HTMLAnchorElement)!.href);
     await page.goto(stagione, opts);
-
-    // Selezione episodio
-    const episodio = await page.evaluate(x => (document.querySelector(`.server.active .episodes.range .episode a[data-episode-num="${ x }"]`) as HTMLAnchorElement)!.href, ep);
-    await page.goto(episodio, opts);
+    
+    // Selezione episodio (Se è già selezionato, salta)
+    const [ episodio, active ] = await page.evaluate(checkEpisode, ep);
+    if (!active) await page.goto(episodio, opts);
 
     // Link di download estratto da quello con il proxy
     const proxy = await page.evaluate(() => (document.querySelector("#alternativeDownloadLink") as HTMLAnchorElement)!.href);
