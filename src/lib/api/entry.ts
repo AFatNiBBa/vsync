@@ -49,10 +49,10 @@ export default function getApi() {
   // Ottieni link episodio
   api.get("/animeworld/:name/:ep/raw", async (req, res) => {
     const { name, ep } = req.params;
-		const url = await getAnimeUrl(name, ep);
-		if (url == null)
-			res.status(500);
-		res.json(url);
+    const url = await getAnimeUrl(name, ep);
+    if (url == null)
+      res.status(500);
+    res.json(url);
   });
 
   return api;
