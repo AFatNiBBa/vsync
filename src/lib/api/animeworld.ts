@@ -1,58 +1,48 @@
 
-import type { Browser, WaitForOptions } from "puppeteer";
+import { parse, HTMLElement } from "node-html-parser";
 import { encode, decode } from "base64-url";
-import { createRequire } from "module";
 
-const require = createRequire(import.meta.url); // Viene usato il "require()" per non includere nel bundle un certo modulo
-const puppeteerExtraPluginStealth: typeof import("puppeteer-extra-plugin-stealth") = require("puppeteer-extra-plugin-stealth");
-const puppeteerExtra: typeof import("puppeteer-extra").default = require("puppeteer-extra");
-const { executablePath }: typeof import("puppeteer") = require("puppeteer");
-
-const puppeteer = puppeteerExtra.use(puppeteerExtraPluginStealth());
-var browser: Promise<Browser>;
-
-/**
- * Funzione lato client che valuta un episodio
- * @param ep Episodio
- * @returns Il link all'episodio ed un {@link Boolean} che indica se si tratta di quello attivo
- */
-function checkEpisode(ep: string) {
-  const elm = document.querySelector(`.server.active .episodes.range .episode a[data-episode-num="${ ep }"]`);
-  return [ (elm as HTMLAnchorElement)!.href, elm.matches(".active") ] as const;
+function toProxy(url: URL) {
+  return url;
+  return new URL(`https://www.hidemyass-freeproxy.com/proxy/en-ww/${ encode(url.href) }?agreed=1`);
 }
 
-/**
- * Ottiene il link del flusso video di un episodio da "https://www.animeworld.tv"
- * @param name Nome della stagione della serie
- * @param ep Episodio della serie
- */
-export default async function getAnimeUrl(name: string, ep: string) {
-  browser ??= puppeteer.launch({ args: [ '--no-sandbox' ], executablePath: executablePath() });
-  const page = await (await browser).newPage();
-  const opts: WaitForOptions = { waitUntil: "domcontentloaded" };
+function fromProxy(url: URL) {
+  return url;
+  return new URL(decode(url.href.match(/([^/]*)$/)[1]));
+}
 
+function getHref(baseUrl: URL, elem: HTMLElement) {
+  return new URL(elem.attrs["href"], baseUrl);
+}
+
+async function getPage(url: URL) {
+  const x = await fetch(url);
+  const data = await x.text();
+  return parse(data);
+}
+
+export default async function getAnimeUrl(name: string, ep: string | number) {
   try
   {
-    // Ricerca serie
+    // Generazione indirizzo di ricerca
     const url = new URL("https://www.animeworld.tv/search");
     url.searchParams.set("keyword", name);
-
-    // Passaggio per proxy
-    await page.goto(`https://www.hidemyass-freeproxy.com/proxy/en-ww/${ encode(url.href) }?agreed=1`, opts);
+    
+    // Ricerca passando per proxy
+    const base = toProxy(url);
+    const search = await getPage(base);
     
     // Selezione serie
-    const stagione = await page.evaluate(() => (document.querySelector(".film-list > .item a") as HTMLAnchorElement)!.href);
-    await page.goto(stagione, opts);
+    const stagione = await getPage(getHref(base, search.querySelector(".film-list > .item a")));
     
     // Selezione episodio (Se è già selezionato, salta)
-    const [ episodio, active ] = await page.evaluate(checkEpisode, ep);
-    if (!active) await page.goto(episodio, opts);
+    const btnEp = stagione.querySelector(`.server.active .episodes.range .episode a[data-episode-num="${ ep }"]`);
+    const episodio = btnEp.classNames.includes("active") ? stagione : await getPage(getHref(base, btnEp));
 
-    // Link di download estratto da quello con il proxy
-    const proxy = await page.evaluate(() => (document.querySelector("#alternativeDownloadLink") as HTMLAnchorElement)!.href);
-    const link = new URL(decode(proxy.match(/([^/]*)$/)[1]));
-    return link;
+    // Estrazione link di download da quello con il proxy
+    const btnDownload2 = episodio.querySelector("#alternativeDownloadLink");
+    return fromProxy(getHref(base, btnDownload2));
   }
   catch (e) { return console.error(e), null; }
-  finally { await page.close(); }
 }
