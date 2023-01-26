@@ -40,8 +40,7 @@ export default function getApi() {
     const { name, ep } = req.params;
     const url = await getAnimeUrl(name, ep);
     if (url == null) 
-      return void res.redirect(errorLink(req, 404, "Anime non trovato"));
-    
+      return void res.redirect(errorLink(req, 404, `${ JSON.stringify(name) } ep. ${ JSON.stringify(ep) } non trovato`));
     const host = hostLink(req);
     host.searchParams.set("link", url.href);
     res.redirect(host.href);
@@ -50,7 +49,10 @@ export default function getApi() {
   // Ottieni link episodio
   api.get("/animeworld/:name/:ep/raw", async (req, res) => {
     const { name, ep } = req.params;
-    res.status(500).json(await getAnimeUrl(name, ep));
+    const url = await getAnimeUrl(name, ep);
+    if (url == null)
+      res.status(500);
+    res.json(url);
   });
 
   return api;
