@@ -7,7 +7,7 @@ import { Request } from "express";
  * @param host The host to check
  */
 export function getSubDomainOffset(host: string) {
-  return host.endsWith("localhost") ? 1 : 2;
+  return host.endsWith("localhost") ? 1 : host.endsWith("vercel.app") ? 3 : 2;
 }
 
 /**
