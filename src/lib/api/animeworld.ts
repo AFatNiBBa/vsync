@@ -3,12 +3,10 @@ import { parse, HTMLElement } from "node-html-parser";
 import { encode, decode } from "base64-url";
 
 function toProxy(url: URL) {
-  return url;
   return new URL(`https://www.hidemyass-freeproxy.com/proxy/en-ww/${ encode(url.href) }?agreed=1`);
 }
 
 function fromProxy(url: URL) {
-  return url;
   return new URL(decode(url.href.match(/([^/]*)$/)[1]));
 }
 
