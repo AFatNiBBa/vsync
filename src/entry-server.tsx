@@ -29,6 +29,7 @@ export default Object.assign(handler, {
 
     app.ws("/", sync); // Non può essere dentro "api.*" a causa di problemi con le implementazioni del tutte-cose
 
-    app.use(subdomain("api", getApi()));
+    // app.use(subdomain("api", getApi()));
+    app.use(getApi());
   }
 } satisfies Observer);
