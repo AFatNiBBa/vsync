@@ -1,25 +1,30 @@
 
 import { parse, HTMLElement } from "node-html-parser";
-import { encode, decode } from "base64-url";
+import { fromProxy, toProxy } from "./url";
 
-function toProxy(url: URL) {
-  return new URL(`https://www.hidemyass-freeproxy.com/proxy/en-ww/${ encode(url.href) }?agreed=1`);
-}
-
-function fromProxy(url: URL) {
-  return new URL(decode(url.href.match(/([^/]*)$/)[1]));
-}
-
+/**
+ * Ottiene un link assoluto dall'attributo "href" di {@link elem}
+ * @param baseUrl Url della pagina in caso si tratti di un percorso relativo
+ * @param elem Probabilmente un {@link HTMLAnchorElement}
+ */
 function getHref(baseUrl: URL, elem: HTMLElement) {
-  return new URL(elem.attrs["href"], baseUrl);
+  return new URL(elem.getAttribute("href"), baseUrl);
 }
 
+/**
+ * Scarica e parsa una pagina HTML
+ * @param url Link alla pagina
+ */
 async function getPage(url: URL) {
-  const x = await fetch(url);
-  const data = await x.text();
-  return parse(data);
+  const res = await fetch(url, { headers: { "Cookie": "PHPSESSID=2o317umn7o646mdq9g81ligaqf" } });
+  return parse(await res.text());
 }
 
+/**
+ * Ottiene il link del flusso video di un episodio da "https://www.animeworld.tv"
+ * @param name Nome della stagione della serie
+ * @param ep Episodio della serie
+ */
 export default async function getAnimeUrl(name: string, ep: string | number) {
   try
   {
@@ -32,11 +37,11 @@ export default async function getAnimeUrl(name: string, ep: string | number) {
     const search = await getPage(base);
     
     // Selezione serie
-    const stagione = await getPage(getHref(base, search.querySelector(".film-list > .item a")));
+    const serie = await getPage(getHref(base, search.querySelector(".film-list > .item a")));
     
     // Selezione episodio (Se è già selezionato, salta)
-    const btnEp = stagione.querySelector(`.server.active .episodes.range .episode a[data-episode-num="${ ep }"]`);
-    const episodio = btnEp.classNames.includes("active") ? stagione : await getPage(getHref(base, btnEp));
+    const btnEp = serie.querySelector(`.server.active .episodes.range .episode a[data-episode-num="${ ep }"]`);
+    const episodio = btnEp.classNames.includes("active") ? serie : await getPage(getHref(base, btnEp));
 
     // Estrazione link di download da quello con il proxy
     const btnDownload2 = episodio.querySelector("#alternativeDownloadLink");
