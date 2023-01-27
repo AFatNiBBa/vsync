@@ -1,10 +1,10 @@
 
 .grid { display: grid; }
 
-/* .btn:hover {
+.btn:hover {
   background-color: white !important;
   color: black !important;
-} */
+}
 
 main {
   width: 100vw;
