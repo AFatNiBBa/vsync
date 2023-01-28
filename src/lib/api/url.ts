@@ -1,5 +1,4 @@
 
-import { encode, decode } from "base64-url";
 import type { Request } from "express";
 
 /**
@@ -32,22 +31,6 @@ export function getSubDomainLength(host: string, offset = getSubDomainOffset(hos
  */
 export function getTopLevelHost(host: string, offset?: number) {
   return host.substring(getSubDomainLength(host, offset));
-}
-
-/**
- * Ottiene un link proxy partendo da un link normale
- * @param url Link di destinazione
- */
-export function toProxy(url: URL) {
-  return new URL(`https://www.hidemyass-freeproxy.com/proxy/en-ww/${ encode(url.href) }?agreed=1`);
-}
-
-/**
- * Estrae il link da un link proxy
- * @param url Link proxy
- */
-export function fromProxy(url: URL) {
-  return new URL(decode(url.href.match(/([^/]*)$/)[1]));
 }
 
 /**

@@ -1,6 +1,10 @@
 
+import { fromProxy, toProxy, getCookie } from "./hideMyAss";
 import { parse, HTMLElement } from "node-html-parser";
-import { fromProxy, toProxy } from "./url";
+import { get } from "./request";
+
+/** Promise contenente il cookie del proxy valido per questa sessione */
+export const sessionCookie = getCookie();
 
 /**
  * Ottiene un link assoluto dall'attributo "href" di {@link elem}
@@ -16,8 +20,8 @@ function getHref(baseUrl: URL, elem: HTMLElement) {
  * @param url Link alla pagina
  */
 async function getPage(url: URL) {
-  const res = await fetch(url, { headers: { "Cookie": "PHPSESSID=2o317umn7o646mdq9g81ligaqf" } });
-  return parse(await res.text());
+  const res = await get(url.href, { headers: { "Cookie": await sessionCookie } });
+  return parse(res.body);
 }
 
 /**

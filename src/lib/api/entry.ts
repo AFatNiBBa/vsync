@@ -1,12 +1,9 @@
 
-import getAnimeUrl from "./animeworld";
+import getAnimeUrl from "./animeWorld";
 import subdomain from "express-subdomain";
 import { getSubDomainOffset, getSubDomainLength, hostLink, errorLink } from "./url";
-import { createRequire } from "module"
 import { Router } from "express";
-
-const require = createRequire(import.meta.url); // Viene usato il "require()" per non includere nel bundle un certo modulo
-const request: typeof import("request") = require("request");
+import { pipe } from "./request";
 
 /** Crea il router per il sottodominio "api" */
 export default function getApi() {
@@ -26,13 +23,8 @@ export default function getApi() {
     if (!target)
       return void res.redirect(errorLink(req, 400, "Host non impostato"));
 
-    const headers = { range: req.headers.range };                           // Viene mantenuto l'header che permette di ottenere le robe a chunk
-    const { href } = new URL(req.url, `http://${ target }`);
-    await new Promise((t, c) =>                                             // Viene sincronizzato per poter catchare l'eccezione se schioppa
-      request
-        .get(href, { headers }, e => e && c(e))
-        .pipe(res)
-        .on("finish", t));
+    const { href, host } = new URL(req.url, `http://${ target }`);
+    await pipe(href, res, { headers: { ...req.headers, host } });           // Sovrascrive l'header "host" per non farlo puntare al proxy
   }));
 
   // Reindirizza al player

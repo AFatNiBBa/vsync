@@ -2,3 +2,5 @@
 prova a rendere il sito https (anche se non sicuro)
 
 c'è un'opzione (DA DISATTIVARE) su vite per l'SSR?
+
+fixa versione nuova dell'API di animeworld > le richieste al proxy nno sono accettate da fetch > va su puppeteer e cerca di prendere tutti gli header dalla REQUEST
