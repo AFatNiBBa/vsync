@@ -1,4 +1,5 @@
 
+import EpExp from "@seanalunni/epexp";
 import { toProxy, fromProxy, getCookie, parseCookie } from "./hideMyAss";
 import { parse, HTMLElement } from "node-html-parser";
 import { get } from "./request";
@@ -18,7 +19,7 @@ function getHref(baseUrl: URL, elem: HTMLElement) {
  * Scarica e parsa una pagina HTML
  * @param url Link alla pagina
  */
-async function getPage(url: URL) {
+async function getPage(url: URL): Promise<HTMLElement> {
   const res = await get(url.href, { headers: { "Cookie": await sessionCookie } });
   const html = parse(res.body);
   return html.querySelector("body.terms-agree") // Se viene mostrata la pagina di dei termini e delle condizioni vuol dire che è scaduto il cookie
@@ -31,7 +32,7 @@ async function getPage(url: URL) {
  * @param name Nome della stagione della serie
  * @param ep Episodio della serie
  */
-export default async function getAnimeUrl(name: string, ep: string | number) {
+export default async function getAnimeUrl(name: string, ep: string) {
   try
   {
     // Generazione indirizzo di ricerca
@@ -46,7 +47,9 @@ export default async function getAnimeUrl(name: string, ep: string | number) {
     const serie = await getPage(getHref(base, search.querySelector(".film-list > .item a")));
     
     // Selezione episodio (Se è già selezionato, salta)
-    const btnEp = serie.querySelector(`.server.active .episodes.range .episode a[data-episode-num="${ ep }"]`);
+    const attr = "data-episode-num"
+    const lstEp = serie.querySelectorAll(`.server.active .episodes.range .episode a[${attr}]`);
+    const btnEp = new EpExp(ep).get(lstEp, x => x.getAttribute(attr));
     const episodio = btnEp.classNames.includes("active") ? serie : await getPage(getHref(base, btnEp));
 
     // Estrazione link di download da quello con il proxy

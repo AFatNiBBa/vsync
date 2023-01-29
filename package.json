@@ -24,6 +24,7 @@
     "vite": "^3.1.8"
   },
   "dependencies": {
+    "@seanalunni/epexp": "^1.1.2",
     "@solidjs/meta": "^0.28.0",
     "@solidjs/router": "^0.7.0",
     "base64-url": "^2.3.3",
