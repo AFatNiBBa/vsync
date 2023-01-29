@@ -21,7 +21,7 @@ function getHref(baseUrl: URL, elem: HTMLElement) {
 async function getPage(url: URL) {
   const res = await get(url.href, { headers: { "Cookie": await sessionCookie } });
   const html = parse(res.body);
-  return html.querySelector(".terms-agree") // Se viene mostrata la pagina di dei termini e delle condizioni vuol dire che è scaduto il cookie
+  return html.querySelector("body.terms-agree") // Se viene mostrata la pagina di dei termini e delle condizioni vuol dire che è scaduto il cookie
     ? (sessionCookie = Promise.resolve(parseCookie(res)), await getPage(url))
     : html;
 }
