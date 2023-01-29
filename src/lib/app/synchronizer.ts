@@ -52,20 +52,28 @@ export abstract class Synchronizer {
     };
   }
 
-  /** Imposta l'elemento video da sincronizzare (Eseguire appena disponibile) */
+  /**
+   * Imposta l'elemento video da sincronizzare (Eseguire appena disponibile)
+   * @param video Elemento video da utilizzare
+   */
   initVideo(video: HTMLVideoElement) {
     video.onplay =  // ↓
       video.onpause = // ↓
       (this.video = video).ontimeupdate = () => this.send();
   }
 
-  /** Manda un pacchetto di aggiornamento con password, tempo corrente e tipo del pacchetto */
+  /**
+   * Manda un pacchetto di aggiornamento con password, tempo corrente e tipo del pacchetto
+   * @param obj Il pacchetto
+   */
   send(obj?: OutputState) {
     if (!this._lock && this.video && this.socket.readyState === WebSocket.OPEN)
       this.socket.send(JSON.stringify(obj ?? this.state));
   }
 
-  /** Genera l'url del server dando per scontato che si trova sul server corrente */
+  /**
+   * Genera l'url del server dando per scontato che si trova sul server corrente
+   */
   static url() { return `ws${location.protocol == "https:" ? "s" : ""}://${location.hostname}${location.port && `:${location.port}`}`; }
 }
 

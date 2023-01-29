@@ -1,10 +1,9 @@
 
-import { fromProxy, toProxy, getCookie } from "./hideMyAss";
+import { toProxy, fromProxy, getCookie, parseCookie } from "./hideMyAss";
 import { parse, HTMLElement } from "node-html-parser";
 import { get } from "./request";
 
-/** Promise contenente il cookie del proxy valido per questa sessione */
-export const sessionCookie = getCookie();
+var sessionCookie = getCookie();
 
 /**
  * Ottiene un link assoluto dall'attributo "href" di {@link elem}
@@ -21,7 +20,10 @@ function getHref(baseUrl: URL, elem: HTMLElement) {
  */
 async function getPage(url: URL) {
   const res = await get(url.href, { headers: { "Cookie": await sessionCookie } });
-  return parse(res.body);
+  const html = parse(res.body);
+  return html.querySelector(".terms-agree") // Se viene mostrata la pagina di dei termini e delle condizioni vuol dire che è scaduto il cookie
+    ? (sessionCookie = Promise.resolve(parseCookie(res)), await getPage(url))
+    : html;
 }
 
 /**

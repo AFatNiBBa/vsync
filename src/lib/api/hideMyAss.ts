@@ -1,8 +1,11 @@
 
+import type { Response } from "request";
 import { encode, decode } from "base64-url";
 import { get } from "./request";
 
-/** Sito da usare come proxy */
+/**
+ * Sito da usare come proxy
+ */
 export const host = "https://www.hidemyass-freeproxy.com"
 
 /**
@@ -22,11 +25,17 @@ export function fromProxy(url: URL) {
 }
 
 /**
- * Restituisce il cookie necessario al sito proxy per funzionare.
- * È valido per l'intera sessione
+ * Restituisce il cookie necessario al sito proxy per funzionare
  */
 export async function getCookie() {
-  const res = await get(host);
+  return parseCookie(await get(host));
+}
+
+/**
+ * Ottiene il cookie necessario al sito proxy per funzionare partendo da una risposta del sito
+ * @param res La risposta del sito proxy
+ */
+export function parseCookie(res: Response) {
   const cookie = res.headers["set-cookie"]?.[0];
   return cookie.match(/PHPSESSID=[^;]+/)?.[0];
 }

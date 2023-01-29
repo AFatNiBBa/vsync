@@ -5,7 +5,9 @@ import { getSubDomainOffset, getSubDomainLength, hostLink, errorLink } from "./u
 import { Router } from "express";
 import { pipe } from "./request";
 
-/** Crea il router per il sottodominio "api" */
+/**
+ * Crea il router per il sottodominio "api"
+ */
 export default function getApi() {
   const api = Router();
 
