@@ -1,9 +1,10 @@
 
 import Input from '~/components/input';
 import SubTitle from '~/components/subTitle';
-import { createEffect, Switch, Match, createSignal, onMount } from 'solid-js';
+import { createEffect, Switch, Match, createSignal, onMount, Show, createMemo } from 'solid-js';
 import { Synchronizer, EmbedSynchronizer } from "~/lib/app/synchronizer";
 import { shiftTab, copyToClipboard, createEnv } from "../lib/app/client";
+import { tooltip } from '~/lib/utils'; tooltip;
 
 enum State {
   OK = "fa-check-circle text-success",
@@ -14,6 +15,13 @@ enum State {
 export default function Player() {
   const [url, sync] = createEnv();
   const [state, setState] = createSignal(State.WAIT);
+  
+  const provider = createMemo(() => {
+    if (!sync.provider) return null;
+    const temp = new URL(url);
+    temp.host = `api.${temp.host}`;
+    return new URL(sync.provider, temp);
+  });
 
   function copyUserUrl() {
     const out = new URL(url);
@@ -34,9 +42,6 @@ export default function Player() {
       );
     `);
   }
-
-  //@ts-ignore
-  onMount(() => $("[title]").tooltip());
 
   createEffect(() => {
     sync.link;
@@ -76,9 +81,17 @@ export default function Player() {
               Il primo che la setta comanda (Insieme agli altri che hanno la stessa).
             </Input>
 
-            <input type="button" value="Admin" title="Condividi il tuo Link." class="btn btn-danger ml-2" onclick={() => copyToClipboard(url.href)} />
-            <input type="button" value="Utente" title="Condividi un link che non include la Password." class="btn btn-primary ml-2" onclick={copyUserUrl} />
-            <input type="button" value="Embed" title="Sincronizza video con link privati incollando questo sul loro sito." class="btn btn-info ml-2" onclick={copyEmbedCode} />
+            <button use:tooltip="Condividi il tuo Link" class="btn btn-danger ml-2" onclick={() => copyToClipboard(url.href)}>Admin</button>
+            <button use:tooltip="Condividi un link che non include la Password" class="btn btn-primary ml-2" onclick={copyUserUrl}>Utente</button>
+            <button use:tooltip="Sincronizza video con link privati incollando questo sul loro sito" class="btn btn-info ml-2" onclick={copyEmbedCode}>Embed</button>
+            <Show when={provider()}>
+              <a use:tooltip="Precedente" class="btn btn-secondary ml-2" href={`${provider()}-`}>
+                <i class="fa-solid fa-caret-left" />
+              </a>
+              <a use:tooltip="Successivo" class="btn btn-secondary ml-2" href={`${provider()}+`}>
+                <i class="fa-solid fa-caret-right" />
+              </a>
+            </Show>
           </form>
         </div>
       </div>

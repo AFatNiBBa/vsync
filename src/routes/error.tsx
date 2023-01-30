@@ -1,7 +1,7 @@
 
 import SubTitle from "~/components/subTitle";
 import { HttpStatusCode } from "solid-start/server";
-import { useSearchParams } from "solid-start";
+import { Style, useSearchParams } from "solid-start";
 import { JSX } from "solid-js";
 
 const ERRORE_CODICE_STRINGA = 499;
@@ -35,7 +35,7 @@ export default function Error(props: { code?: number, icon?: string, children?: 
     <SubTitle> Errore </SubTitle>
     <HttpStatusCode code={code()} />
     <div class="d-flex flex-row align-items-center" style={{ "min-height": "100vh" }}>
-      <style textContent="body { background: #dedede; }" />
+      <Style innerText="body { background: #dedede; }" />
       <div class="container">
         <div class="row justify-content-center">
           <div class="col-md-12 text-center">

@@ -29,13 +29,13 @@ export function copyToClipboard(str: string) {
 
 export function createEnv(): [ URL, ReactiveSynchronizer ] {
   const url = new URL(globalThis.location.href);
-  const sync = globalThis.sync = new ReactiveSynchronizer(url.searchParams.get("room"), url.searchParams.get("pass"), url.searchParams.get("link"));
+  const sync = globalThis.sync = new ReactiveSynchronizer(url.searchParams.get("room"), url.searchParams.get("pass"), url.searchParams.get("link"), url.searchParams.get("provider"));
 
   sync.room ??= uuid();
   sync.link ??= "https://server6.streamingaw.online/DDL/ANIME/SpyXFamily/SpyXFamily_Ep_01_SUB_ITA.mp4"
 
   createEffect(() => {
-    for (const k of ["room", "link", "pass"])
+    for (const k of [ "room", "link", "pass", "provider" ])
       url.searchParams[sync[k] ? "set" : "delete"](k, sync[k]);
     history.pushState(null, null, url.href);
     sync.send();
