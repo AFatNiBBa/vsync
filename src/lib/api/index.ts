@@ -37,7 +37,7 @@ export default function getApi() {
       return void res.redirect(errorLink(req, 404, `${ JSON.stringify(name) } ep. ${ JSON.stringify(ep) } non trovato`));
     const host = hostLink(req);
     host.searchParams.set("link", url.href);
-    host.searchParams.set("provider", decodeURIComponent(req.url));
+    host.searchParams.set("provider", req.url);
     res.redirect(host.href);
   });
 
