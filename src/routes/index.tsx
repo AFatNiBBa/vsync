@@ -85,10 +85,10 @@ export default function Player() {
             <button use:tooltip="Condividi un link che non include la Password" class="btn btn-primary ml-2" onclick={copyUserUrl}>Utente</button>
             <button use:tooltip="Sincronizza video con link privati incollando questo sul loro sito" class="btn btn-info ml-2" onclick={copyEmbedCode}>Embed</button>
             <Show when={provider()}>
-              <a use:tooltip="Precedente" class="btn btn-secondary ml-2" href={`${provider()}-`}>
+              <a use:tooltip="Precedente" class="btn btn-secondary ml-2" href={provider() + encodeURI("-")}>
                 <i class="fa-solid fa-caret-left" />
               </a>
-              <a use:tooltip="Successivo" class="btn btn-secondary ml-2" href={`${provider()}+`}>
+              <a use:tooltip="Successivo" class="btn btn-secondary ml-2" href={provider() + encodeURI("+")}>
                 <i class="fa-solid fa-caret-right" />
               </a>
             </Show>
