@@ -37,7 +37,8 @@ export function createEnv(): [ URL, ReactiveSynchronizer ] {
   createEffect(() => {
     for (const k of [ "room", "link", "pass", "provider" ])
       url.searchParams[sync[k] ? "set" : "delete"](k, sync[k]);
-    history.pushState(null, null, url.href);
+    if (url.href !== globalThis.location.href)
+      history.pushState(null, null, url.href);
     sync.send();
   });
 

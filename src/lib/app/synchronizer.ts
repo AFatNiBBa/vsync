@@ -1,5 +1,5 @@
 
-import { createSignal } from "solid-js";
+import { batch, createSignal } from "solid-js";
 import { uuid } from "../utils";
 
 type BaseState = { paused?: boolean, time?: number };
@@ -58,8 +58,8 @@ export abstract class Synchronizer {
    */
   initVideo(video: HTMLVideoElement) {
     video.onplay =  // ↓
-      video.onpause = // ↓
-      (this.video = video).ontimeupdate = () => this.send();
+    video.onpause = // ↓
+    (this.video = video).ontimeupdate = () => this.send();
   }
 
   /**
@@ -104,13 +104,13 @@ export class ReactiveSynchronizer extends Synchronizer {
   get link() { return this._link[0](); }
   set link(v) { this._link[1](() => v); }
 
-  _users = createSignal<number>(1);
-  get users() { return this._users[0](); }
-  set users(v) { this._users[1](() => v); }
-
   _provider = createSignal<string>();
   get provider() { return this._provider[0](); }
   set provider(v) { this._provider[1](() => v); }
+
+  _users = createSignal<number>(1);
+  get users() { return this._users[0](); }
+  set users(v) { this._users[1](() => v); }
 
   /**
    * Versione reattiva del {@link Synchronizer}
@@ -120,11 +120,24 @@ export class ReactiveSynchronizer extends Synchronizer {
    */
   constructor(room: string = uuid(), pass: string = null, link?: string, provider?: string, server?: string, delta?: number) {
     super(server, delta);
-    this.room = room;
-    this.pass = pass;
-    this.link = link;
-    this.provider = provider;
+    
+    // Vengono settati a pacchetto
+    batch(() => {
+      this.room = room;
+      this.pass = pass;
+      this.link = link;
+      this.provider = provider;
+    });
 
-    this.onUpdate = (obj: InputState) => this.users = obj.users;
+    // Se viene cambiato il link viene annullato il provider
+    const [ , setLink ] = this._link;
+    this._link[1] = <any>((x: any) => {
+      batch(() => {
+        setLink(x);
+        this.provider = null;
+      });
+    });
+
+    this.onUpdate = (obj: InputState) => this.users = obj.users;    
   }
 }
