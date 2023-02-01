@@ -1,6 +1,10 @@
 
+import "jquery";
+import "bootstrap";
 import { createRenderEffect } from "solid-js";
 import { setAttribute } from "solid-js/web";
+
+declare const $: JQueryStatic;
 
 /**
  * Genera un id univoco
@@ -13,8 +17,7 @@ export function uuid() {
  * Proprietà d'estensione che aggiunge un tooltip
  */
 export function tooltip(elm: Element, accessor: () => string) {
-  createRenderEffect(() => setAttribute(elm, "title", accessor()));
-  //@ts-ignore
+  createRenderEffect(() => setAttribute(elm, "title", accessor()));  
   $(elm).tooltip();
 }
 

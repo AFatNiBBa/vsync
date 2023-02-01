@@ -12,7 +12,6 @@
     "@types/bootstrap": "^5.2.6",
     "@types/express": "^4.17.15",
     "@types/express-ws": "^3.0.1",
-    "@types/fast-html-parser": "^1.0.2",
     "@types/jquery": "^3.5.16",
     "@types/node": "^18.11.9",
     "@types/request": "^2.48.8",
