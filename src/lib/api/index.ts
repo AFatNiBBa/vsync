@@ -11,6 +11,13 @@ import { pipe } from "./request";
 export default function getApi() {
   const api = Router();
 
+  // Disabilita le CORS
+  api.use((_, res, next) => {
+      res.header("Access-Control-Allow-Origin", "*");
+      res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+      next();
+  });
+
   // Codice della pagina contenuto nel link
   api.get("/eval", (req, res) => 
     res.send(`<script>eval(${ JSON.stringify(req.query.code).replace(/<\/script>/g, "<\\/script>") } )</script>`)

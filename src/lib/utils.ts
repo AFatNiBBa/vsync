@@ -1,10 +1,8 @@
 
-import "jquery";
-import "bootstrap";
 import { createRenderEffect } from "solid-js";
 import { setAttribute } from "solid-js/web";
 
-declare const $: JQueryStatic;
+declare const $: (x: Element) => { tooltip(): void };
 
 /**
  * Genera un id univoco
