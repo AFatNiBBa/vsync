@@ -9,10 +9,8 @@
   "type": "module",
   "devDependencies": {
     "@types/base64-url": "^2.2.0",
-    "@types/bootstrap": "^5.2.6",
     "@types/express": "^4.17.15",
     "@types/express-ws": "^3.0.1",
-    "@types/jquery": "^3.5.16",
     "@types/node": "^18.11.9",
     "@types/request": "^2.48.8",
     "@types/ws": "^8.5.4",
@@ -32,7 +30,7 @@
     "node-html-parser": "^6.1.4",
     "request": "^2.88.2",
     "solid-js": "^1.6.2",
-    "solid-start": "^0.2.16",
+    "solid-start": "0.2.18",
     "undici": "^5.11.0"
   },
   "engines": {

@@ -1,6 +1,6 @@
 
-import { useParams } from "solid-start";
 import Error from "./error";
+import { useParams } from "solid-start";
 
 export default function Missing() {
   const { error } = useParams();
