@@ -20,7 +20,7 @@ export default function Player() {
     if (!sync.provider) return null;
     const temp = new URL(url);
     temp.host = `api.${temp.host}`;
-    return new URL(sync.provider, temp);
+    return new URL(sync.provider, temp).href;
   });
 
   function copyUserUrl() {
@@ -85,6 +85,9 @@ export default function Player() {
             <button type="button" use:tooltip="Condividi un link che non include la Password" class="btn btn-primary ml-2" onclick={copyUserUrl}>Utente</button>
             <button type="button" use:tooltip="Sincronizza video con link privati incollando questo sul loro sito" class="btn btn-info ml-2" onclick={copyEmbedCode}>Embed</button>
             <Show when={provider()}>
+              <a use:tooltip="Ricarica" class="btn btn-secondary ml-2" href={provider()}>
+                <i class="fa-solid fa-rotate-right" />
+              </a>
               <a use:tooltip="Precedente" class="btn btn-secondary ml-2" href={provider() + encodeURI("-")}>
                 <i class="fa-solid fa-caret-left" />
               </a>
