@@ -1,15 +1,11 @@
 
 import ws from "express-ws";
-import sync from "./lib/app/server";
 import getApi from "./lib/api";
+import sync from "./lib/app/server";
 import subdomain from "express-subdomain";
-import { getSubDomainOffset } from "./lib/api/url";
+import { createHandler, renderAsync, StartServer } from "solid-start/entry-server";
 import type { Observer } from "solid-start-express";
-import {
-  createHandler,
-  renderAsync,
-  StartServer,
-} from "solid-start/entry-server";
+import { getSubDomainOffset } from "./lib/api/url";
 
 declare module "express" {
   interface Express {

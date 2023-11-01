@@ -4,7 +4,6 @@ import SubTitle from '~/components/subTitle';
 import { createEffect, createSignal, createMemo, Show, Switch, Match } from 'solid-js';
 import { Synchronizer, EmbedSynchronizer } from "~/lib/app/synchronizer";
 import { shiftTab, copyToClipboard, createEnv } from "../lib/app/client";
-import { tooltip } from '~/lib/utils'; tooltip;
 
 enum State {
   OK = "fa-check-circle text-success",
@@ -81,17 +80,17 @@ export default function Player() {
               Il primo che la setta comanda (Insieme agli altri che hanno la stessa).
             </Input>
 
-            <button type="button" use:tooltip="Condividi il tuo Link" class="btn btn-danger ml-2" onclick={() => copyToClipboard(url.href)}>Admin</button>
-            <button type="button" use:tooltip="Condividi un link che non include la Password" class="btn btn-primary ml-2" onclick={copyUserUrl}>Utente</button>
-            <button type="button" use:tooltip="Sincronizza video con link privati incollando questo sul loro sito" class="btn btn-info ml-2" onclick={copyEmbedCode}>Embed</button>
+            <button type="button" title="Condividi il tuo Link" class="btn btn-danger ml-2" onclick={() => copyToClipboard(url.href)}>Admin</button>
+            <button type="button" title="Condividi un link che non include la Password" class="btn btn-primary ml-2" onclick={copyUserUrl}>Utente</button>
+            <button type="button" title="Sincronizza video con link privati incollando questo sul loro sito" class="btn btn-info ml-2" onclick={copyEmbedCode}>Embed</button>
             <Show when={provider()}>
-              <a use:tooltip="Ricarica" class="btn btn-secondary ml-2" href={provider()}>
+              <a title="Ricarica" class="btn btn-secondary ml-2" href={provider()}>
                 <i class="fa-solid fa-rotate-right" />
               </a>
-              <a use:tooltip="Precedente" class="btn btn-secondary ml-2" href={provider() + encodeURI("-")}>
+              <a title="Precedente" class="btn btn-secondary ml-2" href={provider() + encodeURI("-")}>
                 <i class="fa-solid fa-caret-left" />
               </a>
-              <a use:tooltip="Successivo" class="btn btn-secondary ml-2" href={provider() + encodeURI("+")}>
+              <a title="Successivo" class="btn btn-secondary ml-2" href={provider() + encodeURI("+")}>
                 <i class="fa-solid fa-caret-right" />
               </a>
             </Show>

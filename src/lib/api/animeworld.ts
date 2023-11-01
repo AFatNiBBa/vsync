@@ -1,10 +1,7 @@
 
 import EpExp from "@seanalunni/epexp";
-import { toProxy, fromProxy, getCookie, parseCookie } from "./hideMyAss";
 import { parse, HTMLElement } from "node-html-parser";
 import { get } from "./request";
-
-var sessionCookie = getCookie();
 
 /**
  * Ottiene un link assoluto dall'attributo "href" di {@link elem}
@@ -20,11 +17,8 @@ function getHref(baseUrl: URL, elem: HTMLElement) {
  * @param url Link alla pagina
  */
 async function getPage(url: URL): Promise<HTMLElement> {
-  const res = await get(url.href, { headers: { "Cookie": await sessionCookie } });
-  const html = parse(res.body);
-  return html.querySelector("body.terms-agree") // Se viene mostrata la pagina di dei termini e delle condizioni vuol dire che è scaduto il cookie
-    ? (sessionCookie = Promise.resolve(parseCookie(res)), await getPage(url))
-    : html;
+  const res = await get(url.href);
+  return parse(res.body);
 }
 
 /**
@@ -38,23 +32,22 @@ export default async function getAnimeUrl(name: string, ep: string) {
     // Generazione indirizzo di ricerca
     const url = new URL("https://www.animeworld.tv/search");
     url.searchParams.set("keyword", name);
-    
-    // Ricerca passando per proxy
-    const base = toProxy(url);
-    const search = await getPage(base);
+
+    // Ricerca
+    const search = await getPage(url);
     
     // Selezione serie
-    const serie = await getPage(getHref(base, search.querySelector(".film-list > .item a")));
+    const serie = await getPage(getHref(url, search.querySelector(".film-list > .item a")));
     
     // Selezione episodio (Se è già selezionato, salta)
     const attr = "data-episode-num"
     const lstEp = serie.querySelectorAll(`.server.active .episodes.range .episode a[${attr}]`);
     const btnEp = new EpExp(ep).get(lstEp, x => x.getAttribute(attr));
-    const episodio = btnEp.classNames.includes("active") ? serie : await getPage(getHref(base, btnEp));
+    const episodio = btnEp.classNames.includes("active") ? serie : await getPage(getHref(url, btnEp));
 
     // Estrazione link di download da quello con il proxy
     const btnDownload2 = episodio.querySelector("#alternativeDownloadLink");
-    return fromProxy(getHref(base, btnDownload2));
+    return getHref(url, btnDownload2);
   }
   catch (e) { return console.error(e), null; }
 }
