@@ -1,37 +1,11 @@
 {
-  "name": "vsync",
+  "private": true,
   "scripts": {
-    "dev": "solid-start dev",
-    "build": "solid-start build",
-    "start": "solid-start start",
-    "load": "cls & npm run build && npm start"
+    "start": "npm run dev -w package/vsync",
+    "style": "npm run start -w package/style",
+		"clean": "git clean -Xdf"
   },
-  "type": "module",
-  "engines": {
-    "node": ">=16.8"
-  },
-  "devDependencies": {
-    "@types/express": "^4.17.20",
-    "@types/express-ws": "^3.0.3",
-    "@types/node": "^20.8.10",
-    "@types/request": "^2.48.11",
-    "@types/ws": "^8.5.8",
-    "esbuild": "^0.19.5",
-    "postcss": "^8.4.31",
-    "solid-start-express": "^0.2.20",
-    "typescript": "^5.2.2",
-    "vite": "^4.5.0"
-  },
-  "dependencies": {
-    "@seanalunni/epexp": "^1.2.0",
-    "@solidjs/meta": "^0.29.1",
-    "@solidjs/router": "^0.8.3",
-    "express-subdomain": "^1.0.5",
-    "express-ws": "^5.0.2",
-    "node-html-parser": "^6.1.11",
-    "request": "^2.88.2",
-    "solid-js": "^1.8.5",
-    "solid-start": "^0.3.9",
-    "undici": "^5.27.0"
-  }
+  "workspaces": [
+    "package/*"
+  ]
 }

@@ -1,0 +1,17 @@
+{
+  "name": "vsync",
+  "type": "module",
+  "scripts": {
+    "dev": "vinxi dev --port 80",
+    "build": "vinxi build",
+    "start": "vinxi start --port 80"
+  },
+  "dependencies": {
+    "@seanalunni/style": "*",
+    "@solidjs/router": "^0.13.1",
+    "@solidjs/start": "^1.0.0-rc.0",
+    "sass": "^1.70.0",
+    "solid-js": "^1.8.16",
+    "vinxi": "^0.3.10"
+  }
+}

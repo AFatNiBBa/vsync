@@ -1,0 +1,15 @@
+
+.host {
+	// As big as possible without scrolling
+	width: fit-content;
+	height: fit-content;
+	
+	// Allow scrolling if the space isn't even enough for the minimum
+	min-width: min-content;
+	min-height: min-content;
+}
+
+.slot {
+	display: grid;
+	grid: 1fr / 1fr;
+}
