@@ -1,6 +1,6 @@
 
 // @refresh reload
-import logo from "../assets/icon.png";
+import logo from "../assets/logo.svg";
 import { createHandler, StartServer } from "@solidjs/start/server";
 
 export default createHandler(() => 
