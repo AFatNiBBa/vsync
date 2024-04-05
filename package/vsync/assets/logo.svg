@@ -11,7 +11,7 @@
 
 		#play {
 			--ratio: .3;
-			--x: calc((384px - 199.77957860615885px) * var(--ratio) / 2);
+			--x: calc((384px - 199.77957860615885px) * var(--ratio) / 2); /* (L'icona originale non è centrata) */
 			fill: white;
 		}
 

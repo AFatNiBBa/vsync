@@ -1,5 +1,13 @@
 {
     "editor.tabSize": 2,
     "editor.insertSpaces": false,
-    "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets": true
+    "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets": true,
+    
+    "antlr4.generation": {
+        "mode": "external",
+        "outputDir": "./.antlr",
+        "language": "TypeScript",
+        "listeners": false,
+        "visitors": true
+    }
 }

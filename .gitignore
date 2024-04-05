@@ -1,6 +1,11 @@
 
+# Solid Start
 .output/
 .vinxi/
 dist/
 node_modules/
 package-lock.json
+
+# Antlr4
+**/.antlr/**
+!**/.antlr/**/*.ts
