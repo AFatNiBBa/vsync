@@ -12,10 +12,6 @@
 		"types": [ "vinxi/client", "vite/client" ],
 		"jsxImportSource": "solid-js",
 		"isolatedModules": true,
-		"jsx": "preserve",
-
-		"paths": {
-			"~/*": [ "./src/*" ]
-		}
+		"jsx": "preserve"
 	}
 }

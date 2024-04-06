@@ -1,6 +1,6 @@
 
 import { MinusContext, NamedContext, PlusContext, PositionalContext, StartContext, WrapContext, epExpParser } from "./.antlr/epExpParser";
-import { AbstractParseTreeVisitor, CharStream, CommonTokenStream, Token } from "antlr4ng";
+import { ATNSimulator, AbstractParseTreeVisitor, BaseErrorListener, CharStream, CommonTokenStream, Recognizer, Token } from "antlr4ng";
 import { EpExp, NominalEpExp, PositionalEpExp } from "./model";
 import { epExpVisitor } from "./.antlr/epExpVisitor";
 import { epExpLexer } from "./.antlr/epExpLexer";
@@ -17,8 +17,16 @@ const REGEX_UNESCAPE = /\\(.)/g;
 export function createEpExp(code: string): EpExp {
 	const lexer = new epExpLexer(CharStream.fromString(code));
 	const parser = new epExpParser(new CommonTokenStream(lexer));
+	parser.addErrorListener(Thrower.prototype);
 	const tree = parser.start();
 	return Visitor.instance.visit(tree)!;
+}
+
+/** Oggetto che gestisce gli errori sintattici (Lanciando errori) */
+class Thrower extends BaseErrorListener {
+	syntaxError<S extends Token, T extends ATNSimulator>(recognizer: Recognizer<T>, unespected: S | null, line: number, column: number, msg: string) {
+		throw new SyntaxError(`${msg}\n    at ${EpExp.name} body (${line}:${column})`);
+	}
 }
 
 /** Genera un {@link EpExp} partendo da un {@link StartContext} */
