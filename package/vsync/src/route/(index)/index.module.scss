@@ -1,0 +1,80 @@
+
+@mixin phone {
+	@media (max-aspect-ratio: 12 / 11) {
+		@content;
+	}
+}
+
+.host {
+	display: flex;
+	justify-content: center;
+	padding-top: 2em;
+	padding-inline: 2em;
+
+	@include phone { padding-inline: 1ch; }
+}
+
+.page {
+	display: grid;
+	grid: 1fr / 1fr max-content;
+	gap: 1em;
+
+	> video {
+		max-width: 100%;	// Rende le dimensioni adattabili
+		width: 1280px;		// Dimensioni indicative video, servono soprattutto per i video rotti
+	}
+
+	> .form {
+		display: grid;
+		grid-auto-rows: max-content;
+		gap: 2ch;
+	}
+
+	@include phone {
+		grid: repeat(2, max-content) / 1fr;
+	}
+}
+
+.field {	
+	> label > h4 {
+		margin-top: 0;
+		font-weight: 500;
+		margin-bottom: 1ch;
+		
+		display: flex;
+		align-items: center;
+	}
+
+	> input {
+		display: block;
+		width: 100%;
+		padding: .75ch;
+
+		font-family: inherit;
+		border: 1px solid #ced4da;
+		border-radius: .5ch;
+		box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075);
+	}
+
+	> small {
+		font-size: 80%;
+		color: var(--color-secondary);
+	}
+}
+
+.control {
+	display: grid;
+	grid-auto-flow: column;
+	grid-auto-columns: max-content;
+	gap: 1ch;
+
+	> button {
+		width: 1.5em;
+		height: 1.5em;
+
+		color: white;
+		background-color: var(--color-secondary);
+		border-radius: .5ch;
+		border: 0;
+	}
+}

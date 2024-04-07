@@ -2,9 +2,9 @@
   "name": "vsync",
   "type": "module",
   "scripts": {
-    "dev": "vinxi dev --port 80",
+    "start": "vinxi dev --host --port 80",
     "build": "vinxi build",
-    "start": "vinxi start --port 80"
+    "production": "npm run build && vinxi start --port 80"
   },
   "dependencies": {
     "@seanalunni/epexp": "*",

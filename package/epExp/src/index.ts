@@ -1,6 +1,6 @@
 
 import { MinusContext, NamedContext, PlusContext, PositionalContext, StartContext, WrapContext, epExpParser } from "./.antlr/epExpParser";
-import { ATNSimulator, AbstractParseTreeVisitor, BaseErrorListener, CharStream, CommonTokenStream, Recognizer, Token } from "antlr4ng";
+import { AbstractParseTreeVisitor, BaseErrorListener, CharStream, CommonTokenStream, Recognizer, Token } from "antlr4ng";
 import { EpExp, NominalEpExp, PositionalEpExp } from "./model";
 import { epExpVisitor } from "./.antlr/epExpVisitor";
 import { epExpLexer } from "./.antlr/epExpLexer";
@@ -24,7 +24,7 @@ export function createEpExp(code: string): EpExp {
 
 /** Oggetto che gestisce gli errori sintattici (Lanciando errori) */
 class Thrower extends BaseErrorListener {
-	syntaxError<S extends Token, T extends ATNSimulator>(recognizer: Recognizer<T>, unespected: S | null, line: number, column: number, msg: string) {
+	syntaxError(_rec: Recognizer<any>, _tok: Token | null, line: number, column: number, msg: string) {
 		throw new SyntaxError(`${msg}\n    at ${EpExp.name} body (${line}:${column})`);
 	}
 }

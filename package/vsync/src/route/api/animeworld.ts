@@ -29,7 +29,9 @@ const href = (elm: HTMLElement) => new URL(elm.getAttribute("href")!, RICERCA_UR
 export async function getAnimeWorldVideoUrl(name: string, ep: number | EpExp = 0) {
 	RICERCA_URL.searchParams.set(RICERCA_QUERY_KEY, name);
 	const searchPage = await html(RICERCA_URL);	
-	const showPage = await html(href(searchPage.querySelector(".film-list > .item a")!));
+	const showButton = searchPage.querySelector(".film-list > .item a");
+	if (!showButton) throw new Error("Serie non trovata");
+	const showPage = await html(href(showButton));
 	const episodeList = showPage.querySelectorAll(`.server.active .episodes.range .episode a[${EPISODE_NUM_ATTRIBUTE}]`);
 	const episodeButton = typeof ep === "number" ? episodeList[ep] : ep.get(episodeList, x => x.getAttribute(EPISODE_NUM_ATTRIBUTE)!)!;
 	const episodePage = episodeButton.classNames.includes(EPISODE_ACTIVE_CLASS) ? showPage : await html(href(episodeButton));

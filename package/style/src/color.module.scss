@@ -1,0 +1,21 @@
+
+:root {
+	--color-primary: #007bff;
+	--color-secondary: #6c757d;
+	--color-success: #28a745;
+	--color-warning: #faa200;
+	--color-danger: #dc3545;
+	--color-info: #17a2b8;
+}
+
+.textPrimary { color: var(--color-primary); }
+
+.textSecondary { color: var(--color-secondary); }
+
+.textSuccess { color: var(--color-success); }
+
+.textWarning { color: var(--color-warning); }
+
+.textDanger { color: var(--color-danger); }
+
+.textInfo { color: var(--color-info); }
