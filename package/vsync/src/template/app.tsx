@@ -1,6 +1,5 @@
 
 import "./app.scss";
-import "@seanalunni/style/fix";
 
 import { FileRoutes } from "@solidjs/start/router";
 import { Router } from "@solidjs/router";

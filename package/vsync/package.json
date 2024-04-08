@@ -2,9 +2,10 @@
   "name": "vsync",
   "type": "module",
   "scripts": {
-    "start": "vinxi dev --host --port 80",
     "build": "vinxi build",
-    "production": "npm run build && vinxi start --port 80"
+    "start": "vinxi dev --host --port 80",
+    "production": "vinxi start --port 80",
+    "copy": "npm run build && scp -r ./.output root@vsync.it:/root/vsync/package/vsync/.output"
   },
   "dependencies": {
     "@seanalunni/epexp": "*",
