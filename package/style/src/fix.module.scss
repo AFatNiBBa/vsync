@@ -6,11 +6,15 @@
 
 	button { cursor: pointer; }
 
-	* {
-		box-sizing: border-box;
-		font-size: inherit;
-		position: relative;
-		overflow: hidden;
+	::before, ::after {
+		@at-root :not(li), & { overflow: hidden; }
+
+		@at-root :not(h1, h2, h3, h4, h5, h6, b, i), & { font: inherit; }
+
+		@at-root *, & {
+			box-sizing: border-box;
+			position: relative;
+		}
 	}
 
 	@media screen {
