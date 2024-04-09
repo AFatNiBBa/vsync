@@ -4,11 +4,13 @@ import layout from "@seanalunni/style/layout";
 
 import { A, RouteSectionProps } from "@solidjs/router";
 import { HttpStatusCode } from "@solidjs/start";
+import { Title } from "@solidjs/meta";
 
 /** Pagina visualizzata quando se ne richiede una che non esiste */
 export default function(props: RouteSectionProps) {
 	return <>
 		<HttpStatusCode code={404} />
+		<Title>Vsync - Not Found</Title>
 		<div class={`${layout.stretch} ${layout.center}`} style={{ background: "#dedede" }}>
 			<div style={{ "text-align": "center" }}>
 				<h1 style={{ "font-size": "3em" }}>
