@@ -53,7 +53,24 @@
 		font-family: inherit;
 		border: 1px solid #ced4da;
 		border-radius: .5ch;
-		box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075);
+
+		--shadow-color: black;
+		--shadow-opacity: .075;
+		box-shadow: 0 .125rem .25rem rgb(from var(--shadow-color) r g b / var(--shadow-opacity));
+
+		&:read-only { background-color: #f0f0f0; }
+
+		&:focus {
+			--shadow-color: var(--color-primary);
+			--shadow-opacity: .4;
+		}
+
+		@media (prefers-color-scheme: dark) {
+			--shadow-color: white;
+			--shadow-opacity: .2;
+
+			&:read-only { background-color: #0a0a0a; }
+		}
 	}
 
 	> small {

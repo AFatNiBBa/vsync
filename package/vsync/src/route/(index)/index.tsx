@@ -43,6 +43,13 @@ export default function() {
 						Episodio&nbsp;
 						<i class={`fad ${state()}`} title={(url()?.err as Error)?.message} />
 					</Field>
+					<Field
+						readOnly
+						children="Url"
+						placeholder="Vuoto"
+						value={url()?.res}
+						detail="Link diretto al video in riproduzione"
+					/>
 					<div class={style.control}>
 						<button class={layout.center} onClick={() => setEp(x => `${x}-`)}>
 							<i class="fa-solid fa-caret-left" />
@@ -58,7 +65,7 @@ export default function() {
 }
 
 /** Componente che rappresenta un campo da input della pagina */
-function Field(props: ParentProps<{ value?: string, onInput?(x: string): void, detail?: JSX.Element, placeholder?: string }>) {
+function Field(props: ParentProps<{ value?: string, onInput?(x: string): void, detail?: JSX.Element, placeholder?: string, readOnly?: boolean }>) {
 	const id = createUniqueId();
 	return <>
 		<div class={style.field}>
@@ -67,6 +74,7 @@ function Field(props: ParentProps<{ value?: string, onInput?(x: string): void, d
 			</label>
 			<input
 				id={id}
+				readOnly={props.readOnly}
 				placeholder={props.placeholder}
 				value={props.value ?? ""}
 				onChange={e => props.onInput?.(e.target.value)}

@@ -2,6 +2,9 @@
 // Importa il foglio di stile che fixa le merdate che l'HTML si porta dietro da quando è nato
 @use "@seanalunni/style/fix";
 
+// Imposta lo schema di colori dell'applicazione con quello preferito dall'utente
+:root { color-scheme: dark light; }
+
 // Fa sì che non vengano tagliate le icone di Font Awesome
 i[class*=fa-] { overflow: visible; }
 
