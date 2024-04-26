@@ -1,8 +1,8 @@
 
 "use server";
 
-import { EpExp, createEpExp } from "@seanalunni/epexp";
 import { parse, HTMLElement } from "node-html-parser";
+import { EpExp, parseEpExp } from "@seanalunni/epexp";
 import { APIEvent } from "@solidjs/start/server";
 import { json } from "@solidjs/router";
 
@@ -49,7 +49,7 @@ export async function GET(event: APIEvent) {
 		const name = url.searchParams.get("name");
 		if (!name) throw new ReferenceError("Manca il nome della serie");
 		const ep = url.searchParams.get("ep");
-		const expr = ep == null ? undefined : createEpExp(ep);
+		const expr = ep == null ? undefined : parseEpExp(ep);
 		const temp = await getAnimeWorldVideoUrl(name, expr);
 		return json(temp.href);
 	}

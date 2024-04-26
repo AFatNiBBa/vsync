@@ -5,9 +5,9 @@ import layout from "@seanalunni/style/layout";
 
 import { JSX, ParentProps, createMemo, createResource, createUniqueId } from "solid-js";
 import { getAnimeWorldVideoUrl } from "../api/animeworld";
-import { EpExp, createEpExp } from "@seanalunni/epexp";
+import { EpExp, parseEpExp } from "@seanalunni/epexp";
+import { copyText, parseTime } from "../../lib/util";
 import { useSearchParams } from "@solidjs/router";
-import { parseTime } from "../../lib/util";
 import { Result } from "../../lib/result";
 
 /** Pagina iniziale dell'applicazione */
@@ -16,21 +16,27 @@ export default function() {
 	const [ params, setParams ] = useSearchParams<search>();
 	const [ url ] = createResource(() => Result.from(bridge(params.name, params.ep)), x => x);
 	const state = createMemo(() => url.loading ? State.loading : url()!.ok ? State.ok : State.fail);
-	const setEp = (f: (x: string) => string) => setParams({ ep: f(params.ep ?? "1°") } satisfies search);
+	const setEp = (f: (x: string) => string) => setParams({ ep: f(params.ep || "1°"), time: undefined } satisfies search);
+	var video!: HTMLVideoElement;
 	return <>
 		<div class={`${style.host} ${layout.stretch}`}>
 			<div class={style.page}>
 				<video
 					controls
+					class={layout.stretch}
 					src={url()?.res ?? ""} // Se l'url non viene trovato ci mette la stringa vuota perchè se ci andava a finire `undefined` toglieva tutto l'attributo ma non il video vecchio
-					ref={x => params.time && (x.currentTime = parseTime(params.time))}
+					ref={x => {
+						video = x;
+						if (!params.time) return;
+						x.currentTime = parseTime(params.time);
+					}}
 				/>
 				<div class={style.form}>
 					<Field
 						children="Nome"
 						placeholder="Vuoto"
 						value={params.name}
-						onInput={name => setParams({ name } satisfies search)}
+						onInput={name => setParams({ name, time: undefined } satisfies search)}
 						detail="Il nome della serie da cercare"
 					/>
 					<Field
@@ -51,11 +57,20 @@ export default function() {
 						detail="Link diretto al video in riproduzione"
 					/>
 					<div class={style.control}>
-						<button class={layout.center} onClick={() => setEp(x => `${x}-`)}>
+						<button title="Episodio precedente" class={`${layout.center} ${color.backSecondary}`} onClick={() => setEp(x => `${x}-`)}>
 							<i class="fa-solid fa-caret-left" />
 						</button>
-						<button class={layout.center} onClick={() => setEp(x => `${x}+`)}>
+						<button title="Episodio successivo" class={`${layout.center} ${color.backSecondary}`} onClick={() => setEp(x => `${x}+`)}>
 							<i class="fa-solid fa-caret-right" />
+						</button>
+						<button title="Copia link" class={`${layout.center} ${color.backPrimary}`} onClick={() => copyText(location.href)}>
+							<i class="fa-duotone fa-link" />
+						</button>
+						<button title="Scrivi il minutaggio sul link" class={`${layout.center} ${color.backSuccess}`} onClick={() => setParams({ time: video.currentTime.toString() } satisfies search)}>
+							<i class="fa-duotone fa-stopwatch-20" />
+						</button>
+						<button title="Cancella il minutaggio dal link" class={`${layout.center} ${color.backDanger}`} onClick={() => setParams({ time: undefined } satisfies search)}>
+							<i class="fa-duotone fa-stopwatch" />
 						</button>
 					</div>
 				</div>
@@ -95,7 +110,7 @@ function Field(props: ParentProps<{ value?: string, onInput?(x: string): void, d
 async function bridge(name: string | undefined, ep: string = "1°") {
 	"use server";
 	if (!name) throw new RangeError("Non è stato fornito il nome della serie");
-	return (await getAnimeWorldVideoUrl(name, createEpExp(ep))).href;
+	return (await getAnimeWorldVideoUrl(name, parseEpExp(ep))).href;
 }
 
 /**

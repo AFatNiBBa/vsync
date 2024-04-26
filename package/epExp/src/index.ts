@@ -14,7 +14,7 @@ const REGEX_UNESCAPE = /\\(.)/g;
  * Genera un {@link EpExp} a partire da una espressione di riferimento ad un episodio
  * @param code L'espressione
  */
-export function createEpExp(code: string): EpExp {
+export function parseEpExp(code: string): EpExp {
 	const lexer = new epExpLexer(CharStream.fromString(code));
 	const parser = new epExpParser(new CommonTokenStream(lexer));
 	parser.addErrorListener(Thrower.prototype);

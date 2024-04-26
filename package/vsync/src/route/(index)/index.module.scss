@@ -1,37 +1,23 @@
 
-@mixin phone {
-	@media (max-aspect-ratio: 12 / 11) {
-		@content;
-	}
-}
-
 .host {
 	display: flex;
 	justify-content: center;
-	padding-top: 2em;
-	padding-inline: 2em;
-
-	@include phone { padding-inline: 1ch; }
+	padding: 2em .5ch;
 }
 
 .page {
 	display: grid;
-	grid: 1fr / 1fr max-content;
+	grid: repeat(2, max-content) / 1fr;
 	gap: 1em;
 
-	> video {
-		max-width: 100%;	// Rende le dimensioni adattabili
-		width: 1280px;		// Dimensioni indicative video, servono soprattutto per i video rotti
-	}
+	flex: 1;
+	max-width: 40em;
+	height: max-content; // Permette di scrollare se il contenuto non ci stà
 
 	> .form {
 		display: grid;
 		grid-auto-rows: max-content;
 		gap: 2ch;
-	}
-
-	@include phone {
-		grid: repeat(2, max-content) / 1fr;
 	}
 }
 
@@ -90,7 +76,6 @@
 		height: 1.5em;
 
 		color: white;
-		background-color: var(--color-secondary);
 		border-radius: .5ch;
 		border: 0;
 	}

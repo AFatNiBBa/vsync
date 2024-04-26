@@ -16,3 +16,24 @@ export function parseTime(time: string) {
 			sum += +elm * 60 ** k;
 	return sum;
 }
+
+/**
+ * Copia del testo nella clipboard.
+ * Prova ad usare {@link navigator.clipboard} se è possibile, ma dato che c'è solo in HTTPS fornisce anche un metodo alternativo.
+ * In caso venga usato il metodo alternativo, l'operazione viene completata in maniera sincrona.
+ * Funzione utilizzabile solo lato client
+ * @param text Il testo da copiare
+ */
+export async function copyText(text: string): Promise<void> {
+	const { clipboard } = navigator;
+	if (clipboard) return clipboard.writeText(text);
+	const area = document.createElement("textarea");
+	try
+	{
+		document.body.append(area);
+		area.focus({ preventScroll: true });
+		area.select();
+		document.execCommand("copy");
+	}
+	finally { area.remove(); }
+}

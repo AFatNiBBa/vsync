@@ -42,7 +42,7 @@ export class PositionalEpExp extends EpExp {
 
 	get<T>(list: T[]): T | undefined { return list[this.index]; }
 
-	toString() { return `${this.position}°${super.toString()}`; }
+	toString() { return `${this.position + this.shift}°`; }
 }
 
 /** Versione nominale di {@link EpExp} */

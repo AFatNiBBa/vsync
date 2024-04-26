@@ -10,12 +10,24 @@
 
 .textPrimary { color: var(--color-primary); }
 
+.backPrimary { background-color: var(--color-primary); }
+
 .textSecondary { color: var(--color-secondary); }
+
+.backSecondary { background-color: var(--color-secondary); }
 
 .textSuccess { color: var(--color-success); }
 
+.backSuccess { background-color: var(--color-success); }
+
 .textWarning { color: var(--color-warning); }
+
+.backWarning { background-color: var(--color-warning); }
 
 .textDanger { color: var(--color-danger); }
 
+.backDanger { background-color: var(--color-danger); }
+
 .textInfo { color: var(--color-info); }
+
+.backInfo { background-color: var(--color-info); }
