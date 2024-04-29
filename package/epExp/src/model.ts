@@ -22,11 +22,13 @@ export abstract class EpExp {
 
 	/** Stringifizza l'espressione corrente */
 	toString() {
-		return this.shift == 0
-			? ""
-			: this.shift > 0
-				? `+${this.shift}`
-				: this.shift.toString();
+		const { shift } = this;
+		switch (shift) {
+			case 0: return "";
+			case 1: return "+";
+			case -1: return "-";
+			default: return shift > 0 ? `+${shift}` : shift.toString();
+		}
 	}
 }
 

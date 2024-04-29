@@ -67,7 +67,7 @@ export default function() {
 							<i class="fa-duotone fa-link" />
 						</button>
 						<button title="Formatta l'espressione di riferimento all'episodio" class={`${layout.center} ${color.backInfo}`} onClick={() => setEp(x => parseEpExp(x).toString())}>
-							<i class="fa-duotone fa-gears" />
+							<i class="fa-duotone fa-hashtag" />
 						</button>
 						<button title="Scrivi il minutaggio sul link" class={`${layout.center} ${color.backSuccess}`} onClick={() => setParams({ time: video.currentTime.toString() } satisfies search)}>
 							<i class="fa-duotone fa-stopwatch-20" />
