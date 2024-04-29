@@ -1,7 +1,7 @@
 {
 	"name": "@seanalunni/style",
 	"description": "Common styles for my projects",
-	"version": "1.0.6",
+	"version": "1.0.7",
   "author": "AFatNiBBa",
   "license": "ISC",
 	"exports": {
