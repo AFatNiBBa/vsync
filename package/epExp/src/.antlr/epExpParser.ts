@@ -109,18 +109,29 @@ export class epExpParser extends antlr.Parser {
     public base(): BaseContext {
         let localContext = new BaseContext(this.context, this.state);
         this.enterRule(localContext, 4, epExpParser.RULE_base);
+        let _la: number;
         try {
             let alternative: number;
-            this.state = 26;
+            this.state = 32;
             this.errorHandler.sync(this);
-            switch (this.interpreter.adaptivePredict(this.tokenStream, 2, this.context) ) {
+            switch (this.interpreter.adaptivePredict(this.tokenStream, 4, this.context) ) {
             case 1:
                 localContext = new PositionalContext(localContext);
                 this.enterOuterAlt(localContext, 1);
                 {
                 this.state = 13;
                 this.match(epExpParser.HASH);
-                this.state = 14;
+                this.state = 15;
+                this.errorHandler.sync(this);
+                _la = this.tokenStream.LA(1);
+                if (_la === 4) {
+                    {
+                    this.state = 14;
+                    (localContext as PositionalContext)._s = this.match(epExpParser.MINUS);
+                    }
+                }
+
+                this.state = 17;
                 (localContext as PositionalContext)._i = this.match(epExpParser.INT);
                 }
                 break;
@@ -128,9 +139,19 @@ export class epExpParser extends antlr.Parser {
                 localContext = new PositionalContext(localContext);
                 this.enterOuterAlt(localContext, 2);
                 {
-                this.state = 15;
+                this.state = 19;
+                this.errorHandler.sync(this);
+                _la = this.tokenStream.LA(1);
+                if (_la === 4) {
+                    {
+                    this.state = 18;
+                    (localContext as PositionalContext)._s = this.match(epExpParser.MINUS);
+                    }
+                }
+
+                this.state = 21;
                 (localContext as PositionalContext)._i = this.match(epExpParser.INT);
-                this.state = 16;
+                this.state = 22;
                 this.match(epExpParser.POSITIONAL);
                 }
                 break;
@@ -138,32 +159,32 @@ export class epExpParser extends antlr.Parser {
                 localContext = new NamedContext(localContext);
                 this.enterOuterAlt(localContext, 3);
                 {
-                this.state = 23;
+                this.state = 29;
                 this.errorHandler.sync(this);
-                alternative = this.interpreter.adaptivePredict(this.tokenStream, 1, this.context);
+                alternative = this.interpreter.adaptivePredict(this.tokenStream, 3, this.context);
                 while (alternative !== 2 && alternative !== antlr.ATN.INVALID_ALT_NUMBER) {
                     if (alternative === 1) {
                         {
-                        this.state = 21;
+                        this.state = 27;
                         this.errorHandler.sync(this);
                         switch (this.tokenStream.LA(1)) {
                         case epExpParser.CHAR:
                             {
-                            this.state = 17;
+                            this.state = 23;
                             this.match(epExpParser.CHAR);
                             }
                             break;
                         case epExpParser.INT:
                             {
-                            this.state = 18;
+                            this.state = 24;
                             this.match(epExpParser.INT);
                             }
                             break;
                         case epExpParser.ESC:
                             {
-                            this.state = 19;
+                            this.state = 25;
                             this.match(epExpParser.ESC);
-                            this.state = 20;
+                            this.state = 26;
                             this.any_();
                             }
                             break;
@@ -172,9 +193,9 @@ export class epExpParser extends antlr.Parser {
                         }
                         }
                     }
-                    this.state = 25;
+                    this.state = 31;
                     this.errorHandler.sync(this);
-                    alternative = this.interpreter.adaptivePredict(this.tokenStream, 1, this.context);
+                    alternative = this.interpreter.adaptivePredict(this.tokenStream, 3, this.context);
                 }
                 }
                 break;
@@ -217,13 +238,13 @@ export class epExpParser extends antlr.Parser {
             this.context = localContext;
             previousContext = localContext;
 
-            this.state = 29;
+            this.state = 35;
             (localContext as WrapContext)._value = this.base();
             }
             this.context!.stop = this.tokenStream.LT(-1);
-            this.state = 43;
+            this.state = 49;
             this.errorHandler.sync(this);
-            alternative = this.interpreter.adaptivePredict(this.tokenStream, 6, this.context);
+            alternative = this.interpreter.adaptivePredict(this.tokenStream, 8, this.context);
             while (alternative !== 2 && alternative !== antlr.ATN.INVALID_ALT_NUMBER) {
                 if (alternative === 1) {
                     if (this._parseListeners != null) {
@@ -231,26 +252,26 @@ export class epExpParser extends antlr.Parser {
                     }
                     previousContext = localContext;
                     {
-                    this.state = 41;
+                    this.state = 47;
                     this.errorHandler.sync(this);
-                    switch (this.interpreter.adaptivePredict(this.tokenStream, 5, this.context) ) {
+                    switch (this.interpreter.adaptivePredict(this.tokenStream, 7, this.context) ) {
                     case 1:
                         {
                         localContext = new PlusContext(new ExprContext(parentContext, parentState));
                         (localContext as PlusContext)._value = previousContext;
                         this.pushNewRecursionContext(localContext, _startState, epExpParser.RULE_expr);
-                        this.state = 31;
+                        this.state = 37;
                         if (!(this.precpred(this.context, 2))) {
                             throw this.createFailedPredicateException("this.precpred(this.context, 2)");
                         }
-                        this.state = 32;
+                        this.state = 38;
                         this.match(epExpParser.PLUS);
-                        this.state = 34;
+                        this.state = 40;
                         this.errorHandler.sync(this);
-                        switch (this.interpreter.adaptivePredict(this.tokenStream, 3, this.context) ) {
+                        switch (this.interpreter.adaptivePredict(this.tokenStream, 5, this.context) ) {
                         case 1:
                             {
-                            this.state = 33;
+                            this.state = 39;
                             (localContext as PlusContext)._n = this.match(epExpParser.INT);
                             }
                             break;
@@ -262,18 +283,18 @@ export class epExpParser extends antlr.Parser {
                         localContext = new MinusContext(new ExprContext(parentContext, parentState));
                         (localContext as MinusContext)._value = previousContext;
                         this.pushNewRecursionContext(localContext, _startState, epExpParser.RULE_expr);
-                        this.state = 36;
+                        this.state = 42;
                         if (!(this.precpred(this.context, 1))) {
                             throw this.createFailedPredicateException("this.precpred(this.context, 1)");
                         }
-                        this.state = 37;
+                        this.state = 43;
                         this.match(epExpParser.MINUS);
-                        this.state = 39;
+                        this.state = 45;
                         this.errorHandler.sync(this);
-                        switch (this.interpreter.adaptivePredict(this.tokenStream, 4, this.context) ) {
+                        switch (this.interpreter.adaptivePredict(this.tokenStream, 6, this.context) ) {
                         case 1:
                             {
-                            this.state = 38;
+                            this.state = 44;
                             (localContext as MinusContext)._n = this.match(epExpParser.INT);
                             }
                             break;
@@ -283,9 +304,9 @@ export class epExpParser extends antlr.Parser {
                     }
                     }
                 }
-                this.state = 45;
+                this.state = 51;
                 this.errorHandler.sync(this);
-                alternative = this.interpreter.adaptivePredict(this.tokenStream, 6, this.context);
+                alternative = this.interpreter.adaptivePredict(this.tokenStream, 8, this.context);
             }
             }
         }
@@ -322,22 +343,24 @@ export class epExpParser extends antlr.Parser {
     }
 
     public static readonly _serializedATN: number[] = [
-        4,1,7,47,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,1,0,1,0,1,0,1,1,1,1,1,2,
-        1,2,1,2,1,2,1,2,1,2,1,2,1,2,5,2,22,8,2,10,2,12,2,25,9,2,3,2,27,8,
-        2,1,3,1,3,1,3,1,3,1,3,1,3,3,3,35,8,3,1,3,1,3,1,3,3,3,40,8,3,5,3,
-        42,8,3,10,3,12,3,45,9,3,1,3,0,1,6,4,0,2,4,6,0,1,1,0,1,7,51,0,8,1,
-        0,0,0,2,11,1,0,0,0,4,26,1,0,0,0,6,28,1,0,0,0,8,9,3,6,3,0,9,10,5,
-        0,0,1,10,1,1,0,0,0,11,12,7,0,0,0,12,3,1,0,0,0,13,14,5,2,0,0,14,27,
-        5,6,0,0,15,16,5,6,0,0,16,27,5,1,0,0,17,22,5,7,0,0,18,22,5,6,0,0,
-        19,20,5,5,0,0,20,22,3,2,1,0,21,17,1,0,0,0,21,18,1,0,0,0,21,19,1,
-        0,0,0,22,25,1,0,0,0,23,21,1,0,0,0,23,24,1,0,0,0,24,27,1,0,0,0,25,
-        23,1,0,0,0,26,13,1,0,0,0,26,15,1,0,0,0,26,23,1,0,0,0,27,5,1,0,0,
-        0,28,29,6,3,-1,0,29,30,3,4,2,0,30,43,1,0,0,0,31,32,10,2,0,0,32,34,
-        5,3,0,0,33,35,5,6,0,0,34,33,1,0,0,0,34,35,1,0,0,0,35,42,1,0,0,0,
-        36,37,10,1,0,0,37,39,5,4,0,0,38,40,5,6,0,0,39,38,1,0,0,0,39,40,1,
-        0,0,0,40,42,1,0,0,0,41,31,1,0,0,0,41,36,1,0,0,0,42,45,1,0,0,0,43,
-        41,1,0,0,0,43,44,1,0,0,0,44,7,1,0,0,0,45,43,1,0,0,0,7,21,23,26,34,
-        39,41,43
+        4,1,7,53,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,1,0,1,0,1,0,1,1,1,1,1,2,
+        1,2,3,2,16,8,2,1,2,1,2,3,2,20,8,2,1,2,1,2,1,2,1,2,1,2,1,2,5,2,28,
+        8,2,10,2,12,2,31,9,2,3,2,33,8,2,1,3,1,3,1,3,1,3,1,3,1,3,3,3,41,8,
+        3,1,3,1,3,1,3,3,3,46,8,3,5,3,48,8,3,10,3,12,3,51,9,3,1,3,0,1,6,4,
+        0,2,4,6,0,1,1,0,1,7,59,0,8,1,0,0,0,2,11,1,0,0,0,4,32,1,0,0,0,6,34,
+        1,0,0,0,8,9,3,6,3,0,9,10,5,0,0,1,10,1,1,0,0,0,11,12,7,0,0,0,12,3,
+        1,0,0,0,13,15,5,2,0,0,14,16,5,4,0,0,15,14,1,0,0,0,15,16,1,0,0,0,
+        16,17,1,0,0,0,17,33,5,6,0,0,18,20,5,4,0,0,19,18,1,0,0,0,19,20,1,
+        0,0,0,20,21,1,0,0,0,21,22,5,6,0,0,22,33,5,1,0,0,23,28,5,7,0,0,24,
+        28,5,6,0,0,25,26,5,5,0,0,26,28,3,2,1,0,27,23,1,0,0,0,27,24,1,0,0,
+        0,27,25,1,0,0,0,28,31,1,0,0,0,29,27,1,0,0,0,29,30,1,0,0,0,30,33,
+        1,0,0,0,31,29,1,0,0,0,32,13,1,0,0,0,32,19,1,0,0,0,32,29,1,0,0,0,
+        33,5,1,0,0,0,34,35,6,3,-1,0,35,36,3,4,2,0,36,49,1,0,0,0,37,38,10,
+        2,0,0,38,40,5,3,0,0,39,41,5,6,0,0,40,39,1,0,0,0,40,41,1,0,0,0,41,
+        48,1,0,0,0,42,43,10,1,0,0,43,45,5,4,0,0,44,46,5,6,0,0,45,44,1,0,
+        0,0,45,46,1,0,0,0,46,48,1,0,0,0,47,37,1,0,0,0,47,42,1,0,0,0,48,51,
+        1,0,0,0,49,47,1,0,0,0,49,50,1,0,0,0,50,7,1,0,0,0,51,49,1,0,0,0,9,
+        15,19,27,29,32,40,45,47,49
     ];
 
     private static __ATN: antlr.ATN;
@@ -482,6 +505,7 @@ export class NamedContext extends BaseContext {
     }
 }
 export class PositionalContext extends BaseContext {
+    public _s?: Token | null;
     public _i?: Token | null;
     public constructor(ctx: BaseContext) {
         super(ctx.parent, ctx.invokingState);
@@ -492,6 +516,9 @@ export class PositionalContext extends BaseContext {
     }
     public INT(): antlr.TerminalNode {
         return this.getToken(epExpParser.INT, 0)!;
+    }
+    public MINUS(): antlr.TerminalNode | null {
+        return this.getToken(epExpParser.MINUS, 0);
     }
     public POSITIONAL(): antlr.TerminalNode | null {
         return this.getToken(epExpParser.POSITIONAL, 0);

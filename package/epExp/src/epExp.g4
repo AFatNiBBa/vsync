@@ -27,8 +27,8 @@ any
     ;
 
 base
-    : HASH i=INT                    # Positional
-    | i=INT POSITIONAL              # Positional
+    : HASH s=MINUS? i=INT           # Positional
+    | s=MINUS? i=INT POSITIONAL     # Positional
     | (CHAR | INT | ESC any)*       # Named
     ;
     
