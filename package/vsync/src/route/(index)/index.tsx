@@ -10,13 +10,16 @@ import { copyText, parseTime } from "../../lib/util";
 import { useSearchParams } from "@solidjs/router";
 import { Result } from "../../lib/result";
 
+/** Episodio di default se non viene fornito uno esplicitamente */
+const DEFAULT_EPISODE = "1°";
+
 /** Pagina iniziale dell'applicazione */
 export default function() {
 	type search = { name?: string, ep?: string, time?: string };
 	const [ params, setParams ] = useSearchParams<search>();
 	const [ url ] = createResource(() => Result.from(bridge(params.name, params.ep)), x => x);
 	const state = createMemo(() => url.loading ? State.loading : url()!.ok ? State.ok : State.fail);
-	const setEp = (f: (x: string) => string) => setParams({ ep: f(params.ep || "1°"), time: undefined } satisfies search);
+	const setEp = (f: (x: string) => string) => setParams({ ep: f(params.ep || DEFAULT_EPISODE), time: undefined } satisfies search);
 	var video!: HTMLVideoElement;
 	return <>
 		<div class={`${style.host} ${layout.stretch}`}>
@@ -110,7 +113,7 @@ function Field(props: ParentProps<{ value?: string, onInput?(x: string): void, d
  * @param ep Episodio richiesto
  * @returns Restituisce un'oggetto che comunica il risultato/errore dell'operazione
  */
-async function bridge(name: string | undefined, ep: string = "1°") {
+async function bridge(name: string | undefined, ep = DEFAULT_EPISODE) {
 	"use server";
 	if (!name) throw new RangeError("Non è stato fornito il nome della serie");
 	return (await getAnimeWorldVideoUrl(name, parseEpExp(ep))).href;
