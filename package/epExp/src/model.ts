@@ -27,7 +27,7 @@ export abstract class EpExp {
 			case 0: return "";
 			case 1: return "+";
 			case -1: return "-";
-			default: return shift > 0 ? `+${shift}` : shift.toString();
+			default: return shift < 0 ? shift.toString() : `+${shift}`;
 		}
 	}
 }
@@ -39,12 +39,18 @@ export abstract class EpExp {
 export class PositionalEpExp extends EpExp {
 	constructor(public position: number, shift?: number) { super(shift); }
 
-	/** Indice assoluto puntato dall'espressione corrente */
-	get index() { return this.position - 1 + this.shift; }
+	get<T>(list: T[]): T | undefined {
+		const { position } = this;
+		const index = position < 0 ? list.length + position : position - 1;
+		return list[index + this.shift];
+	}
 
-	get<T>(list: T[]): T | undefined { return list[this.index]; }
-
-	toString() { return `${this.position + this.shift}°`; }
+	toString() {
+		const { position } = this;
+		return position < 0
+			? `${position}°${super.toString()}`
+			: `${position + this.shift}°`;
+	}
 }
 
 /** Versione nominale di {@link EpExp} */

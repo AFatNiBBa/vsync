@@ -35,7 +35,7 @@ class Visitor extends AbstractParseTreeVisitor<EpExp> implements epExpVisitor<Ep
 
 	visitStart(ctx: StartContext) { return this.visit(ctx._value!)!; };
 
-	visitPositional(ctx: PositionalContext) { return new PositionalEpExp(+ctx._i!.text!); }
+	visitPositional(ctx: PositionalContext) { return new PositionalEpExp(+ctx._i!.text! * (ctx._s ? -1 : 1)); }
 
 	visitNamed(ctx: NamedContext) { return new NominalEpExp(ctx.getText().replace(REGEX_UNESCAPE, "$1")); }
 
