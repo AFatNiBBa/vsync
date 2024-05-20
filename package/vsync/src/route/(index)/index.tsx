@@ -3,7 +3,7 @@ import style from "./index.module.scss";
 import color from "@seanalunni/style/color";
 import layout from "@seanalunni/style/layout";
 
-import { JSX, ParentProps, createMemo, createResource, createUniqueId } from "solid-js";
+import { JSX, ParentProps, Show, createMemo, createResource, createUniqueId } from "solid-js";
 import { getAnimeWorldVideoUrl } from "../api/animeworld";
 import { EpExp, parseEpExp } from "@seanalunni/epexp";
 import { copyText, parseTime } from "../../lib/util";
@@ -75,9 +75,11 @@ export default function() {
 						<button title="Scrivi il minutaggio sul link" class={`${layout.center} ${color.backSuccess}`} onClick={() => setParams({ time: video.currentTime.toString() } satisfies search)}>
 							<i class="fa-duotone fa-stopwatch-20" />
 						</button>
-						<button title="Cancella il minutaggio dal link" class={`${layout.center} ${color.backDanger}`} onClick={() => setParams({ time: undefined } satisfies search)}>
-							<i class="fa-duotone fa-stopwatch" />
-						</button>
+						<Show when={params.time}>
+							<button title="Cancella il minutaggio dal link" class={`${layout.center} ${color.backDanger}`} onClick={() => setParams({ time: undefined } satisfies search)}>
+								<i class="fa-duotone fa-stopwatch" />
+							</button>
+						</Show>
 					</div>
 				</div>
 			</div>
