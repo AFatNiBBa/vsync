@@ -43,12 +43,13 @@ export default function() {
 						detail="Il nome della serie da cercare"
 					/>
 					<Field
-						placeholder="1º"
+						placeholder={DEFAULT_EPISODE}
 						value={params.ep}
 						onInput={x => setEp(() => x)}
 						detail="Espressione di riferimento ad episodio del video desiderato"
 					>
-						{/* Se il `nbsp;` lo metti sotto ti ci mette un'altro spazio */}
+						{/* Se lo spazio lo metto sotto ci mette un'altro spazio */}
+						{/* Il `nbsp;` è necessario perchè il testo è su una flexbox */}
 						Episodio&nbsp;
 						<i class={`fad ${state()}`} title={(url()?.err as Error)?.message} />
 					</Field>

@@ -14,7 +14,7 @@ export default function(props: RouteSectionProps) {
 		<div class={`${layout.stretch} ${layout.center}`}>
 			<div style={{ "text-align": "center" }}>
 				<h1 style={{ "font-size": "3em" }}>
-					Errore 404 -&nbsp;
+					Errore 404 -{" "}
 					<i class={`fa-duotone fa-file-circle-exclamation ${color.textDanger}`} />
 				</h1>
 				<p>La pagina <b>"{props.location.pathname}"</b> non esiste</p>
