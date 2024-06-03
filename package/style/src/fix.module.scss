@@ -6,24 +6,16 @@
 
 	button { cursor: pointer; }
 
+	body { margin: 0; }
+
 	::before, ::after {
-		@at-root :not(html, li), & { overflow: hidden; } // If the root element doesn't allow overflowing then you won't be able to refresh the page by pulling down on mobile devices
+		@at-root :not(html, body, li), & { overflow: hidden; } // If the root element and the body don't allow overflowing then you won't be able to refresh the page by pulling down on mobile devices
 
 		@at-root :not(h1, h2, h3, h4, h5, h6, b, i), & { font: inherit; }
 
 		@at-root *, & {
 			box-sizing: border-box;
 			position: relative;
-		}
-	}
-
-	@media screen {
-		body {
-			margin: 0;
-			padding: 0;
-			width: 100dvw;
-			height: 100dvh;
-			overflow: auto;
 		}
 	}
 }
