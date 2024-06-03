@@ -1,9 +1,9 @@
 {
 	"name": "@seanalunni/style",
 	"description": "Common styles for my projects",
-	"version": "1.0.7",
-  "author": "AFatNiBBa",
-  "license": "ISC",
+	"version": "1.0.9",
+	"author": "AFatNiBBa",
+	"license": "ISC",
 	"exports": {
 		"./*": {
 			"import": "./src/*.module.scss",
@@ -23,7 +23,7 @@
 		"sass": "^1.74.1"
 	},
 	"repository": {
-    "type": "git",
-    "url": "git+https://github.com/AFatNiBBa/vsync.git"
-  }
+		"type": "git",
+		"url": "git+https://github.com/AFatNiBBa/vsync.git"
+	}
 }
