@@ -4,13 +4,13 @@
 
 	input[type=checkbox] { margin: 0; }
 
+	input, textarea { overflow: hidden; }
+
 	button { cursor: pointer; }
 
 	body { margin: 0; }
 
 	::before, ::after {
-		@at-root :not(html, body, li), & { overflow: hidden; } // If the root element and the body don't allow overflowing then you won't be able to refresh the page by pulling down on mobile devices
-
 		@at-root :not(h1, h2, h3, h4, h5, h6, b, i), & { font: inherit; }
 
 		@at-root *, & {
