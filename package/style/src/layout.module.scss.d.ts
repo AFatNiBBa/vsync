@@ -1,7 +1,8 @@
 declare const classNames: {
-  readonly host: "host";
-  readonly slot: "slot";
-  readonly stretch: "stretch";
+  readonly auto: "auto";
   readonly center: "center";
+  readonly stretch: "stretch";
+  readonly slot: "slot";
+  readonly align: "align";
 };
 export = classNames;

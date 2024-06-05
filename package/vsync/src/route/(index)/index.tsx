@@ -61,23 +61,23 @@ export default function() {
 						detail="Link diretto al video in riproduzione"
 					/>
 					<div class={style.control}>
-						<button title="Episodio precedente" class={`${layout.center} ${color.backSecondary}`} onClick={() => setEp(x => `${x}-`)}>
+						<button title="Episodio precedente" class={`${layout.align} ${color.backSecondary}`} onClick={() => setEp(x => `${x}-`)}>
 							<i class="fa-solid fa-caret-left" />
 						</button>
-						<button title="Episodio successivo" class={`${layout.center} ${color.backSecondary}`} onClick={() => setEp(x => `${x}+`)}>
+						<button title="Episodio successivo" class={`${layout.align} ${color.backSecondary}`} onClick={() => setEp(x => `${x}+`)}>
 							<i class="fa-solid fa-caret-right" />
 						</button>
-						<button title="Copia link" class={`${layout.center} ${color.backPrimary}`} onClick={() => copyText(location.href)}>
+						<button title="Copia link" class={`${layout.align} ${color.backPrimary}`} onClick={() => copyText(location.href)}>
 							<i class="fa-duotone fa-link" />
 						</button>
-						<button title="Formatta l'espressione di riferimento all'episodio" class={`${layout.center} ${color.backInfo}`} onClick={() => setEp(x => parseEpExp(x).toString())}>
+						<button title="Formatta l'espressione di riferimento all'episodio" class={`${layout.align} ${color.backInfo}`} onClick={() => setEp(x => parseEpExp(x).toString())}>
 							<i class="fa-duotone fa-hashtag" />
 						</button>
-						<button title="Scrivi il minutaggio sul link" class={`${layout.center} ${color.backSuccess}`} onClick={() => setParams({ time: video.currentTime.toString() } satisfies search)}>
+						<button title="Scrivi il minutaggio sul link" class={`${layout.align} ${color.backSuccess}`} onClick={() => setParams({ time: video.currentTime.toString() } satisfies search)}>
 							<i class="fa-duotone fa-stopwatch-20" />
 						</button>
 						<Show when={params.time}>
-							<button title="Cancella il minutaggio dal link" class={`${layout.center} ${color.backDanger}`} onClick={() => setParams({ time: undefined } satisfies search)}>
+							<button title="Cancella il minutaggio dal link" class={`${layout.align} ${color.backDanger}`} onClick={() => setParams({ time: undefined } satisfies search)}>
 								<i class="fa-duotone fa-stopwatch" />
 							</button>
 						</Show>

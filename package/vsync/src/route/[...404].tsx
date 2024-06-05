@@ -11,7 +11,7 @@ export default function(props: RouteSectionProps) {
 	return <>
 		<HttpStatusCode code={404} />
 		<Title>Vsync - Not Found</Title>
-		<div class={`${layout.stretch} ${layout.center}`}>
+		<div class={`${layout.stretch} ${layout.align}`}>
 			<div style={{ "text-align": "center" }}>
 				<h1 style={{ "font-size": "3em" }}>
 					Errore 404 -{" "}
