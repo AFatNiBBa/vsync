@@ -1,5 +1,8 @@
 
 .host {
+	position: absolute;
+	inset: 0;
+
 	display: flex;
 	justify-content: center;
 	padding: 2em .5ch;

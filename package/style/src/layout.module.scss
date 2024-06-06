@@ -1,26 +1,32 @@
 
-.auto {
-	// Stays compact
-	width: fit-content;
-	height: fit-content;
+.host {
+	// Stays compact (And provides a great layout for children, since I need to provide one)
+	display: inline grid;
 }
 
-.stretch, .slot > * {
+.slot {
+	// Stretches the children
+	display: grid;
+	grid: 1fr / 1fr;
+}
+
+.stretch {
 	// Fills the parent
 	width: 100%;
 	height: 100%;
 }
 
 .align {
-	// Centers content
+	// Centers the content
 	display: flex;
 	align-items: center;
 	justify-content: center;
 }
 
 .center {
-	// Centers self
-	@extend .auto;
+	// Centers itself
+	width: fit-content;
+	height: fit-content;
 	position: absolute;
 	margin: auto;
 	inset: 0;
