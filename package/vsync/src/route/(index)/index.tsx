@@ -2,6 +2,7 @@
 import style from "./index.module.scss";
 import color from "@seanalunni/style/color";
 import layout from "@seanalunni/style/layout";
+import util from "../../style/util.module.scss";
 
 import { JSX, ParentProps, Show, createMemo, createResource, createUniqueId } from "solid-js";
 import { getAnimeWorldVideoUrl } from "../api/animeworld";
@@ -60,7 +61,7 @@ export default function() {
 						value={url()?.res}
 						detail="Link diretto al video in riproduzione"
 					/>
-					<div class={style.control}>
+					<div class={util.control}>
 						<button title="Episodio precedente" class={`${layout.align} ${color.backSecondary}`} onClick={() => setEp(x => `${x}-`)}>
 							<i class="fa-solid fa-caret-left" />
 						</button>

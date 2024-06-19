@@ -65,19 +65,3 @@
 		color: var(--color-secondary);
 	}
 }
-
-.control {
-	display: grid;
-	grid-auto-flow: column;
-	grid-auto-columns: max-content;
-	gap: 1ch;
-
-	> button {
-		width: 1.5em;
-		height: 1.5em;
-
-		color: white;
-		border-radius: .5ch;
-		border: 0;
-	}
-}

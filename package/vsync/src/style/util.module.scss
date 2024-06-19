@@ -1,0 +1,26 @@
+
+.layer::after {
+	content: "";
+	position: absolute;
+	z-index: -1;										// Si assicura che lo sfondo non vada sopra al contenuto
+	inset: 0;
+
+	background-color: #00000030;
+	filter: invert(.5);							// Il filtro viene applicato solo allo sfondo semi-trasparente e serve per adattare la pagina alla modalità scura
+}
+
+.control {
+	display: grid;
+	grid-auto-flow: column;
+	grid-auto-columns: max-content;
+	gap: 1ch;
+
+	> button {
+		width: 1.5em;
+		height: 1.5em;
+
+		color: white;
+		border-radius: .5ch;
+		border: 0;
+	}
+}

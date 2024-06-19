@@ -1,0 +1,11 @@
+
+.page {
+	display: grid;
+	grid-template-columns: max-content 1fr;
+	padding: 1ch;
+	gap: 1ch;
+
+	&::after { border-radius: 1ch; }
+
+	> input { width: 10ch; }
+}

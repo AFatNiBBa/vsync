@@ -1,5 +1,5 @@
 
-import "./app.scss";
+import "../style/app.scss";
 
 import { FileRoutes } from "@solidjs/start/router";
 import { MetaProvider } from "@solidjs/meta";
