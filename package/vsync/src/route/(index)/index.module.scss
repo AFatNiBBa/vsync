@@ -47,8 +47,6 @@
 		--shadow-opacity: .075;
 		box-shadow: 0 .125rem .25rem rgb(from var(--shadow-color) r g b / var(--shadow-opacity));
 
-		&:read-only { filter: invert(.1); }
-
 		&:focus {
 			--shadow-color: var(--color-primary);
 			--shadow-opacity: .4;

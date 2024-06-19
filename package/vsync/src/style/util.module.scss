@@ -1,4 +1,6 @@
 
+.input:read-only { filter: invert(.2); }
+
 .layer::after {
 	content: "";
 	position: absolute;

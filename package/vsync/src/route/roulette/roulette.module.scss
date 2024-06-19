@@ -7,5 +7,13 @@
 
 	&::after { border-radius: 1ch; }
 
-	> input { width: 11ch; }
+	> h1 { grid-column: span 2; }
+
+	> input {
+		border: 1px solid black;
+		border-radius: .25ch;
+		width: 11ch;
+
+		&.important { background-color: rgb(from dodgerblue r g b / .6); }
+	}
 }

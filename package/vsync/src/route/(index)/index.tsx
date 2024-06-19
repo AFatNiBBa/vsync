@@ -99,6 +99,7 @@ function Field(props: ParentProps<{ value?: string, onInput?(x: string): void, d
 			</label>
 			<input
 				id={id}
+				class={util.input}
 				readOnly={props.readOnly}
 				placeholder={props.placeholder}
 				value={props.value ?? ""}
