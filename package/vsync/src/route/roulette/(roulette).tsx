@@ -4,7 +4,7 @@ import color from "@seanalunni/style/color";
 import layout from "@seanalunni/style/layout";
 import util from "../../style/util.module.scss";
 
-import { createMemo, createSignal } from "solid-js";
+import { Setter, createMemo, createSignal } from "solid-js";
 
 /** Possibilità di vincere per ogni turno */
 const CHANCE = 1 / 3;
@@ -23,36 +23,62 @@ export default function() {
 	const [ volta, setVolta ] = createSignal(DEFAULT_VOLTA);
 
 	const current = createMemo(() => APPROX_IMPORTO(fibonacciAt(saltati() + volta()) * multiplier()));
+	const perdita = createMemo(() => APPROX_IMPORTO(spesa() + current()));
 	const ricavo = createMemo(() => APPROX_IMPORTO(current() / CHANCE));
 
 	return <>
 		<div class={`${style.page} ${util.layer} ${layout.center}`}>
 			<h1>Metodo Fibonacci</h1>
 			Importo unitario (€)
-			<input type="number" min={0} step={.1} value={multiplier()} onInput={e => setMultiplier(e.currentTarget.valueAsNumber)} />
+			<Field step={.1} value={multiplier()} setter={setMultiplier} />
 			Puntata corrente (€)
-			<input type="number" readOnly class={`${style.important} ${util.input}`} value={current()} />
+			<Field important value={current()} />
 			Persi fino ad ora (€)
-			<input type="number" readOnly class={util.input} value={spesa()} />
-			Ricavo eventuale (€)
-			<input type="number" readOnly class={util.input} value={ricavo()} />
-			Guadagno eventuale (€)
-			<input type="number" readOnly class={util.input} value={APPROX_IMPORTO(ricavo() - spesa())} />
+			<Field value={spesa()} />
+			<span>
+				<span class={color.textDanger}>Perdita</span> eventuale (€)
+			</span>
+			<Field value={perdita()} />
+			<span>
+				<span class={color.textWarning}>Ricavo</span> eventuale (€)
+			</span>
+			<Field value={ricavo()} />
+			<span>
+				<span class={color.textSuccess}>Guadagno</span> eventuale (€)
+			</span>
+			<Field value={APPROX_IMPORTO(ricavo() - spesa())} />
 			Turni iniziali saltati
-			<input type="number" min={0} value={saltati()} onInput={e => setSaltati(e.currentTarget.valueAsNumber)} />
+			<Field value={saltati()} setter={setSaltati} />
 			Numero puntata
-			<input type="number" readOnly class={`${style.important} ${util.input}`} value={volta()} />
+			<Field important value={volta()} setter={setVolta} />
 			Probabilità di vittoria (%)
-			<input type="number" readOnly class={util.input} value={APPROX_PERC(100 * (1 - (1 - CHANCE) ** volta()))} />
+			<Field value={APPROX_PERC(100 * (1 - (1 - CHANCE) ** volta()))} />
 			<div class={util.control}>
 				<button title="Vittoria" class={`${layout.align} ${color.backSuccess}`} onClick={() => (setSpesa(0), setVolta(DEFAULT_VOLTA))}>
 					<i class="fa-duotone fa-sack-dollar" />
 				</button>
-				<button title="Sconfitta" class={`${layout.align} ${color.backDanger}`} onClick={() => (setSpesa(x => APPROX_IMPORTO(x + current())), setVolta(x => x + 1))}>
+				<button title="Sconfitta" class={`${layout.align} ${color.backDanger}`} onClick={() => (setSpesa(perdita()), setVolta(x => x + 1))}>
 					<i class="fa-duotone fa-hand-holding-dollar" />
 				</button>
 			</div>
 		</div>
+	</>
+}
+
+/** Componente che rappresenta un campo da input della pagina */
+function Field(props: { value: number, step?: number, important?: boolean, setter?: Setter<number> }) {
+	const setter = createMemo(() => props.setter);
+	return <>
+		<input
+			type="number"
+			min={0}
+			step={props.step}
+			class={util.input}
+			readOnly={!setter()}
+			value={props.value}
+			classList={{ [style.important]: props.important }}
+			onInput={e => setter()?.(e.target.valueAsNumber || 0)}
+		/>
 	</>
 }
 
