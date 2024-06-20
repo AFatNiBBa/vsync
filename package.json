@@ -4,7 +4,7 @@
     "build": "npm run build -w package/vsync",
     "start": "npm run start -w package/vsync",
     "production": "npm run production -w package/vsync",
-    "copy": "npm run copy -w package/vsync",
+    "save": "npm run save -w package/vsync",
     "style": "npm run start -w package/style",
 		"clean": "git clean -Xdf"
   },

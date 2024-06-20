@@ -5,7 +5,7 @@
     "build": "vinxi build",
     "start": "vinxi dev --host --port 80",
     "production": "vinxi start --port 80",
-    "copy": "npm run build && scp -r ./.output root@vsync.it:/root/vsync/package/vsync/"
+    "save": "npm run build && scp -r ./.output root@vsync.it:/root/vsync/package/vsync/"
   },
   "dependencies": {
     "@seanalunni/epexp": "*",
