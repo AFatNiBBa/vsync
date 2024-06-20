@@ -4,7 +4,7 @@ import color from "@seanalunni/style/color";
 import layout from "@seanalunni/style/layout";
 import util from "../../style/util.module.scss";
 
-import { Setter, createMemo, createSignal } from "solid-js";
+import { Accessor, Setter, createMemo, createSignal, on } from "solid-js";
 
 /** Possibilità di vincere per ogni turno */
 const CHANCE = 1 / 3;
@@ -18,46 +18,35 @@ const APPROX_IMPORTO = createApprox(2), APPROX_PERC = createApprox(5);
 /** Calcolatore di puntate alla roulette col metodo di Fibonacci */
 export default function() {
 	const [ multiplier, setMultiplier ] = createSignal(.4);
-	const [ spesa, setSpesa ] = createSignal(0);
 	const [ saltati, setSaltati ] = createSignal(0);
 	const [ volta, setVolta ] = createSignal(DEFAULT_VOLTA);
-
-	const current = createMemo(() => APPROX_IMPORTO(fibonacciAt(saltati() + volta()) * multiplier()));
-	const perdita = createMemo(() => APPROX_IMPORTO(spesa() + current()));
-	const ricavo = createMemo(() => APPROX_IMPORTO(current() / CHANCE));
-
+	const result = solve(multiplier, () => saltati() + volta());
 	return <>
 		<div class={`${style.page} ${util.layer} ${layout.center}`}>
 			<h1>Metodo Fibonacci</h1>
 			Importo unitario (€)
 			<Field step={.1} value={multiplier()} setter={setMultiplier} />
 			Puntata corrente (€)
-			<Field important value={current()} />
+			<Field class={style.important} value={APPROX_IMPORTO(result().puntata)} />
 			Persi fino ad ora (€)
-			<Field value={spesa()} />
-			<span>
-				<span class={color.textDanger}>Perdita</span> eventuale (€)
-			</span>
-			<Field value={perdita()} />
-			<span>
-				<span class={color.textWarning}>Ricavo</span> eventuale (€)
-			</span>
-			<Field value={ricavo()} />
-			<span>
-				<span class={color.textSuccess}>Guadagno</span> eventuale (€)
-			</span>
-			<Field value={APPROX_IMPORTO(ricavo() - spesa())} />
+			<Field value={APPROX_IMPORTO(result().spesa)} />
+			Perdita eventuale (€)
+			<Field class={color.textDanger} value={APPROX_IMPORTO(result().perdita)} />
+			Ricavo eventuale (€)
+			<Field class={color.textWarning} value={APPROX_IMPORTO(result().ricavo)} />
+			Guadagno eventuale (€)
+			<Field class={color.textSuccess} value={APPROX_IMPORTO(result().guadagno)} />
 			Turni iniziali saltati
 			<Field value={saltati()} setter={setSaltati} />
 			Numero puntata
-			<Field important value={volta()} setter={setVolta} />
+			<Field class={style.important} value={volta()} setter={setVolta} />
 			Probabilità di vittoria (%)
 			<Field value={APPROX_PERC(100 * (1 - (1 - CHANCE) ** volta()))} />
 			<div class={util.control}>
-				<button title="Vittoria" class={`${layout.align} ${color.backSuccess}`} onClick={() => (setSpesa(0), setVolta(DEFAULT_VOLTA))}>
+				<button title="Vittoria" class={`${layout.align} ${color.backSuccess}`} onClick={() => setVolta(DEFAULT_VOLTA)}>
 					<i class="fa-duotone fa-sack-dollar" />
 				</button>
-				<button title="Sconfitta" class={`${layout.align} ${color.backDanger}`} onClick={() => (setSpesa(perdita()), setVolta(x => x + 1))}>
+				<button title="Sconfitta" class={`${layout.align} ${color.backDanger}`} onClick={() => setVolta(x => x + 1)}>
 					<i class="fa-duotone fa-hand-holding-dollar" />
 				</button>
 			</div>
@@ -66,20 +55,37 @@ export default function() {
 }
 
 /** Componente che rappresenta un campo da input della pagina */
-function Field(props: { value: number, step?: number, important?: boolean, setter?: Setter<number> }) {
+function Field(props: { step?: number, class?: string, value: number, setter?: Setter<number> }) {
 	const setter = createMemo(() => props.setter);
 	return <>
 		<input
-			type="number"
 			min={0}
+			type="number"
 			step={props.step}
-			class={util.input}
 			readOnly={!setter()}
 			value={props.value}
-			classList={{ [style.important]: props.important }}
+			class={`${util.input} ${props.class ?? ""}`}
 			onInput={e => setter()?.(e.target.valueAsNumber || 0)}
 		/>
 	</>
+}
+
+/**
+ * Genera un'{@link Accessor} reattivo che restituisce il calcolo della puntata corrente
+ * @param mul Moltiplicatore da utilizzare per la puntata
+ * @param i Numero della puntata
+ */
+function solve(mul: Accessor<number>, i: Accessor<number>) {
+	return createMemo(on([ mul, i ], ([ multiplier, volta ]) => {
+		var puntata = 0, spesa = 0;
+		for (const elm of fibonacci())
+			if (puntata = elm * multiplier, volta-- > 0)
+				spesa += puntata;
+			else
+				break;
+		const ricavo = puntata / CHANCE;
+		return { puntata, spesa, perdita: puntata + spesa, ricavo, guadagno: ricavo - spesa };
+	}));
 }
 
 /** Funzione che genera un'iteratore che emette la sequenza di Fibonacci */
@@ -89,17 +95,6 @@ function *fibonacci() {
 	yield last;
 	for (var curr: number; true; prev = last, last = curr)
 		yield curr = prev + last;
-}
-
-/**
- * Funzione che ottiene l'elemento {@link n} della sequenza generata da {@link fibonacci}
- * @param n Indice in base 0 dell'elemento della sequenza di Fibonacci desiderato
- */
-function fibonacciAt(n: number) {
-	for (const elm of fibonacci())
-		if (n-- <= 0)
-			return elm;
-	throw new RangeError("La sequenza di Fibonacci si è interrotta (?)");
 }
 
 /**
