@@ -39,6 +39,7 @@ function Calculator() {
 	const generator = new IndexAwareFibonacciGenerator();
 	const [ unit, setUnit ] = createSignal(.4);
 	const [ skip, setSkip ] = createSignal(0);
+	const [ virtual, setVirtual ] = createSignal(0);
 	const [ volta, setVolta ] = createSignal(DEFAULT_VOLTA);
 	const result = createMemo(on([ unit, skip, volta ], x => solve(generator, ...x)));
 	return <>
@@ -60,8 +61,10 @@ function Calculator() {
 			<Field value={skip()} setter={setSkip} />
 			Numero puntata
 			<Field class={style.important} value={volta()} setter={setVolta} />
+			Sconfitte virtuali
+			<Field value={virtual()} setter={setVirtual} />
 			Probabilità di vittoria (%)
-			<Field cifre={5} value={100 * (1 - (1 - CHANCE) ** volta())} />
+			<Field cifre={5} value={100 * (1 - (1 - CHANCE) ** (virtual() + volta()))} />
 			<div class={util.control}>
 				<button title="Vittoria" class={`${layout.align} ${color.backSuccess}`} onClick={() => setVolta(DEFAULT_VOLTA)}>
 					<i class="fa-duotone fa-sack-dollar" />
