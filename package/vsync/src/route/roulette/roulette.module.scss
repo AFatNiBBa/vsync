@@ -1,6 +1,22 @@
 
 .page {
 	display: grid;
+	width: 100vw;
+	height: 100vh;
+
+	align-items: center;
+	justify-items: center;
+
+	> .header {
+		grid-column: 1 / -1;
+		display: grid;
+		grid: 1fr / repeat(2, 1fr);
+		gap: 1em;
+	}
+}
+
+.calculator {
+	display: grid;
 	grid-template-columns: max-content 1fr;
 	padding: 1ch;
 	gap: 1ch;

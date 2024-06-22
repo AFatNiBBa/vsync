@@ -4,7 +4,7 @@ import color from "@seanalunni/style/color";
 import layout from "@seanalunni/style/layout";
 import util from "../../style/util.module.scss";
 
-import { Setter, createMemo, createSignal, on } from "solid-js";
+import { For, Setter, createMemo, createSignal, on } from "solid-js";
 
 /** Possibilità di vincere per ogni turno */
 const CHANCE = 1 / 3;
@@ -14,13 +14,34 @@ const DEFAULT_VOLTA = 1;
 
 /** Calcolatore di puntate alla roulette col metodo di Fibonacci */
 export default function() {
+	const [ row, setRow ] = createSignal(1);
+	const [ col, setCol ] = createSignal(1);
+	return <>
+		<div class={style.page} style={{ grid: `auto repeat(${row()}, 1fr) / repeat(${col()}, 1fr)` }}>
+			<div class={style.header}>
+				<Field title="Riga" value={row()} setter={setRow} />
+				<Field title="Colonna" value={col()} setter={setCol} />
+			</div>
+			<For each={Array(row())}>
+				{() => <>
+					<For each={Array(col())}>
+						{() => <Calculator />}
+					</For>
+				</>}
+			</For>
+		</div>
+	</>
+}
+
+/** Singolo calcolatore del metodo di Fibonacci */
+function Calculator() {
 	const [ unit, setUnit ] = createSignal(.4);
 	const [ skip, setSkip ] = createSignal(0);
 	const [ volta, setVolta ] = createSignal(DEFAULT_VOLTA);
 	const result = createMemo(on([ unit, skip, volta ], x => solve(...x)));
 	return <>
-		<div class={`${style.page} ${util.layer} ${layout.center}`}>
-			<h1>Metodo Fibonacci</h1>
+		<div class={`${style.calculator} ${util.layer}`}>
+			<h1 contentEditable>Metodo Fibonacci</h1>
 			Importo unitario (€)
 			<Field step={.1} value={unit()} setter={setUnit} />
 			Puntata corrente (€)
@@ -52,7 +73,7 @@ export default function() {
 }
 
 /** Componente che rappresenta un campo da input della pagina */
-function Field(props: { cifre?: number, step?: number, class?: string, value: number, setter?: Setter<number> }) {
+function Field(props: { title?: string, cifre?: number, step?: number, class?: string, value: number, setter?: Setter<number> }) {
 	const setter = createMemo(() => props.setter);
 	const mul = createMemo(() => 10 ** (props.cifre ?? 2));
 	return <>
@@ -60,6 +81,7 @@ function Field(props: { cifre?: number, step?: number, class?: string, value: nu
 			min={0}
 			type="number"
 			step={props.step}
+			title={props.title}
 			readOnly={!setter()}
 			value={Math.round(props.value * mul()) / mul()}
 			class={`${util.input} ${props.class ?? ""}`}
