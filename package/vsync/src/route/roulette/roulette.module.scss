@@ -8,6 +8,7 @@
 	justify-items: center;
 
 	> .header {
+		padding: 1ch;
 		grid-column: 1 / -1;
 		display: grid;
 		grid: 1fr / repeat(2, 1fr);

@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@seanalunni/epexp": "*",
+    "@seanalunni/fibonacci": "*",
     "@seanalunni/style": "*",
     "@solidjs/meta": "^0.29.3",
     "@solidjs/router": "^0.13.1",

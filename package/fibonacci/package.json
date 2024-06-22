@@ -1,0 +1,4 @@
+{
+	"name": "@seanalunni/fibonacci",
+	"main": "./src/index.ts"
+}
