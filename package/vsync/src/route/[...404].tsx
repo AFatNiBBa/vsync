@@ -2,6 +2,7 @@
 import color from "@seanalunni/style/color";
 import layout from "@seanalunni/style/layout";
 
+import FileCircleExclamation from "solid-fa6-pro/duotone/file-circle-exclamation";
 import { A, RouteSectionProps } from "@solidjs/router";
 import { HttpStatusCode } from "@solidjs/start";
 import { Title } from "@solidjs/meta";
@@ -15,7 +16,7 @@ export default function(props: RouteSectionProps) {
 			<div style={{ "text-align": "center" }}>
 				<h1 style={{ "font-size": "3em" }}>
 					Errore 404 -{" "}
-					<i class={`fa-duotone fa-file-circle-exclamation ${color.textDanger}`} />
+					<FileCircleExclamation class={color.textDanger} />
 				</h1>
 				<p>La pagina <b>"{props.location.pathname}"</b> non esiste</p>
 				<A href="/?">Home</A>

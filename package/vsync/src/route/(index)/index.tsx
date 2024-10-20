@@ -4,15 +4,28 @@ import color from "@seanalunni/style/color";
 import layout from "@seanalunni/style/layout";
 import util from "../../style/util.module.scss";
 
-import { JSX, ParentProps, Show, createMemo, createResource, createUniqueId } from "solid-js";
+import Link from "solid-fa6-pro/duotone/link";
+import Hashtag from "solid-fa6-pro/duotone/hashtag";
+import CaretLeft from "solid-fa6-pro/solid/caret-left";
+import Stopwatch from "solid-fa6-pro/duotone/stopwatch";
+import CaretRight from "solid-fa6-pro/solid/caret-right";
+import CircleCheck from "solid-fa6-pro/duotone/circle-check";
+import CircleXmark from "solid-fa6-pro/duotone/circle-xmark";
+import Stopwatch_20 from "solid-fa6-pro/duotone/stopwatch-20";
+import SpinnerThird from "solid-fa6-pro/duotone/spinner-third";
+import { JSX, Match, ParentProps, Show, Switch, createMemo, createResource, createUniqueId } from "solid-js";
 import { getAnimeWorldVideoUrl } from "../api/animeworld";
 import { EpExp, parseEpExp } from "@seanalunni/epexp";
 import { copyText, parseTime } from "../../lib/util";
+import { DEFAULT_ICON_SIZE } from "solid-fa6-pro";
 import { useSearchParams } from "@solidjs/router";
 import { Result } from "../../lib/result";
 
 /** Episodio di default se non viene fornito uno esplicitamente */
 const DEFAULT_EPISODE = "1°";
+
+/** Enumeratore che rappresenta lo stato di caricamento del video */
+enum State { ok, fail, loading }
 
 /** Pagina iniziale dell'applicazione */
 export default function() {
@@ -52,7 +65,7 @@ export default function() {
 						{/* Se lo spazio lo metto sotto ci mette un'altro spazio */}
 						{/* Il `nbsp;` è necessario perchè il testo è su una flexbox */}
 						Episodio&nbsp;
-						<i class={`fad ${state()}`} title={(url()?.err as Error)?.message} />
+						<ViewState state={state()} message={(url()?.err as Error)?.message} />
 					</Field>
 					<Field
 						readOnly
@@ -63,23 +76,23 @@ export default function() {
 					/>
 					<div class={util.control}>
 						<button title="Episodio precedente" class={`${layout.align} ${color.backSecondary}`} onClick={() => setEp(x => `${x}-`)}>
-							<i class="fa-solid fa-caret-left" />
+							<CaretLeft />
 						</button>
 						<button title="Episodio successivo" class={`${layout.align} ${color.backSecondary}`} onClick={() => setEp(x => `${x}+`)}>
-							<i class="fa-solid fa-caret-right" />
+							<CaretRight />
 						</button>
 						<button title="Copia link" class={`${layout.align} ${color.backPrimary}`} onClick={() => copyText(location.href)}>
-							<i class="fa-duotone fa-link" />
+							<Link />
 						</button>
 						<button title="Formatta l'espressione di riferimento all'episodio" class={`${layout.align} ${color.backInfo}`} onClick={() => setEp(x => parseEpExp(x).toString())}>
-							<i class="fa-duotone fa-hashtag" />
+							<Hashtag />
 						</button>
 						<button title="Scrivi il minutaggio sul link" class={`${layout.align} ${color.backSuccess}`} onClick={() => setParams({ time: video.currentTime.toString() } satisfies search)}>
-							<i class="fa-duotone fa-stopwatch-20" />
+							<Stopwatch_20 />
 						</button>
 						<Show when={params.time}>
 							<button title="Cancella il minutaggio dal link" class={`${layout.align} ${color.backDanger}`} onClick={() => setParams({ time: undefined } satisfies search)}>
-								<i class="fa-duotone fa-stopwatch" />
+								<Stopwatch />
 							</button>
 						</Show>
 					</div>
@@ -112,6 +125,27 @@ function Field(props: ParentProps<{ value?: string, onInput?(x: string): void, d
 	</>
 }
 
+/** Icona per visualizzare uno {@link State} */
+function ViewState(props: { state: State, message: string }) {
+	const state = createMemo(() => props.state);
+	return <>
+		{/* Applico l'altezza per allineare verticalmente (Solito problema che ancora non ho capito) */}
+		<span title={props.message} style={{ height: DEFAULT_ICON_SIZE }}>
+			<Switch>
+				<Match when={state() === State.ok}>
+					<CircleCheck class={color.textSuccess} />
+				</Match>
+				<Match when={state() === State.fail}>
+					<CircleXmark class={color.textDanger} />
+				</Match>
+				<Match when={state() === State.loading}>
+					<SpinnerThird class={color.textWarning} />
+				</Match>
+			</Switch>
+		</span>
+	</>
+}
+
 /**
  * Come {@link getAnimeWorldVideoUrl} ma prende in input una stringa al posto di un {@link EpExp} perchè "seroval" di merda non è in grado di serializzalli
  * @param name Nome della serie richiesta
@@ -122,15 +156,4 @@ async function bridge(name: string | undefined, ep = DEFAULT_EPISODE) {
 	"use server";
 	if (!name) throw new RangeError("Non è stato fornito il nome della serie");
 	return (await getAnimeWorldVideoUrl(name, parseEpExp(ep))).href;
-}
-
-/**
- * Enumeratore che rappresenta lo stato di caricamento del video.
- * Non è un `enum` perchè non permettono l'interpolazione.
- * Non è un `namespace` a causa di [questo](https://github.com/solidjs/solid-start/issues/1438)
- */
-abstract class State {
-	static readonly ok = `fa-check-circle ${color.textSuccess}`;
-	static readonly fail = `fa-times-circle ${color.textDanger}`;
-	static readonly loading = `fa-spinner-third ${color.textWarning} fa-spin`;
 }

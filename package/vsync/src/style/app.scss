@@ -5,9 +5,6 @@
 // Imposta lo schema di colori dell'applicazione con quello preferito dall'utente
 :root { color-scheme: dark light; }
 
-// Fa sì che non vengano tagliate le icone di Font Awesome
-i[class*=fa-] { overflow: visible; }
-
 // Imposta il font di base
 body {
 	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";

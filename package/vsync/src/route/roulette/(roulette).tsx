@@ -4,6 +4,8 @@ import color from "@seanalunni/style/color";
 import layout from "@seanalunni/style/layout";
 import util from "../../style/util.module.scss";
 
+import SackDollar from "solid-fa6-pro/duotone/sack-dollar";
+import HandHoldingDollar from "solid-fa6-pro/duotone/hand-holding-dollar";
 import { For, Setter, createMemo, createSignal, on } from "solid-js";
 import { IndexAwareFibonacciGenerator } from "@seanalunni/fibonacci";
 
@@ -67,10 +69,10 @@ function Calculator() {
 			<Field cifre={5} value={100 * (1 - (1 - CHANCE) ** (virtual() + volta()))} />
 			<div class={util.control}>
 				<button title="Vittoria" class={`${layout.align} ${color.backSuccess}`} onClick={() => setVolta(DEFAULT_VOLTA)}>
-					<i class="fa-duotone fa-sack-dollar" />
+					<SackDollar />
 				</button>
 				<button title="Sconfitta" class={`${layout.align} ${color.backDanger}`} onClick={() => setVolta(x => x + 1)}>
-					<i class="fa-duotone fa-hand-holding-dollar" />
+					<HandHoldingDollar />
 				</button>
 			</div>
 		</div>

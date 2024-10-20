@@ -16,6 +16,7 @@
     "@solidjs/start": "^1.0.9",
     "node-html-parser": "^6.1.13",
     "sass": "^1.80.3",
+    "solid-fa6-pro": "*",
     "solid-js": "^1.9.2",
     "vinxi": "^0.4.3"
   }
