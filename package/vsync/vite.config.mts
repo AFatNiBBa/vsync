@@ -9,6 +9,13 @@ export default defineConfig({
 	vite: {
 		build: {
 			minify: false
+		},
+		css: {
+			preprocessorOptions: {
+				scss: {
+					api: 'modern-compiler'
+				}
+			}
 		}
 	} satisfies UserConfig
 });

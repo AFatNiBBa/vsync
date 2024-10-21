@@ -15,9 +15,9 @@ import Stopwatch_20 from "solid-fa6-pro/duotone/stopwatch-20";
 import SpinnerThird from "solid-fa6-pro/duotone/spinner-third";
 import { JSX, Match, ParentProps, Show, Switch, createMemo, createResource, createUniqueId } from "solid-js";
 import { getAnimeWorldVideoUrl } from "../api/animeworld";
+import { anim, DEFAULT_ICON_SIZE } from "solid-fa6-pro";
 import { EpExp, parseEpExp } from "@seanalunni/epexp";
 import { copyText, parseTime } from "../../lib/util";
-import { DEFAULT_ICON_SIZE } from "solid-fa6-pro";
 import { useSearchParams } from "@solidjs/router";
 import { Result } from "../../lib/result";
 
@@ -139,7 +139,7 @@ function ViewState(props: { state: State, message: string }) {
 					<CircleXmark class={color.textDanger} />
 				</Match>
 				<Match when={state() === State.loading}>
-					<SpinnerThird class={color.textWarning} />
+					<SpinnerThird class={`${color.textWarning} ${anim.spin}`} />
 				</Match>
 			</Switch>
 		</span>
