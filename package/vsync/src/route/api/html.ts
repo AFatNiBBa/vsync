@@ -9,5 +9,5 @@ export function GET(event: APIEvent) {
 	const code = `${html || ""}<script>${js || ""}</script>`;
 	const headers = new Headers();
 	headers.set("Content-Type", "text/html");
-	return new Response(code, { headers })
+	return new Response(code, { headers });
 }
