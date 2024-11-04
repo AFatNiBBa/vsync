@@ -15,11 +15,11 @@ import Stopwatch_20 from "solid-fa6-pro/duotone/stopwatch-20";
 import SpinnerThird from "solid-fa6-pro/duotone/spinner-third";
 import { JSX, Match, ParentProps, Show, Switch, createMemo, createResource, createUniqueId } from "solid-js";
 import { getAnimeWorldVideoUrl } from "../api/animeworld";
-import { anim, DEFAULT_ICON_SIZE } from "solid-fa6-pro";
 import { EpExp, parseEpExp } from "@seanalunni/epexp";
 import { copyText, parseTime } from "../../lib/util";
 import { useSearchParams } from "@solidjs/router";
 import { Result } from "../../lib/result";
+import { anim } from "solid-fa6-pro";
 
 /** Episodio di default se non viene fornito uno esplicitamente */
 const DEFAULT_EPISODE = "1°";
@@ -62,10 +62,7 @@ export default function() {
 						onInput={x => setEp(() => x)}
 						detail="Espressione di riferimento ad episodio del video desiderato"
 					>
-						{/* Se lo spazio lo metto sotto ci mette un'altro spazio */}
-						{/* Il `nbsp;` è necessario perchè il testo è su una flexbox */}
-						Episodio&nbsp;
-						<ViewState state={state()} message={(url()?.err as Error)?.message} />
+						Episodi <ViewState state={state()} message={(url()?.err as Error)?.message} />
 					</Field>
 					<Field
 						readOnly
@@ -75,23 +72,23 @@ export default function() {
 						detail="Link diretto al video in riproduzione"
 					/>
 					<div class={util.control}>
-						<button title="Episodio precedente" class={`${layout.align} ${color.backSecondary}`} onClick={() => setEp(x => `${x}-`)}>
+						<button title="Episodio precedente" class={color.backSecondary} onClick={() => setEp(x => `${x}-`)}>
 							<CaretLeft />
 						</button>
-						<button title="Episodio successivo" class={`${layout.align} ${color.backSecondary}`} onClick={() => setEp(x => `${x}+`)}>
+						<button title="Episodio successivo" class={color.backSecondary} onClick={() => setEp(x => `${x}+`)}>
 							<CaretRight />
 						</button>
-						<button title="Copia link" class={`${layout.align} ${color.backPrimary}`} onClick={() => copyText(location.href)}>
+						<button title="Copia link" class={color.backPrimary} onClick={() => copyText(location.href)}>
 							<Link />
 						</button>
-						<button title="Formatta l'espressione di riferimento all'episodio" class={`${layout.align} ${color.backInfo}`} onClick={() => setEp(x => parseEpExp(x).toString())}>
+						<button title="Formatta l'espressione di riferimento all'episodio" class={color.backInfo} onClick={() => setEp(x => parseEpExp(x).toString())}>
 							<Hashtag />
 						</button>
-						<button title="Scrivi il minutaggio sul link" class={`${layout.align} ${color.backSuccess}`} onClick={() => setParams({ time: video.currentTime.toString() } satisfies search)}>
+						<button title="Scrivi il minutaggio sul link" class={color.backSuccess} onClick={() => setParams({ time: video.currentTime.toString() } satisfies search)}>
 							<Stopwatch_20 />
 						</button>
 						<Show when={params.time}>
-							<button title="Cancella il minutaggio dal link" class={`${layout.align} ${color.backDanger}`} onClick={() => setParams({ time: undefined } satisfies search)}>
+							<button title="Cancella il minutaggio dal link" class={color.backDanger} onClick={() => setParams({ time: undefined } satisfies search)}>
 								<Stopwatch />
 							</button>
 						</Show>
@@ -129,20 +126,17 @@ function Field(props: ParentProps<{ value?: string, onInput?(x: string): void, d
 function ViewState(props: { state: State, message: string }) {
 	const state = createMemo(() => props.state);
 	return <>
-		{/* Applico l'altezza per allineare verticalmente (Solito problema che ancora non ho capito) */}
-		<span title={props.message} style={{ height: DEFAULT_ICON_SIZE }}>
-			<Switch>
-				<Match when={state() === State.ok}>
-					<CircleCheck class={color.textSuccess} />
-				</Match>
-				<Match when={state() === State.fail}>
-					<CircleXmark class={color.textDanger} />
-				</Match>
-				<Match when={state() === State.loading}>
-					<SpinnerThird class={`${color.textWarning} ${anim.spin}`} />
-				</Match>
-			</Switch>
-		</span>
+		<Switch>
+			<Match when={state() === State.ok}>
+				<CircleCheck title={props.message} class={color.textSuccess} />
+			</Match>
+			<Match when={state() === State.fail}>
+				<CircleXmark title={props.message} class={color.textDanger} />
+			</Match>
+			<Match when={state() === State.loading}>
+				<SpinnerThird title={props.message} class={`${color.textWarning} ${anim.spin}`} />
+			</Match>
+		</Switch>
 	</>
 }
 
