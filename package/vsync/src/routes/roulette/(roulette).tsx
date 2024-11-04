@@ -3,10 +3,9 @@ import style from "./roulette.module.scss";
 import color from "@seanalunni/style/color";
 import util from "../../style/util.module.scss";
 
-import SackDollar from "solid-fa6-pro/duotone/sack-dollar";
-import HandHoldingDollar from "solid-fa6-pro/duotone/hand-holding-dollar";
 import { For, Setter, createMemo, createSignal, on } from "solid-js";
 import { IndexAwareFibonacciGenerator } from "@seanalunni/fibonacci";
+import { icon } from "~/lib/icon";
 
 /** Possibilità di vincere per ogni turno */
 const CHANCE = 1 / 3;
@@ -68,10 +67,10 @@ function Calculator() {
 			<Field cifre={5} value={100 * (1 - (1 - CHANCE) ** (virtual() + volta()))} />
 			<div class={util.control}>
 				<button title="Vittoria" class={color.backSuccess} onClick={() => setVolta(DEFAULT_VOLTA)}>
-					<SackDollar />
+					<icon.SackDollar />
 				</button>
 				<button title="Sconfitta" class={color.backDanger} onClick={() => setVolta(x => x + 1)}>
-					<HandHoldingDollar />
+					<icon.HandHoldingDollar />
 				</button>
 			</div>
 		</div>

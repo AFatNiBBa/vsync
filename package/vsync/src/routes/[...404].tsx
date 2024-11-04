@@ -2,13 +2,13 @@
 import color from "@seanalunni/style/color";
 import layout from "@seanalunni/style/layout";
 
-import FileCircleExclamation from "solid-fa6-pro/duotone/file-circle-exclamation";
 import { A, RouteSectionProps } from "@solidjs/router";
 import { APIEvent } from "@solidjs/start/server";
 import { HttpStatusCode } from "@solidjs/start";
 import { readFile } from "fs/promises";
 import { Title } from "@solidjs/meta";
 import { dirname, join } from "path";
+import { icon } from "~/lib/icon";
 
 /**
  * Endpoint che si assicura che tutti i file dentro la cartella public vengano effettivamente resi pubblici.
@@ -34,7 +34,7 @@ export default function(props: RouteSectionProps) {
 		<Title>Vsync - Not Found</Title>
 		<div class={layout.center} style={{ "text-align": "center" }}>
 			<h1 class={layout.align} style={{ "font-size": "300%" }}>
-				Errore 404 -&nbsp;<FileCircleExclamation class={color.textDanger} />
+				Errore 404 -&nbsp;<icon.FileCircleExclamation class={color.textDanger} />
 			</h1>
 			<p>La pagina <b>"{props.location.pathname}"</b> non esiste</p>
 			<A href="/?">Home</A>

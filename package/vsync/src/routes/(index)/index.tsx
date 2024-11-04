@@ -4,15 +4,6 @@ import color from "@seanalunni/style/color";
 import layout from "@seanalunni/style/layout";
 import util from "../../style/util.module.scss";
 
-import Link from "solid-fa6-pro/duotone/link";
-import Hashtag from "solid-fa6-pro/duotone/hashtag";
-import CaretLeft from "solid-fa6-pro/solid/caret-left";
-import Stopwatch from "solid-fa6-pro/duotone/stopwatch";
-import CaretRight from "solid-fa6-pro/solid/caret-right";
-import CircleCheck from "solid-fa6-pro/duotone/circle-check";
-import CircleXmark from "solid-fa6-pro/duotone/circle-xmark";
-import Stopwatch_20 from "solid-fa6-pro/duotone/stopwatch-20";
-import SpinnerThird from "solid-fa6-pro/duotone/spinner-third";
 import { JSX, Match, ParentProps, Show, Switch, createMemo, createResource, createUniqueId } from "solid-js";
 import { getAnimeWorldVideoUrl } from "../api/animeworld";
 import { EpExp, parseEpExp } from "@seanalunni/epexp";
@@ -20,6 +11,7 @@ import { copyText, parseTime } from "../../lib/util";
 import { useSearchParams } from "@solidjs/router";
 import { Result } from "../../lib/result";
 import { anim } from "solid-fa6-pro";
+import { icon } from "~/lib/icon";
 
 /** Episodio di default se non viene fornito uno esplicitamente */
 const DEFAULT_EPISODE = "1°";
@@ -73,23 +65,23 @@ export default function() {
 					/>
 					<div class={util.control}>
 						<button title="Episodio precedente" class={color.backSecondary} onClick={() => setEp(x => `${x}-`)}>
-							<CaretLeft />
+							<icon.CaretLeft />
 						</button>
 						<button title="Episodio successivo" class={color.backSecondary} onClick={() => setEp(x => `${x}+`)}>
-							<CaretRight />
+							<icon.CaretRight />
 						</button>
 						<button title="Copia link" class={color.backPrimary} onClick={() => copyText(location.href)}>
-							<Link />
+							<icon.Link />
 						</button>
 						<button title="Formatta l'espressione di riferimento all'episodio" class={color.backInfo} onClick={() => setEp(x => parseEpExp(x).toString())}>
-							<Hashtag />
+							<icon.Hashtag />
 						</button>
 						<button title="Scrivi il minutaggio sul link" class={color.backSuccess} onClick={() => setParams({ time: video.currentTime.toString() } satisfies search)}>
-							<Stopwatch_20 />
+							<icon.Stopwatch_20 />
 						</button>
 						<Show when={params.time}>
 							<button title="Cancella il minutaggio dal link" class={color.backDanger} onClick={() => setParams({ time: undefined } satisfies search)}>
-								<Stopwatch />
+								<icon.Stopwatch />
 							</button>
 						</Show>
 					</div>
@@ -128,13 +120,13 @@ function ViewState(props: { state: State, message: string }) {
 	return <>
 		<Switch>
 			<Match when={state() === State.ok}>
-				<CircleCheck title={props.message} class={color.textSuccess} />
+				<icon.CircleCheck title={props.message} class={color.textSuccess} />
 			</Match>
 			<Match when={state() === State.fail}>
-				<CircleXmark title={props.message} class={color.textDanger} />
+				<icon.CircleXmark title={props.message} class={color.textDanger} />
 			</Match>
 			<Match when={state() === State.loading}>
-				<SpinnerThird title={props.message} class={`${color.textWarning} ${anim.spin}`} />
+				<icon.SpinnerThird title={props.message} class={`${color.textWarning} ${anim.spin}`} />
 			</Match>
 		</Switch>
 	</>
