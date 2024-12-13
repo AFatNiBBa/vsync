@@ -28,7 +28,7 @@ export default function() {
 	const setEp = (f: (x: string) => string) => setParams({ ep: f(params.ep || DEFAULT_EPISODE), time: undefined } satisfies search);
 	var video!: HTMLVideoElement;
 	return <>
-		<div class={style.host}>
+		<div class={`${style.host} ${layout.root}`}>
 			<div class={style.page}>
 				<video
 					controls

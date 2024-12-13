@@ -1,4 +1,11 @@
 
+.root {
+	// Root of the page (The body has some unwanted behaviours that can't be removed)
+	width: 100dvw;
+	height: 100dvh;
+	overflow: auto;
+}
+
 .host {
 	// Stays compact (And provides a great layout for children, since I need to provide one)
 	display: inline grid;
@@ -16,18 +23,9 @@
 	height: 100%;
 }
 
-.align {
+.center {
 	// Centers the content
 	display: flex;
 	align-items: center;
 	justify-content: center;
-}
-
-.center {
-	// Centers itself
-	width: fit-content;
-	height: fit-content;
-	position: absolute;
-	margin: auto;
-	inset: 0;
 }

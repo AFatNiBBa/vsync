@@ -8,17 +8,11 @@
 
 	button { cursor: pointer; }
 
-	body {
-		min-height: 100dvh;
-		margin: 0;
-	}
+	body { margin: 0; }
 
 	::before, ::after {
 		@at-root :not(h1, h2, h3, h4, h5, h6, b, i), & { font: inherit; }
 
-		@at-root *, & {
-			box-sizing: border-box;
-			position: relative;
-		}
+		@at-root *, & { box-sizing: border-box; }
 	}
 }

@@ -32,12 +32,14 @@ export default function(props: RouteSectionProps) {
 	return <>
 		<HttpStatusCode code={404} />
 		<Title>Vsync - Not Found</Title>
-		<div class={layout.center} style={{ "text-align": "center" }}>
-			<h1 class={layout.align} style={{ "font-size": "300%" }}>
-				Errore 404 -&nbsp;<icon.FileCircleExclamation class={color.textDanger} />
-			</h1>
-			<p>La pagina <b>"{props.location.pathname}"</b> non esiste</p>
-			<A href="/?">Home</A>
+		<div class={`${layout.root} ${layout.center}`}>
+			<div style={{ "text-align": "center" }}>
+				<h1 style={{ "font-size": "300%" }}>
+					Errore 404 - <icon.FileCircleExclamation class={color.textDanger} />
+				</h1>
+				<p>La pagina <b>"{props.location.pathname}"</b> non esiste</p>
+				<A href="/?">Home</A>
+			</div>
 		</div>
 	</>
 }

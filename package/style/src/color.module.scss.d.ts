@@ -1,4 +1,4 @@
-declare const classNames: {
+declare const color: {
   readonly textPrimary: "textPrimary";
   readonly backPrimary: "backPrimary";
   readonly textSecondary: "textSecondary";
@@ -12,4 +12,4 @@ declare const classNames: {
   readonly textInfo: "textInfo";
   readonly backInfo: "backInfo";
 };
-export = classNames;
+export = color;

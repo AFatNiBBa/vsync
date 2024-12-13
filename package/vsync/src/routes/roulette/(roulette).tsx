@@ -1,6 +1,7 @@
 
 import style from "./roulette.module.scss";
 import color from "@seanalunni/style/color";
+import layout from "@seanalunni/style/layout";
 import util from "../../style/util.module.scss";
 
 import { For, Setter, createMemo, createSignal, on } from "solid-js";
@@ -18,7 +19,7 @@ export default function() {
 	const [ row, setRow ] = createSignal(1);
 	const [ col, setCol ] = createSignal(1);
 	return <>
-		<div class={style.page} style={{ grid: `auto repeat(${row()}, 1fr) / repeat(${col()}, 1fr)` }}>
+		<div class={`${style.page} ${layout.root}`} style={{ grid: `auto repeat(${row()}, 1fr) / repeat(${col()}, 1fr)` }}>
 			<div class={style.header}>
 				<Field title="Riga" value={row()} setter={setRow} />
 				<Field title="Colonna" value={col()} setter={setCol} />

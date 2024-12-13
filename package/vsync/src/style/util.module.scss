@@ -1,14 +1,18 @@
 
 .input:read-only { filter: invert(.2); }
 
-.layer::after {
-	content: "";
-	position: absolute;
-	z-index: -1;										// Si assicura che lo sfondo non vada sopra al contenuto
-	inset: 0;
+.layer {
+	position: relative;
 
-	background-color: #00000030;
-	filter: invert(.5);							// Il filtro viene applicato solo allo sfondo semi-trasparente e serve per adattare la pagina alla modalità scura
+	&::after {
+		content: "";
+		position: absolute;
+		z-index: -1;										// Si assicura che lo sfondo non vada sopra al contenuto
+		inset: 0;
+	
+		background-color: #00000030;
+		filter: invert(.5);							// Il filtro viene applicato solo allo sfondo semi-trasparente e serve per adattare la pagina alla modalità scura
+	}
 }
 
 .control {
