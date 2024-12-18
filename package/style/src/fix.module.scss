@@ -1,5 +1,7 @@
 
 @layer fix {
+	:root { interpolate-size: allow-keywords; }
+
 	:focus-visible { outline: unset; }
 
 	input[type=checkbox] { margin: 0; }
