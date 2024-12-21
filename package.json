@@ -3,9 +3,10 @@
   "scripts": {
     "build": "npm run build -w package/vsync",
     "start": "npm run start -w package/vsync",
+    "icon": "npm run icon -w package/vsync",
     "save": "npm run save -w package/vsync",
     "style": "npm run start -w package/style",
-		"clean": "git clean -Xdf"
+    "clean": "git clean -Xdf"
   },
   "workspaces": [
     "package/*"

@@ -10,7 +10,7 @@ import { EpExp, parseEpExp } from "@seanalunni/epexp";
 import { copyText, parseTime } from "../../lib/util";
 import { useSearchParams } from "@solidjs/router";
 import { Result } from "../../lib/result";
-import { anim } from "solid-fa6-pro";
+import { anim } from "font-class";
 import { icon } from "~/lib/icon";
 
 /** Episodio di default se non viene fornito uno esplicitamente */
@@ -65,23 +65,23 @@ export default function() {
 					/>
 					<div class={util.control}>
 						<button title="Episodio precedente" class={color.backSecondary} onClick={() => setEp(x => `${x}-`)}>
-							<icon.CaretLeft />
+							<span class={icon.caretLeft} />
 						</button>
 						<button title="Episodio successivo" class={color.backSecondary} onClick={() => setEp(x => `${x}+`)}>
-							<icon.CaretRight />
+							<span class={icon.caretRight} />
 						</button>
 						<button title="Copia link" class={color.backPrimary} onClick={() => copyText(location.href)}>
-							<icon.Link />
+							<span class={icon.link} />
 						</button>
 						<button title="Formatta l'espressione di riferimento all'episodio" class={color.backInfo} onClick={() => setEp(x => parseEpExp(x).toString())}>
-							<icon.Hashtag />
+							<span class={icon.hashtag} />
 						</button>
 						<button title="Scrivi il minutaggio sul link" class={color.backSuccess} onClick={() => setParams({ time: video.currentTime.toString() } satisfies search)}>
-							<icon.Stopwatch_20 />
+							<span class={icon.stopwatch_20} />
 						</button>
 						<Show when={params.time}>
 							<button title="Cancella il minutaggio dal link" class={color.backDanger} onClick={() => setParams({ time: undefined } satisfies search)}>
-								<icon.Stopwatch />
+								<span class={icon.stopwatch} />
 							</button>
 						</Show>
 					</div>
@@ -120,13 +120,13 @@ function ViewState(props: { state: State, message: string }) {
 	return <>
 		<Switch>
 			<Match when={state() === State.ok}>
-				<icon.CircleCheck title={props.message} class={color.textSuccess} />
+				<span class={`${icon.circleCheck} ${color.textSuccess}`} />
 			</Match>
 			<Match when={state() === State.fail}>
-				<icon.CircleXmark title={props.message} class={color.textDanger} />
+				<span class={`${icon.circleXmark} ${color.textDanger}`} />
 			</Match>
 			<Match when={state() === State.loading}>
-				<icon.SpinnerThird title={props.message} class={`${color.textWarning} ${anim.spin}`} />
+				<span class={`${icon.spinnerThird} ${color.textWarning} ${anim.spin}`} />
 			</Match>
 		</Switch>
 	</>

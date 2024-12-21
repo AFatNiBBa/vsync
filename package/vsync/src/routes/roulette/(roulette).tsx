@@ -68,10 +68,10 @@ function Calculator() {
 			<Field cifre={5} value={100 * (1 - (1 - CHANCE) ** (virtual() + volta()))} />
 			<div class={util.control}>
 				<button title="Vittoria" class={color.backSuccess} onClick={() => setVolta(DEFAULT_VOLTA)}>
-					<icon.SackDollar />
+					<span class={icon.sackDollar} />
 				</button>
 				<button title="Sconfitta" class={color.backDanger} onClick={() => setVolta(x => x + 1)}>
-					<icon.HandHoldingDollar />
+					<span class={icon.handHoldingDollar} />
 				</button>
 			</div>
 		</div>

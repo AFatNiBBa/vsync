@@ -35,7 +35,7 @@ export default function(props: RouteSectionProps) {
 		<div class={`${layout.root} ${layout.center}`}>
 			<div style={{ "text-align": "center" }}>
 				<h1 style={{ "font-size": "300%" }}>
-					Errore 404 - <icon.FileCircleExclamation class={color.textDanger} />
+					Errore 404 - <span class={`${icon.fileCircleExclamation} ${color.textDanger}`} />
 				</h1>
 				<p>La pagina <b>"{props.location.pathname}"</b> non esiste</p>
 				<A href="/?">Home</A>

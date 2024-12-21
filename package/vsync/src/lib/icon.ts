@@ -1,29 +1,21 @@
-
-import Link from "solid-fa6-pro/duotone/link";
-import Hashtag from "solid-fa6-pro/duotone/hashtag";
-import CaretLeft from "solid-fa6-pro/solid/caret-left";
-import Stopwatch from "solid-fa6-pro/duotone/stopwatch";
-import CaretRight from "solid-fa6-pro/solid/caret-right";
-import SackDollar from "solid-fa6-pro/duotone/sack-dollar";
-import CircleCheck from "solid-fa6-pro/duotone/circle-check";
-import CircleXmark from "solid-fa6-pro/duotone/circle-xmark";
-import Stopwatch_20 from "solid-fa6-pro/duotone/stopwatch-20";
-import SpinnerThird from "solid-fa6-pro/duotone/spinner-third";
-import HandHoldingDollar from "solid-fa6-pro/duotone/hand-holding-dollar";
-import FileCircleExclamation from "solid-fa6-pro/duotone/file-circle-exclamation";
-
-/** Namespace contenente tutte le icone utilizzate nell'app */
-export const icon = {
-	Link,
-	Hashtag,
-	CaretLeft,
-	Stopwatch,
-	CaretRight,
-	SackDollar,
-	CircleCheck,
-	CircleXmark,
-	Stopwatch_20,
-	SpinnerThird,
-	HandHoldingDollar,
-	FileCircleExclamation
-};
+import { createFont } from "font-class";
+export namespace icon {
+  export const {
+    solid: {
+      caretLeft,
+      caretRight
+    },
+    duotone: {
+      stopwatch,
+      stopwatch_20,
+      circleCheck,
+      circleXmark,
+      spinnerThird,
+      link,
+      hashtag,
+      sackDollar,
+      handHoldingDollar,
+      fileCircleExclamation
+    }
+  } = createFont("data:font/woff2;base64,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", "0ceb937b", [["solid_caret-left", false], ["solid_caret-right", false], ["duotone_stopwatch", true], ["duotone_stopwatch-20", true], ["duotone_circle-check", true], ["duotone_circle-xmark", true], ["duotone_spinner-third", true], ["duotone_link", true], ["duotone_hashtag", true], ["duotone_sack-dollar", true], ["duotone_hand-holding-dollar", true], ["duotone_file-circle-exclamation", true]]);
+}

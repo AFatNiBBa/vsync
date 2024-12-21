@@ -4,7 +4,8 @@
   "scripts": {
     "build": "vinxi build",
     "start": "vinxi dev --host --port 80",
-    "save": "npm run build && scp -r ./.output root@vsync.it:/root/vsync"
+    "icon": "font-class ./src/lib/icon.ts",
+    "save": "npm run icon && npm run build && scp -r ./.output root@vsync.it:/root/vsync"
   },
   "dependencies": {
     "@seanalunni/epexp": "*",
@@ -13,9 +14,9 @@
     "@solidjs/meta": "^0.29.4",
     "@solidjs/router": "^0.14.10",
     "@solidjs/start": "^1.0.9",
+    "font-class": "*",
     "node-html-parser": "^6.1.13",
     "sass": "^1.80.3",
-    "solid-fa6-pro": "*",
     "solid-js": "^1.9.2",
     "vinxi": "^0.4.3"
   }
