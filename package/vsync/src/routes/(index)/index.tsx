@@ -4,7 +4,7 @@ import color from "@seanalunni/style/color";
 import layout from "@seanalunni/style/layout";
 import util from "../../style/util.module.scss";
 
-import { JSX, Match, ParentProps, Show, Switch, createMemo, createResource, createUniqueId } from "solid-js";
+import { JSX, ParentProps, Show, createMemo, createResource, createUniqueId, on } from "solid-js";
 import { getAnimeWorldVideoUrl } from "../api/animeworld";
 import { EpExp, parseEpExp } from "@seanalunni/epexp";
 import { copyText, parseTime } from "../../lib/util";
@@ -107,29 +107,22 @@ function Field(props: ParentProps<{ value?: string, onInput?(x: string): void, d
 				value={props.value ?? ""}
 				onChange={e => props.onInput?.(e.target.value)}
 			/>
-			<small>
-				{props.detail}
-			</small>
+			<small>{props.detail}</small>
 		</div>
 	</>
 }
 
 /** Icona per visualizzare uno {@link State} */
 function ViewState(props: { state: State, message: string }) {
-	const state = createMemo(() => props.state);
-	return <>
-		<Switch>
-			<Match when={state() === State.ok}>
-				<span class={`${icon.circleCheck} ${color.textSuccess}`} />
-			</Match>
-			<Match when={state() === State.fail}>
-				<span class={`${icon.circleXmark} ${color.textDanger}`} />
-			</Match>
-			<Match when={state() === State.loading}>
-				<span class={`${icon.spinnerThird} ${color.textWarning} ${anim.spin}`} />
-			</Match>
-		</Switch>
-	</>
+	const style = createMemo(on(() => props.state, x => {
+		switch (x) {
+			case State.ok: return `${icon.circleCheck} ${color.textSuccess}`;
+			case State.fail: return `${icon.circleXmark} ${color.textDanger}`;
+			case State.loading: return `${icon.spinnerThird} ${color.textWarning} ${anim.spin}`;
+			default: return `${icon.circleQuestion} ${color.textSecondary}`;
+		}
+	}));
+	return <span title={props.message} class={style()} />
 }
 
 /**

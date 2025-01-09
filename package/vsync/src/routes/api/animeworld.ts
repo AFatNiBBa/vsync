@@ -5,15 +5,17 @@ import { parse, HTMLElement } from "node-html-parser";
 import { EpExp, parseEpExp } from "@seanalunni/epexp";
 import { APIEvent } from "@solidjs/start/server";
 import { json } from "@solidjs/router";
+import { fetch } from "fetch-h2";
 
 /** Costanti necessarie alla ricerca di un episodio */
 const RICERCA_URL = new URL("https://www.animeworld.so/filter?sort=2"), RICERCA_QUERY_KEY = "keyword", EPISODE_NUM_ATTRIBUTE = "data-episode-num", EPISODE_ACTIVE_CLASS = "active";
 
 /**
- * Esegue {@link parse} sul risultato di {@link fetch}
+ * Esegue {@link parse} sul risultato di {@link fetch}.
+ * Non si usa {@link globalThis.fetch} perchè ora AnimeWorld supporta solo HTTP/2
  * @param url Link della pagina della quale ottenere il DOM
  */
-const html = (url: URL) => fetch(url).then(x => x.text()).then(parse);
+const html = (url: URL) => fetch(url.href, { redirect: "follow" }).then(x => x.text()).then(parse);
 
 /**
  * Ottiene il link di un {@link HTMLAnchorElement} sotto forma di {@link URL} assoluto basandosi su {@link RICERCA_URL.origin}
@@ -22,7 +24,7 @@ const html = (url: URL) => fetch(url).then(x => x.text()).then(parse);
 const href = (elm: HTMLElement) => new URL(elm.getAttribute("href")!, RICERCA_URL.origin);
 
 /**
- * Ottiene l'url di un episodio di una serie su "https://www.animeworld.so/"
+ * Ottiene l'url di un episodio di una serie su AnimeWorld
  * @param name Nome dell'anime dal quale ottenere il video di uno dei suoi episodi
  * @param ep Episodio desiderato, di default è il primo
  */

@@ -4,6 +4,7 @@ export type Result<T, E = unknown> = { ok: true, res: T, err?: undefined } | { o
 
 /** Funzioni di utility per lavorare con i {@link Result} */
 export namespace Result {
+	
 	/**
 	 * Ottiene un {@link Result} positivo
 	 * @param res Il risultato
