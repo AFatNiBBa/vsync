@@ -12,7 +12,11 @@ const RICERCA_URL = new URL("https://www.animeworld.so/filter?sort=2"), RICERCA_
 
 /**
  * Esegue {@link parse} sul risultato di {@link fetch}.
- * Non si usa {@link globalThis.fetch} perchè ora AnimeWorld supporta solo HTTP/2
+ * Non si usa {@link globalThis.fetch} perchè ora AnimeWorld:
+ * - Supporta solo HTTP/2
+ * - Richiede che sia settato un certo cookie per funzionare
+ * Il cookie viene preso la prima volta che viene effettuata una richiesta con un cookie sbagliato, {@link fetch} lo mantiene automaticamente ed esegue i dovuti redirect per eseguire nuovamente la richiesta in maniera trasparente ora che si ha il cookie giusto.
+ * Il cookie inizia con "SecurityAW-" ma il suffisso sembra cambiare sporadicamente
  * @param url Link della pagina della quale ottenere il DOM
  */
 const html = (url: URL) => fetch(url.href, { redirect: "follow" }).then(x => x.text()).then(parse);
