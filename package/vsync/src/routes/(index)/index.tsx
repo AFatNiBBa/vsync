@@ -10,6 +10,7 @@ import { EpExp, parseEpExp } from "@seanalunni/epexp";
 import { copyText, parseTime } from "../../lib/util";
 import { useSearchParams } from "@solidjs/router";
 import { Result } from "../../lib/result";
+import { Title } from "@solidjs/meta";
 import { anim } from "font-class";
 import { icon } from "~/lib/icon";
 
@@ -28,6 +29,7 @@ export default function() {
 	const setEp = (f: (x: string) => string) => setParams({ ep: f(params.ep || DEFAULT_EPISODE), time: undefined } satisfies search);
 	var video!: HTMLVideoElement;
 	return <>
+		<Title>Vsync{params.name ? ` - ${params.name}` : ""}</Title>
 		<div class={`${style.host} ${layout.root}`}>
 			<div class={style.page}>
 				<video

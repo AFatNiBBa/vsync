@@ -6,6 +6,7 @@ import util from "../../style/util.module.scss";
 
 import { For, Setter, createMemo, createSignal, on } from "solid-js";
 import { IndexAwareFibonacciGenerator } from "@seanalunni/fibonacci";
+import { Title } from "@solidjs/meta";
 import { icon } from "~/lib/icon";
 
 /** Possibilità di vincere per ogni turno */
@@ -19,6 +20,7 @@ export default function() {
 	const [ row, setRow ] = createSignal(1);
 	const [ col, setCol ] = createSignal(1);
 	return <>
+		<Title>Vsync - Roulette</Title>
 		<div class={`${style.page} ${layout.root}`} style={{ grid: `auto repeat(${row()}, 1fr) / repeat(${col()}, 1fr)` }}>
 			<div class={style.header}>
 				<Field title="Riga" value={row()} setter={setRow} />
