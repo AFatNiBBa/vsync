@@ -1,8 +1,8 @@
 
 .root {
-	// Root of the page (The body has some unwanted behaviours that can't be removed)
-	width: 100dvw;
-	height: 100dvh;
+	// Root of the page (The body has some unwanted behaviours that can't be removed, so we use a custom element)
+	width: 100cqw;
+	height: 100cqh;
 	overflow: auto;
 }
 
