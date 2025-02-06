@@ -14,6 +14,9 @@ import { Title } from "@solidjs/meta";
 import { anim } from "font-class";
 import { icon } from "~/lib/icon";
 
+/** Numero di secondi skippati quando si usano i comandi media */
+const SKIP_SECONDS = 10;
+
 /** Episodio di default se non viene fornito uno esplicitamente */
 const DEFAULT_EPISODE = "1°";
 
@@ -28,6 +31,11 @@ export default function() {
 	const state = createMemo(() => url.loading ? State.loading : url()!.ok ? State.ok : State.fail);
 	const setEp = (f: (x: string) => string) => setParams({ ep: f(params.ep || DEFAULT_EPISODE), time: undefined } satisfies search);
 	var video!: HTMLVideoElement;
+
+	const { mediaSession } = navigator;
+	mediaSession.setActionHandler("previoustrack", () => video.currentTime -= SKIP_SECONDS);
+	mediaSession.setActionHandler("nexttrack", () => video.currentTime += SKIP_SECONDS);
+
 	return <>
 		<Title>Vsync{params.name ? ` - ${params.name}` : ""}</Title>
 		<div class={`${style.host} ${layout.root}`}>
