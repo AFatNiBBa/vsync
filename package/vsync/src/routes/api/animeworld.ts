@@ -5,6 +5,7 @@ import { parse, HTMLElement } from "node-html-parser";
 import { EpExp, parseEpExp } from "@seanalunni/epexp";
 import { APIEvent } from "@solidjs/start/server";
 import { json } from "@solidjs/router";
+import { fetch } from "fetch-h2";
 
 /** Costanti necessarie alla ricerca di una serie */
 const RICERCA_URL = new URL("https://www.animeworld.so/filter?sort=2"), RICERCA_QUERY_KEY = "keyword";
@@ -12,31 +13,22 @@ const RICERCA_URL = new URL("https://www.animeworld.so/filter?sort=2"), RICERCA_
 /** Costanti necessarie all'estrazione di un'episodio */
 const EPISODE_NUM_ATTRIBUTE = "data-episode-num", EPISODE_ACTIVE_CLASS = "active";
 
-/** Costanti necessarie all'estrazione del cookie necessario al funzionamento di AnimeWorld */
-const COOKIE_STATUS = 202, COOKIE_REGEX = /SecurityAW-\w+=\w+/;
-
-/** Cache del cookie necessario al funzionamento di AnimeWorld */
-var cookie: string;
+/**
+ * Esegue {@link parse} sul risultato di {@link fetch}.
+ * Non si usa {@link globalThis.fetch} perchè ora AnimeWorld:
+ * - Supporta solo HTTP/2
+ * - Richiede che sia settato un certo cookie per funzionare
+ * Il cookie viene preso la prima volta che viene effettuata una richiesta con un cookie sbagliato, {@link fetch} lo mantiene automaticamente ed esegue i dovuti redirect per eseguire nuovamente la richiesta in maniera trasparente ora che si ha il cookie giusto.
+ * Il cookie inizia con "SecurityAW-" ma il suffisso sembra cambiare sporadicamente
+ * @param url Link della pagina della quale ottenere il DOM
+ */
+const html = (url: URL) => fetch(url.href, { redirect: "follow" }).then(x => x.text()).then(parse);
 
 /**
  * Ottiene il link di un {@link HTMLAnchorElement} sotto forma di {@link URL} assoluto basandosi su {@link RICERCA_URL.origin}
  * @param elm L'elemento dal quale ottenere il link
  */
 const href = (elm: HTMLElement) => new URL(elm.getAttribute("href")!, RICERCA_URL.origin);
-
-/**
- * Esegue {@link parse} sul risultato di {@link fetch}.
- * Ora AnimeWorld richiede che sia settato un certo cookie per funzionare, il nome di quest'ultimo inizia con "SecurityAW-" ma il suffisso sembra cambiare sporadicamente.
- * Il cookie viene preso la prima volta che viene effettuata una richiesta con un cookie sbagliato, in tal caso la risposta avrà come stato {@link COOKIE_STATUS} e come contenuto il codice JavaScript necessario per settare il cookie.
- * @param url Link della pagina della quale ottenere il DOM
- */
-async function html(url: URL) {
-	const res = await fetch(url.href, { headers: { cookie } });
-	const source = await res.text();
-	if (res.status !== COOKIE_STATUS) return parse(source);
-	[ cookie ] = source.match(COOKIE_REGEX)!;
-	return await html(url);
-}
 
 /**
  * Ottiene l'url di un episodio di una serie su AnimeWorld
