@@ -1,9 +1,15 @@
 
+.scroll {
+	// Scrollable content
+	overflow: auto;
+	contain: size;
+}
+
 .root {
 	// Root of the page (The body has some unwanted behaviours that can't be removed, so we use a custom element)
+	@extend .scroll;
 	width: 100cqw;
 	height: 100cqh;
-	overflow: auto;
 }
 
 .host {

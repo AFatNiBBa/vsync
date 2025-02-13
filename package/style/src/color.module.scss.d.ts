@@ -1,15 +1,15 @@
 declare const color: {
-  readonly textPrimary: "textPrimary";
-  readonly backPrimary: "backPrimary";
-  readonly textSecondary: "textSecondary";
-  readonly backSecondary: "backSecondary";
-  readonly textSuccess: "textSuccess";
-  readonly backSuccess: "backSuccess";
-  readonly textWarning: "textWarning";
-  readonly backWarning: "backWarning";
-  readonly textDanger: "textDanger";
-  readonly backDanger: "backDanger";
-  readonly textInfo: "textInfo";
-  readonly backInfo: "backInfo";
+  readonly textPrimary: string;
+  readonly backPrimary: string;
+  readonly textSecondary: string;
+  readonly backSecondary: string;
+  readonly textSuccess: string;
+  readonly backSuccess: string;
+  readonly textWarning: string;
+  readonly backWarning: string;
+  readonly textDanger: string;
+  readonly backDanger: string;
+  readonly textInfo: string;
+  readonly backInfo: string;
 };
 export = color;

@@ -1,8 +1,9 @@
 declare const layout: {
-  readonly root: "root";
-  readonly host: "host";
-  readonly slot: "slot";
-  readonly stretch: "stretch";
-  readonly center: "center";
+  readonly scroll: string;
+  readonly root: string;
+  readonly host: string;
+  readonly slot: string;
+  readonly stretch: string;
+  readonly center: string;
 };
 export = layout;
