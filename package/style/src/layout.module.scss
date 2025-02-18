@@ -12,11 +12,6 @@
 	height: 100cqh;
 }
 
-.host {
-	// Stays compact (And provides a great layout for children, since I need to provide one)
-	display: inline grid;
-}
-
 .slot {
 	// Stretches the children
 	display: grid;
