@@ -32,6 +32,6 @@
 .center {
 	// Centers the content
 	display: flex;
-	align-items: center;
-	justify-content: center;
+	align-items: safe center;
+	justify-content: safe center;
 }
