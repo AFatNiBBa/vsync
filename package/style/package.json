@@ -17,7 +17,7 @@
 	"devDependencies": {
 		"@types/node": "^20.12.4",
 		"vite": "^5.2.8",
-		"vite-plugin-sass-dts": "^1.3.17"
+		"vite-plugin-sass-dts": "^1.3.31"
 	},
 	"dependencies": {
 		"sass": "^1.74.1"

@@ -1,4 +1,4 @@
-// Generated from c:/Users/ZioPe/Downloads/vsync/package/epExp/src/epExp.g4 by ANTLR 4.13.1
+// Generated from f:/JavaScript/vsync/package/epExp/src/epExp.g4 by ANTLR 4.13.1
 
 import * as antlr from "antlr4ng";
 import { Token } from "antlr4ng";
