@@ -12,6 +12,12 @@
 	height: 100cqh;
 }
 
+.host {
+	// Container that makes the overflow of its children propagate to its parent
+	min-width: min-content;
+	min-height: min-content;
+}
+
 .slot {
 	// Stretches the children
 	display: grid;

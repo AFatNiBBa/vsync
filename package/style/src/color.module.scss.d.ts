@@ -12,4 +12,4 @@ declare const color: {
   readonly textInfo: string;
   readonly backInfo: string;
 };
-export = color;
+export default color;

@@ -1,2 +1,2 @@
 declare const fix: {};
-export = fix;
+export default fix;
