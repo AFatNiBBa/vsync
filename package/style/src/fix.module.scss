@@ -4,6 +4,10 @@
 
 	:focus-visible { outline: unset; }
 
+	*, ::before, ::after { box-sizing: border-box; }
+
+	input, textarea, select, button { font: inherit; }
+
 	input[type=checkbox] { margin: 0; }
 
 	textarea { overflow: hidden; }
@@ -11,10 +15,4 @@
 	button { cursor: pointer; }
 
 	body { margin: 0; }
-
-	::before, ::after {
-		@at-root :not(h1, h2, h3, h4, h5, h6, b, i), & { font: inherit; }
-
-		@at-root *, & { box-sizing: border-box; }
-	}
 }
