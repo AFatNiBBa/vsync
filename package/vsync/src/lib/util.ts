@@ -1,4 +1,9 @@
 
+import { onCleanup } from "solid-js";
+
+/** Numero di secondi skippati quando si usano i comandi media */
+const SKIP_SECONDS = 10;
+
 /**
  * Data una stringa che rappresenta un lasso di tempo ne estrae i secondi.
  * Grazie all'algoritmo, sono permessi anche formati esotici del tipo "1.5:-16" (Che equivale ad 1 minuto e mezzo meno 16 secondi, ossia 1 minuto e 14 secondi) o "1:::" (Che equivale a 60 ore)
@@ -36,4 +41,18 @@ export async function copyText(text: string): Promise<void> {
 		document.execCommand("copy");
 	}
 	finally { area.remove(); }
+}
+
+/**
+ * Registra i comandi media per un'elemento multimediale
+ * @param f Riferimento all'elemento multimediale
+ */
+export function registerMediaShortcut(ctrl: HTMLMediaElement) {
+	const { mediaSession } = navigator;
+	mediaSession.setActionHandler("previoustrack", () => ctrl.currentTime -= SKIP_SECONDS);
+	mediaSession.setActionHandler("nexttrack", () => ctrl.currentTime += SKIP_SECONDS);
+	onCleanup(() => {
+		mediaSession.setActionHandler("previoustrack", null);
+		mediaSession.setActionHandler("nexttrack", null);
+	});
 }

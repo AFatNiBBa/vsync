@@ -1,26 +1,4 @@
 
-.host {
-	display: flex;
-	justify-content: center;
-	padding: 2em .5ch;
-}
-
-.page {
-	display: grid;
-	grid: repeat(2, max-content) / 1fr;
-	gap: 1em;
-
-	flex: 1;
-	max-width: 40em;
-	height: max-content; // Permette di scrollare se il contenuto non ci stà
-
-	> .form {
-		display: grid;
-		grid-auto-rows: max-content;
-		gap: 2ch;
-	}
-}
-
 .field {	
 	> label > h4 {
 		margin-top: 0;
