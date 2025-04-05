@@ -2,11 +2,11 @@
 import color from "@seanalunni/style/color";
 
 import { parseTime, registerMediaShortcut } from "~/lib/util";
+import { createMemo, createSignal, on } from "solid-js";
 import { WinBase } from "~/component/winBase/winBase";
 import { useSearchParams } from "@solidjs/router";
 import { Field } from "~/component/field/field";
 import { Footer } from "~/component/footer";
-import { createMemo, on } from "solid-js";
 import { Title } from "@solidjs/meta";
 import { icon } from "~/lib/icon";
 
@@ -15,6 +15,7 @@ export default function() {
 	type search = { date?: string, time?: string };
 	const [ params, setParams ] = useSearchParams<search>();
 	const url = createMemo(on(() => params.date, x => x && getZanzaraAudioUrl(new Date(x))));
+	const [ ok, setOk ] = createSignal(false);
 	var audio: HTMLAudioElement;
 	return <>
 		<Title>Vsync - La Zanzara{params.date ? ` ${params.date}` : ""}</Title>
@@ -23,6 +24,9 @@ export default function() {
 				<audio
 					controls
 					src={url() ?? ""} // Se l'url non viene trovato ci mette la stringa vuota perchè se ci andava a finire `undefined` toglieva tutto l'attributo ma non il video vecchio}
+					onCanPlay={() => setOk(true)}
+					onError={() => setOk(false)}
+					style={{ width: "100%" }}
 					ref={x => {
 						audio = x;
 						registerMediaShortcut(x);
@@ -38,7 +42,7 @@ export default function() {
 					onInput={date => setParams({ date })}
 					detail="Data dell'episodio da cercare"
 				>
-					Data <span class={params.date ? `${icon.circleCheck} ${color.textSuccess}` : `${icon.circleXmark} ${color.textDanger}`} />
+					Data <span class={params.date && ok() ? `${icon.circleCheck} ${color.textSuccess}` : `${icon.circleXmark} ${color.textDanger}`} />
 				</Field>
 				<Footer
 					hasTime={!!params.time}
