@@ -14,8 +14,9 @@ import { icon } from "~/lib/icon";
 export default function() {
 	type search = { date?: string, time?: string };
 	const [ params, setParams ] = useSearchParams<search>();
-	const url = createMemo(on(() => params.date, x => x && getZanzaraAudioUrl(new Date(x))));
 	const [ ok, setOk ] = createSignal(false);
+	const url = createMemo(on(() => params.date, x => x && getZanzaraAudioUrl(new Date(x))));
+	const setDate = (date: string) => setParams({ date, time: undefined } satisfies search);
 	var audio: HTMLAudioElement;
 	return <>
 		<Title>Vsync - La Zanzara{params.date ? ` ${params.date}` : ""}</Title>
@@ -39,7 +40,7 @@ export default function() {
 				<Field
 					type="date"
 					value={params.date}
-					onInput={date => setParams({ date })}
+					onInput={setDate}
 					detail="Data dell'episodio da cercare"
 				>
 					Data <span class={params.date && ok() ? `${icon.circleCheck} ${color.textSuccess}` : `${icon.circleXmark} ${color.textDanger}`} />
@@ -53,7 +54,7 @@ export default function() {
 						if (!date) return;
 						const temp = new Date(date);
 						temp.setDate(temp.getDate() + k);
-						setParams({ date: temp.toISOString().split("T")[0], time: undefined } satisfies search);
+						setDate(temp.toISOString().split("T")[0]);
 					}}
 				/>
 			</>}
