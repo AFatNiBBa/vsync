@@ -16,6 +16,9 @@ export function Footer(props: ParentProps<{ hasTime: boolean, onEpShift(x: numbe
 			<button title="Episodio successivo" class={color.backSecondary} onClick={() => props.onEpShift(1)}>
 				<span class={icon.caretRight} />
 			</button>
+			<button title="Duplica" class={color.backWarning} onClick={() => window.open(location.href, "_blank")}>
+				<span class={icon.plus} />
+			</button>
 			<button title="Copia link" class={color.backPrimary} onClick={() => copyText(location.href)}>
 				<span class={icon.link} />
 			</button>
