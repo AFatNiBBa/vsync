@@ -7,7 +7,7 @@ import util from "../../style/util.module.scss";
 import { For, Setter, createMemo, createSignal, on } from "solid-js";
 import { IndexAwareFibonacciGenerator } from "@seanalunni/fibonacci";
 import { Title } from "@solidjs/meta";
-import { icon } from "~/lib/icon";
+import { Icon } from "~/lib/icon";
 
 /** Possibilità di vincere per ogni turno */
 const CHANCE = 1 / 3;
@@ -70,10 +70,10 @@ function Calculator() {
 			<Field cifre={5} value={100 * (1 - (1 - CHANCE) ** (virtual() + volta()))} />
 			<div class={util.control}>
 				<button title="Vittoria" class={color.backSuccess} onClick={() => setVolta(DEFAULT_VOLTA)}>
-					<span class={icon.sackDollar} />
+					<span class={Icon.sackDollar} />
 				</button>
 				<button title="Sconfitta" class={color.backDanger} onClick={() => setVolta(x => x + 1)}>
-					<span class={icon.handHoldingDollar} />
+					<span class={Icon.handHoldingDollar} />
 				</button>
 			</div>
 		</div>

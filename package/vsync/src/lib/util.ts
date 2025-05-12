@@ -2,7 +2,7 @@
 import { onCleanup } from "solid-js";
 
 /** Numero di secondi skippati quando si usano i comandi media */
-const SKIP_SECONDS = 10;
+export const SKIP_SECONDS = 10;
 
 /**
  * Data una stringa che rappresenta un lasso di tempo ne estrae i secondi.

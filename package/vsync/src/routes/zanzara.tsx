@@ -1,14 +1,14 @@
 
 import color from "@seanalunni/style/color";
 
-import { parseTime, registerMediaShortcut } from "~/lib/util";
+import { parseTime, registerMediaShortcut, SKIP_SECONDS } from "~/lib/util";
 import { createMemo, createSignal, on } from "solid-js";
 import { WinBase } from "~/component/winBase/winBase";
 import { useSearchParams } from "@solidjs/router";
 import { Field } from "~/component/field/field";
 import { Footer } from "~/component/footer";
 import { Title } from "@solidjs/meta";
-import { icon } from "~/lib/icon";
+import { Icon } from "~/lib/icon";
 
 /** Pagina che fornisce un'episodio della zanzara */
 export default function() {
@@ -43,7 +43,7 @@ export default function() {
 					onInput={setDate}
 					detail="Data dell'episodio da cercare"
 				>
-					Data <span class={params.date && ok() ? `${icon.circleCheck} ${color.textSuccess}` : `${icon.circleXmark} ${color.textDanger}`} />
+					Data <span class={params.date && ok() ? `${Icon.circleCheck} ${color.textSuccess}` : `${Icon.circleXmark} ${color.textDanger}`} />
 				</Field>
 				<Footer
 					hasTime={!!params.time}
@@ -56,6 +56,14 @@ export default function() {
 						temp.setDate(temp.getDate() + k);
 						setDate(temp.toISOString().split("T")[0]);
 					}}
+					children={<>
+						<button title={`+${SKIP_SECONDS}s`} class={color.backSecondary} onClick={() => audio.currentTime -= SKIP_SECONDS}>
+							<span class={Icon.backward} />
+						</button>
+						<button title={`+${SKIP_SECONDS}s`} class={color.backSecondary} onClick={() => audio.currentTime += SKIP_SECONDS}>
+							<span class={Icon.forward} />
+						</button>
+					</>}
 				/>
 			</>}
 		/>

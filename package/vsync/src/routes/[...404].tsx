@@ -8,7 +8,7 @@ import { HttpStatusCode } from "@solidjs/start";
 import { readFile } from "fs/promises";
 import { Title } from "@solidjs/meta";
 import { dirname, join } from "path";
-import { icon } from "~/lib/icon";
+import { Icon } from "~/lib/icon";
 
 /**
  * Endpoint che si assicura che tutti i file dentro la cartella public vengano effettivamente resi pubblici.
@@ -35,7 +35,7 @@ export default function(props: RouteSectionProps) {
 		<div class={`${layout.root} ${layout.center}`}>
 			<div style={{ "text-align": "center" }}>
 				<h1 style={{ "font-size": "300%" }}>
-					Errore 404 - <span class={`${icon.fileCircleExclamation} ${color.textDanger}`} />
+					Errore 404 - <span class={`${Icon.fileCircleExclamation} ${color.textDanger}`} />
 				</h1>
 				<p>La pagina <b>"{props.location.pathname}"</b> non esiste</p>
 				<A href="/?">Home</A>

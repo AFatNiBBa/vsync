@@ -13,7 +13,7 @@ import { Footer } from "~/component/footer";
 import { Result } from "../lib/result";
 import { Title } from "@solidjs/meta";
 import { anim } from "font-class";
-import { icon } from "~/lib/icon";
+import { Icon } from "~/lib/icon";
 
 /** Episodio di default se non viene fornito uno esplicitamente */
 const DEFAULT_EPISODE = "1°";
@@ -75,7 +75,7 @@ export default function() {
 					onTimeReset={() => setParams({ time: undefined } satisfies search)}
 					children={<>
 						<button title="Formatta l'espressione di riferimento all'episodio" class={color.backInfo} onClick={() => setEp(x => parseEpExp(x).toString())}>
-							<span class={icon.hashtag} />
+							<span class={Icon.hashtag} />
 						</button>
 					</>}
 				/>
@@ -88,10 +88,10 @@ export default function() {
 function ViewState(props: { state: State, message: string }) {
 	const style = createMemo(on(() => props.state, x => {
 		switch (x) {
-			case State.ok: return `${icon.circleCheck} ${color.textSuccess}`;
-			case State.fail: return `${icon.circleXmark} ${color.textDanger}`;
-			case State.loading: return `${icon.spinnerThird} ${color.textWarning} ${anim.spin}`;
-			default: return `${icon.circleQuestion} ${color.textSecondary}`;
+			case State.ok: return `${Icon.circleCheck} ${color.textSuccess}`;
+			case State.fail: return `${Icon.circleXmark} ${color.textDanger}`;
+			case State.loading: return `${Icon.spinnerThird} ${color.textWarning} ${anim.spin}`;
+			default: return `${Icon.circleQuestion} ${color.textSecondary}`;
 		}
 	}));
 	return <span title={props.message} class={style()} />
