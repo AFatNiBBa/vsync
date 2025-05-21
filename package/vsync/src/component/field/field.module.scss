@@ -1,4 +1,6 @@
 
+@use "@seanalunni/style/const" as const;
+
 .field {	
 	> label > h4 {
 		margin-top: 0;
@@ -20,7 +22,7 @@
 		box-shadow: 0 .125rem .25rem rgb(from var(--shadow-color) r g b / var(--shadow-opacity));
 
 		&:focus {
-			--shadow-color: var(--color-primary);
+			--shadow-color: #{const.$color-primary};
 			--shadow-opacity: .4;
 		}
 
@@ -31,7 +33,7 @@
 	}
 
 	> small {
+		color: const.$color-secondary;
 		font-size: 80%;
-		color: var(--color-secondary);
 	}
 }
