@@ -1,10 +1,11 @@
 {
 	"name": "@seanalunni/style",
 	"description": "Common styles for my projects",
-	"version": "3.0.0",
+	"version": "3.0.1",
 	"author": "AFatNiBBa",
 	"license": "ISC",
 	"exports": {
+		"./fix": "./src/fix.scss",
 		"./*": {
 			"import": "./src/*.module.scss",
 			"types": "./src/*.module.scss.d.ts"
