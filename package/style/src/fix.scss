@@ -14,5 +14,7 @@
 
 	button { cursor: pointer; }
 
+	input { min-width: 0; } // Prevents the `size` attribute from setting a minimum width
+
 	body { margin: 0; }
 }
