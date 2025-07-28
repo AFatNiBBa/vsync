@@ -2,7 +2,7 @@
 .scroll {
 	// Scrollable content
 	overflow: auto;
-	contain: size;
+	contain: size; // TODO: In which scenarios was this necessary?
 }
 
 .root {
