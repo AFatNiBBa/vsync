@@ -5,13 +5,9 @@ import { defineConfig } from "vite";
 export default defineConfig({
 	plugins: [
 		sassDts({
-			esmExport: true,
+			exportName: { replacement: x => x.split(".")[0] },
 			typeName: { replacement: "string" },
-			exportName: {
-				replacement(fileName) {
-					return fileName.split(".")[0];
-				},
-			}
+			esmExport: true
 		})
 	]
 });
