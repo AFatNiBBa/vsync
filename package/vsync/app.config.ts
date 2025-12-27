@@ -4,16 +4,10 @@ import { UserConfig } from "vite";
 
 export default defineConfig({
 	ssr: false,
+	middleware: "src/middleware.ts",
 	vite: {
 		build: {
 			minify: false
-		},
-		css: {
-			preprocessorOptions: {
-				scss: {
-					api: 'modern-compiler'
-				}
-			}
 		}
 	} satisfies UserConfig
 });

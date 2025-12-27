@@ -12,13 +12,13 @@
     "@seanalunni/fibonacci": "*",
     "@seanalunni/style": "*",
     "@solidjs/meta": "^0.29.4",
-    "@solidjs/router": "^0.14.10",
-    "@solidjs/start": "^1.0.9",
+    "@solidjs/router": "^0.15.4",
+    "@solidjs/start": "^1.2.1",
     "fetch-h2": "^3.0.2",
     "font-class": "*",
     "node-html-parser": "^6.1.13",
     "sass": "^1.80.3",
-    "solid-js": "^1.9.2",
-    "vinxi": "^0.4.3"
+    "solid-js": "^1.9.5",
+    "vinxi": "^0.5.10"
   }
 }

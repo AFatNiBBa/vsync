@@ -7,6 +7,7 @@ export default defineConfig({
 		sassDts({
 			exportName: { replacement: x => x.split(".")[0] },
 			typeName: { replacement: "string" },
+			legacyFileFormat: true,
 			esmExport: true
 		})
 	]
