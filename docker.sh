@@ -18,6 +18,14 @@ docker run \
   -v ~/shimmie:/app/data \
   shish2k/shimmie2:2
 
+# Esegui il container di Vsync
+docker run \
+  --name vsync \
+  --network vsync \
+  --rm \
+  -d \
+  vsync
+
 # Esegui il container di Nginx
 docker run \
   --name nginx \
@@ -28,5 +36,5 @@ docker run \
   -p 443:443 \
   -v "$DIR/nginx.conf:/etc/nginx/nginx.conf:ro" \
   -v ~/public:/var/www/static:ro \
+  -v /etc/letsencrypt:/etc/letsencrypt:ro \
   nginx
-

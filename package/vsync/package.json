@@ -4,8 +4,7 @@
   "scripts": {
     "build": "vinxi build",
     "start": "vinxi dev --host --port 80",
-    "icon": "font-class ./src/lib/icon.ts",
-    "save": "npm run build && scp -r ./.output root@vsync.it:/root/vsync"
+    "icon": "font-class ./src/lib/icon.ts"
   },
   "dependencies": {
     "@seanalunni/epexp": "*",
