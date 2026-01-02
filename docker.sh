@@ -3,8 +3,8 @@
 DIR="$(dirname "$(realpath $0)")"
 
 # Crea i volumi esterni per docker
-mkdir -p ~/shimmie ~/public
-chmod 777 ~/shimmie ~/public
+mkdir -p ~/data/shimmie ~/public
+chmod 777 ~/data ~/public
 
 # Crea una rete condivisa tra tutti i docker
 docker network create vsync
@@ -15,7 +15,7 @@ docker run \
   --network vsync \
   --rm \
   -d \
-  -v ~/shimmie:/app/data \
+  -v ~/data/shimmie:/app/data \
   shish2k/shimmie2:2
 
 # Esegui il container di Vsync
