@@ -12,3 +12,6 @@ dist/
 # Antlr4
 **/.antlr/**
 !**/.antlr/**/*.ts
+
+# SzuruBooru
+szuru.yaml
