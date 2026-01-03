@@ -1,3 +1,5 @@
 
 name: Vbooru
-#secret: PASSWORD DI BASE NON SICURA MINUSCOLA
+secret: change # Password di base non sicura con la minuscola
+
+'users:create:self': administrator # Solo gli amministratori possono creare gli account (Il primo account creato, se non c'è questa opzione, è amministratore)
