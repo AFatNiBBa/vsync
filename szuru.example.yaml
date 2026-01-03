@@ -1,5 +1,6 @@
 
 name: Vbooru
 secret: change # Password di base non sicura con la minuscola
+max_dl_filesize: 1.0E+9 # 1GB
 
 'users:create:self': administrator # Solo gli amministratori possono creare gli account (Il primo account creato, se non c'è questa opzione, è amministratore)
