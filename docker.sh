@@ -31,7 +31,7 @@ szuru_db_pass=szuru
 
 # Crea i volumi esterni per Docker
 mkdir -p ~/data/szuru_db ~/data/szuru_server ~/public
-chmod 777 ~/data ~/public
+chmod -R 777 ~/data ~/public
 
 # Crea una rete condivisa tra tutti i Docker
 docker network create vsync > /dev/null 2>&1
