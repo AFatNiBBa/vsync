@@ -14,7 +14,7 @@ f_start() {
   name="$1"
   image="$2"
   shift 2
-  docker run --name $name --network vsync --rm -d $@ $image > /dev/null 2>&1
+  docker run --name $name --network vsync -d $@ $image > /dev/null 2>&1
   f_check "Docker \"$name\"" "Started" "Skipped"
 }
 
@@ -36,6 +36,9 @@ chmod -R 777 ~/data ~/public
 # Crea una rete condivisa tra tutti i Docker
 docker network create vsync > /dev/null 2>&1
 f_check "Network" "Created" "Already exists"
+
+# Rimuovi tutti i container spenti
+docker container prune -f > /dev/null
 
 # Esegui il container di Vsync
 f_start vsync vsync
