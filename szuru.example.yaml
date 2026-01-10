@@ -4,4 +4,5 @@ secret: change # Password di base non sicura con la minuscola
 max_dl_filesize: 1.0E+9 # 1GB
 delete_source_files: yes
 
-'users:create:self': administrator # Solo gli amministratori possono creare gli account (Il primo account creato, se non c'è questa opzione, è amministratore)
+privileges:
+  'users:create:self': administrator # Solo gli amministratori possono creare gli account (Il primo account creato, se non c'è questa opzione, è amministratore)
