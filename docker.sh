@@ -14,7 +14,7 @@ f_start() {
   name="$1"
   image="$2"
   shift 2
-  docker run --name $name --network vsync -d $@ $image > /dev/null 2>&1
+  docker run --name $name --network vsync --restart unless-stopped -d $@ $image > /dev/null 2>&1
   f_check "Container \"$name\"" "Started" "Skipped"
 }
 
