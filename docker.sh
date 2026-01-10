@@ -9,13 +9,13 @@ f_check() {
   echo "$1: $res"
 }
 
-# Definisce una funzione che avvia un Docker non ancora avviato
+# Definisce una funzione che crea un container se non esiste già
 f_start() {
   name="$1"
   image="$2"
   shift 2
   docker run --name $name --network vsync -d $@ $image > /dev/null 2>&1
-  f_check "Docker \"$name\"" "Started" "Skipped"
+  f_check "Container \"$name\"" "Started" "Skipped"
 }
 
 ######################################################
@@ -33,7 +33,7 @@ szuru_db_pass=szuru
 mkdir -p ~/data/szuru_db ~/data/szuru_server ~/public
 chmod -R 777 ~/data ~/public
 
-# Crea una rete condivisa tra tutti i Docker
+# Crea una rete condivisa tra tutti i container
 docker network create vsync > /dev/null 2>&1
 f_check "Network" "Created" "Already exists"
 

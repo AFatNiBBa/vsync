@@ -1,4 +1,7 @@
 
+# Termino tutti i container
+docker stop $(docker ps -a -q)
+
 # Istallo CertBot
 apt install snapd
 snap install --classic certbot
