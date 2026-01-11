@@ -50,7 +50,7 @@ export default function() {
 					children="Nome"
 					placeholder="Vuoto"
 					value={params.name}
-					onInput={name => setParams({ name, time: undefined } satisfies search)}
+					onInput={name => setParams({ name } satisfies search)}
 					detail="Il nome della serie da cercare"
 				/>
 				<Field
