@@ -1,8 +1,9 @@
 
 name: Vbooru
-secret: change # Password di base non sicura con la minuscola
-max_dl_filesize: 1.0E+9 # 1GB
+secret: change                          # Password di base non sicura con la minuscola
+max_dl_filesize: 1.0E+9                 # 1GB
 delete_source_files: yes
 
 privileges:
-  'users:create:self': administrator # Solo gli amministratori possono creare gli account (Il primo account creato, se non c'è questa opzione, è amministratore)
+  'users:create:self': administrator    # Solo gli amministratori possono creare gli account (Il primo account creato, se non c'è questa opzione, è amministratore)
+  'tags:list': anonymous                # Consente l'auto-complete delle tag anche agli utenti non loggati
