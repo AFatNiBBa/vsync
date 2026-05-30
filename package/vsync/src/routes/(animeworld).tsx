@@ -98,7 +98,7 @@ function ViewState(props: { state: State, message: string }) {
 }
 
 /**
- * Come {@link getAnimeWorldVideoUrl} ma prende in input una stringa al posto di un {@link EpExp} perchè "seroval" di merda non è in grado di serializzalli
+ * Come {@link getAnimeWorldVideoUrl} ma prende in input una stringa al posto di un {@link EpExp} perchè **"seroval"** di merda non è in grado di serializzalli
  * @param name Nome della serie richiesta
  * @param ep Episodio richiesto
  * @returns Restituisce un'oggetto che comunica il risultato/errore dell'operazione
